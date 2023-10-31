@@ -1,0 +1,78 @@
+/* Reset basic styling for all HTML elements */
+
+/* Box-sizing reset for consistent sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove default hyperlink styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Reset headings to have consistent font-weight and margins */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  margin: 0;
+}
+
+/* Reset form elements for consistent styling */
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+/* Reset images to display as inline-block and remove spacing */
+img {
+  display: inline-block;
+  vertical-align: middle;
+  /* max-width: 100%; */
+  height: auto;
+}
+
+/* Add more specific resets as needed for your project */
+
+/* Example additional resets */
+/* Remove default button styling */
+button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* Reset links on buttons to inherit text color */
+button a {
+  color: inherit;
+}
+
+/* Ensure tables have consistent borders */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+#remoteVideo{
+  width: 100%;
+  height: 100%
+}
