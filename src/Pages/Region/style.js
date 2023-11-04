@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     width: "20%",
     height: "10%",
-    backgroundColor: "#000000",
+    backgroundColor: " #FB1F43",
     color: "#ffffff",
     borderRadius: "30px",
     marginBottom: "10px",
@@ -94,18 +94,38 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   "@keyframes popup": {
-    '0%': {
-        transform: "scale(0.2)",
+    "0%": {
+      transform: "scale(0.2)",
     },
-    '50%': {
-        transform: "scale(1.1)",
+    "50%": {
+      transform: "scale(1.1)",
     },
 
-
-    '100%': {
-        transform: "scale(1)",
+    "100%": {
+      transform: "scale(1)",
     },
-},
+  },
+  block_bg: {
+    bottom: 0,
+    right: 0,
+    position: "absolute",
+    width: "100%",
+    maxWidth: "230px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+
+  logo: {
+    top: "4%",
+    left: "5%",
+    position: "absolute",
+    width: "100%",
+    maxWidth: "150px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 export default useStyles;

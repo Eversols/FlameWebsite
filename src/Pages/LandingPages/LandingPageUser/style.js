@@ -1,24 +1,22 @@
 import { makeStyles } from "@mui/styles";
+import bg_image from "../../../Assets/images/page_1_bg.png";
 import static_bg_img from "../../../Assets/images/page_2_A_background.png";
-import bg_image from '../../../Assets/images/page_1_bg.jpg'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-  
-      // Replace 'your-image-url' with the URL of your background image
-      backgroundImage: `url(${static_bg_img})`,
-      backgroundSize: 'cover',  
-      backgroundRepeat: 'no-repeat',
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      zIndex: -1,
-    
+    // Replace 'your-image-url' with the URL of your background image
+    // backgroundImage: `url(${static_bg_img})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    zIndex: -1,
   },
-  container:{
-    overflowY: 'auto', // Add overflow to make content scrollable 
+  container: {
+    overflowY: "auto", // Add overflow to make content scrollable
   },
   "@global": {
     "*::-webkit-scrollbar": {
@@ -128,338 +126,325 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   body1: {
-    maxHeight:'1280px',
-    maxWidth:'1920px',
-    marginLeft:'auto',
-    marginRight:'auto',
-    fontFamily: 'Montserrat, sans-serif',
-    backgroundColor: 'rgba(0,0,0,0)',
-    
-    width: '100%',
+    maxHeight: "1280px",
+    maxWidth: "1920px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    fontFamily: "Montserrat, sans-serif",
+    backgroundColor: "rgba(0,0,0,0)",
+
+    width: "100%",
     paddingTop: theme.spacing(5),
     paddingBottom: theme.spacing(5),
-    
-
-}, grid_body: {
-    color: '#ffffff',
-    textAlign: 'center',
-    
-    
-
-}, grid_left: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    textAlign: 'left',
-    [theme.breakpoints.down('md')]:{
-        textAlign:'left'
-    }
-},
-grid_right: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    textAlign: 'right',
-    [theme.breakpoints.down('md')]:{
-        textAlign:'right'
-    }
-}, img_container: {
-    textAlign: 'center',
-},
-img_container_sec_1: {
-    textAlign: 'center',
+  },
+  grid_body: {
+    color: "#ffffff",
+    textAlign: "center",
+  },
+  grid_left: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-around",
+    textAlign: "left",
+    [theme.breakpoints.down("md")]: {
+      textAlign: "left",
+    },
+  },
+  grid_right: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-around",
+    textAlign: "right",
+    [theme.breakpoints.down("md")]: {
+      textAlign: "right",
+    },
+  },
+  img_container: {
+    textAlign: "center",
+  },
+  img_container_sec_1: {
+    textAlign: "center",
     paddingLeft: theme.spacing(26),
     animation: `$popup 300ms ${theme.transitions.easing.easeInOut}`,
 
-    [theme.breakpoints.down('md')]:{
-        paddingLeft: theme.spacing(0),
-    }
-},
-img_container_sec_2: {
-    textAlign: 'center',
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: theme.spacing(0),
+    },
+  },
+  img_container_sec_2: {
+    textAlign: "center",
     paddingRight: theme.spacing(28),
     animation: `$popup 600ms ${theme.transitions.easing.easeInOut}`,
 
-    [theme.breakpoints.down('md')]:{
-        paddingRight: theme.spacing(0),
-        fontSize: '15px',
-    }
-},
-text_container_1: {
-    fontFamily: 'Montserrat, sans-serif',
-    width: '85%',
-    marginTop: theme.spacing(2)
-},
-text_container_2: {
-    fontFamily: 'Montserrat, sans-serif',
-    width: '85%',
-    marginTop: theme.spacing(2)
-},
-image: {
-    width: '60%',
+    [theme.breakpoints.down("md")]: {
+      paddingRight: theme.spacing(0),
+      fontSize: "15px",
+    },
+  },
+  text_container_1: {
+    fontFamily: "Montserrat, sans-serif",
+    width: "85%",
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-},
-text_heading: {
-    fontWeight: 'bold',
-    fontFamily: 'Montserrat, sans-serif',
+  },
+  text_container_2: {
+    fontFamily: "Montserrat, sans-serif",
+    width: "85%",
+    marginTop: theme.spacing(2),
+  },
+  image: {
+    width: "60%",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  text_heading: {
+    fontWeight: "bold",
+    fontFamily: "Montserrat, sans-serif",
     animation: `$popup 400ms ${theme.transitions.easing.easeInOut}`,
 
-    [theme.breakpoints.down('md')]:{
-        fontSize: '35px',
-    }
-},text_heading_sec_1: {
-    fontWeight: 'bold',
-    fontFamily: 'Montserrat, sans-serif',
+    [theme.breakpoints.down("md")]: {
+      fontSize: "35px",
+    },
+  },
+  text_heading_sec_1: {
+    fontWeight: "bold",
+    fontFamily: "Montserrat, sans-serif",
     paddingLeft: theme.spacing(25),
-    [theme.breakpoints.down('md')]:{
-        fontSize: '35px',
-        paddingLeft: theme.spacing(0),
-    }
-    
-},text_heading_sec_2: {
-    fontWeight: 'bold',
-    fontFamily: 'Montserrat, sans-serif',
+    [theme.breakpoints.down("md")]: {
+      fontSize: "35px",
+      paddingLeft: theme.spacing(0),
+    },
+  },
+  text_heading_sec_2: {
+    fontWeight: "bold",
+    fontFamily: "Montserrat, sans-serif",
     animation: `$popup 700ms ${theme.transitions.easing.easeInOut}`,
 
     paddingRight: theme.spacing(30),
-    [theme.breakpoints.down('md')]:{
-        fontSize: '35px',
-        paddingRight: theme.spacing(0),
-    }
-    
-},text_heading_2:{
-    fontWeight: 'bold',
-    fontFamily: 'Montserrat, sans-serif',
+    [theme.breakpoints.down("md")]: {
+      fontSize: "35px",
+      paddingRight: theme.spacing(0),
+    },
+  },
+  text_heading_2: {
+    fontWeight: "bold",
+    fontFamily: "Montserrat, sans-serif",
     animation: `$popup 600ms ${theme.transitions.easing.easeInOut}`,
 
-    [theme.breakpoints.down('md')]:{
-        fontSize: '40px',
-    }
-},
-text_body: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontWeight: '100',
-    color:'#cecece',
-    [theme.breakpoints.down('md')]:{
-        fontSize: '15px',
-    }
-},
-text_body_sec_1: {
-    fontFamily: 'Montserrat, sans-serif',
+    [theme.breakpoints.down("md")]: {
+      fontSize: "40px",
+    },
+  },
+  text_body: {
+    fontFamily: "Montserrat, sans-serif",
+    fontWeight: "100",
+    color: "#cecece",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "15px",
+    },
+  },
+  text_body_sec_1: {
+    fontFamily: "Montserrat, sans-serif",
     animation: `$popup 700ms ${theme.transitions.easing.easeInOut}`,
 
-    fontWeight: '100',
-    color:'#cecece',
+    fontWeight: "100",
+    color: "#cecece",
     paddingLeft: theme.spacing(25),
-    [theme.breakpoints.down('md')]:{
-        fontSize: '15px',
-        paddingLeft: theme.spacing(0),
-    }
-},
-text_body_sec_2: {
-    fontFamily: 'Montserrat, sans-serif',
+    [theme.breakpoints.down("md")]: {
+      fontSize: "15px",
+      paddingLeft: theme.spacing(0),
+    },
+  },
+  text_body_sec_2: {
+    fontFamily: "Montserrat, sans-serif",
     animation: `$popup 600ms ${theme.transitions.easing.easeInOut}`,
 
-    fontWeight: '100',
-    color:'#cecece',
+    fontWeight: "100",
+    color: "#cecece",
     paddingRight: theme.spacing(29),
-    [theme.breakpoints.down('md')]:{
-        paddingRight: theme.spacing(0),
-        fontSize: '15px',
-    }
-},
-section_2_header: {
-    textAlign: 'center',
-    fontFamily: 'Montserrat, sans-serif',
-    fontWeight: 'bold',
-    width: '100%',
-    height: '100%',
+    [theme.breakpoints.down("md")]: {
+      paddingRight: theme.spacing(0),
+      fontSize: "15px",
+    },
+  },
+  section_2_header: {
+    textAlign: "center",
+    fontFamily: "Montserrat, sans-serif",
+    fontWeight: "bold",
+    width: "100%",
+    height: "100%",
     marginTop: theme.spacing(10),
-    color: '#ffffff',
+    color: "#ffffff",
     animation: `$popup 400ms ${theme.transitions.easing.easeInOut}`,
+  },
+  carousel: {
+    width: "50%",
+  },
 
-},
-carousel: {
-    width: '50%',
-},
-
-footer:{
-    width:'100%',
-    padding:'10px 30px',
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'space-between',
+  footer: {
+    width: "100%",
+    padding: "10px 30px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     animation: `$popup 300ms ${theme.transitions.easing.easeInOut}`,
+  },
 
-},
+  // Carousel Left Styling
+  carousel_left: {
+    width: "300px",
+    height: "500px",
+    opacity: "0.6",
+    zIndex: "-1",
+    animation: `$fade 300ms ${theme.transitions.easing.easeInOut}`,
 
+    [theme.breakpoints.between("md")]: {
+      width: "150px",
+      height: "400px",
+    },
 
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  carousel_left_container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "end",
+    [theme.breakpoints.between("md", "sm")]: {
+      justifyContent: "end",
+    },
+  },
+  //    --------------------
 
-// Carousel Left Styling 
-carousel_left:{
-width:'300px',
-height:'500px',
-opacity:'0.6',
-zIndex:'-1',
-animation: `$fade 300ms ${theme.transitions.easing.easeInOut}`,
+  // Carousel Right Styling
+  carousel_right: {
+    width: "300px",
+    height: "500px",
+    opacity: "0.6",
+    zIndex: "-1",
+    animation: `$fade 300ms ${theme.transitions.easing.easeInOut}`,
 
-[theme.breakpoints.between('md')]:{
-    width:'150px',
-    height:'400px',
-},
+    [theme.breakpoints.between("md", "sm")]: {
+      width: "150px",
+      height: "400px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  carousel_right_container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "start",
+    [theme.breakpoints.between("md", "sm")]: {
+      justifyContent: "start",
+    },
+  },
+  //    ----------------------
 
-[theme.breakpoints.down('sm')]:{
-display:'none'
-}
+  // Carousel Active element Styling
 
+  carousel_active: {
+    width: "450px",
+    height: "780px",
+    borderRadius: "80px",
+    position: "absolute",
+    right: "0",
+    left: "0",
+    marginLeft: "auto",
+    marginRight: "auto",
+    animation: `$fade 300ms ${theme.transitions.easing.easeInOut}`,
 
-},carousel_left_container:{
-display:'flex',
-flexDirection:'row',
-alignItems:'center',
-justifyContent:'end',
- [theme.breakpoints.between('md','sm')]:{
-    justifyContent:'end',
-},
-},
-//    --------------------
-
-
-
-// Carousel Right Styling 
-carousel_right:{
-width:'300px',
-height:'500px',
-opacity:'0.6',
-zIndex:'-1',
-animation: `$fade 300ms ${theme.transitions.easing.easeInOut}`,
-
-[theme.breakpoints.between('md','sm')]:{
-    width:'150px',
-    height:'400px',
-},
-[theme.breakpoints.down('sm')]:{
-display:'none'
-}
-
-},carousel_right_container:{
-display:'flex',
-flexDirection:'row',
-alignItems:'center',
-justifyContent:'start',
-[theme.breakpoints.between('md','sm')]:{
-    justifyContent:'start',
-},
-},
-//    ----------------------
-
-
-// Carousel Active element Styling
-
-carousel_active:{
-width:'450px',
-height:'780px',
-borderRadius:'80px',
-position:'absolute',
-right:'0',
-left:'0',
-marginLeft:'auto',
-marginRight:'auto',
-animation: `$fade 300ms ${theme.transitions.easing.easeInOut}`,
-
-[theme.breakpoints.between('md','sm')]:{
-    width:'400px',
-    height:'720px',
-},
-[theme.breakpoints.down('sm')]:{
-width:'315px',
-height:'650px',
-}
-
-},
-carousel_active_container:{
-display:'flex',
-flexDirection:'row',
-alignItems:'center',
-justifyContent:'center',
-},
-carousel_iphone:{
-position:'absolute',
-right:'0',
-left:'0',
-marginLeft:'auto',
-marginRight:'auto',
-width:'450px',
-height:'800px',
-[theme.breakpoints.between('md','sm')]:{
-    width:'400px',
-    height:'720px',
-},
-[theme.breakpoints.down('sm')]:{
-width:'320px',
-height:'650px',
-}
-
-},
-//    --------------------------
-carousel_container:{
-display:'flex',
-flexDirection:'row',
-alignItems:'center',
-justifyContent:'center',
-minHeight:'850px',
-},
-carousel_nav_icons_container:{
-    position:'absolute',
-    right:'0',
-    left:'0',
-    marginLeft:'auto',
-    marginRight:'auto',
-    width:'550px',
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'space-between',
-    [theme.breakpoints.between('md','sm')]:{
-        width:'430px',
-   },
-   [theme.breakpoints.down('sm')]:{
-        width:'350px',
-   }
-},
-carousel_nav_icon:{
-    color: 'white',
-    fontSize: '100px',
-    backgroundColor: 'rgba(56,50,43,0.8)',
-    borderRadius: '50px',
-    [theme.breakpoints.between('md','sm')]:{
-        fontSize: '50px',
-   },
-   [theme.breakpoints.down('sm')]:{
-    fontSize: '40px',
-   }
-},
-"@keyframes popup": {
-    '0%': {
+    [theme.breakpoints.between("md", "sm")]: {
+      width: "400px",
+      height: "720px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "315px",
+      height: "650px",
+    },
+  },
+  carousel_active_container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  carousel_iphone: {
+    position: "absolute",
+    right: "0",
+    left: "0",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "450px",
+    height: "800px",
+    [theme.breakpoints.between("md", "sm")]: {
+      width: "400px",
+      height: "720px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "320px",
+      height: "650px",
+    },
+  },
+  //    --------------------------
+  carousel_container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "850px",
+  },
+  carousel_nav_icons_container: {
+    position: "absolute",
+    right: "0",
+    left: "0",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "550px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    [theme.breakpoints.between("md", "sm")]: {
+      width: "430px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "350px",
+    },
+  },
+  carousel_nav_icon: {
+    color: "white",
+    fontSize: "100px",
+    backgroundColor: "rgba(56,50,43,0.8)",
+    borderRadius: "50px",
+    [theme.breakpoints.between("md", "sm")]: {
+      fontSize: "50px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "40px",
+    },
+  },
+  "@keyframes popup": {
+    "0%": {
       transform: "scale(0.2)",
     },
- 
-   
-    '100%': {
+
+    "100%": {
       transform: "scale(1)",
     },
   },
   "@keyframes fade": {
-    '0%': {
+    "0%": {
       opacity: "10%",
     },
- 
-   
-    '100%': {
+
+    "100%": {
       transform: "100%",
     },
   },

@@ -1,25 +1,27 @@
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import BackgroundGradient from "../Assets/images/background_gradient.png";
-import { Outlet } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet, useParams } from "react-router-dom";
 
-const useStyles = makeStyles(() => ({
+// import BackgroundGradient from "../Assets/images/background_gradient.png";
+
+const useStyles = makeStyles((theme) => ({
   body: {
     width: "100vw",
     height: "100vh",
-    backgroundImage: `url(${BackgroundGradient})`,
+    position: "relative",
+    // backgroundImage: `url(${BackgroundGradient})`,
     backgroundSize: "cover",
+    background: "#ffff",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
   },
 }));
 const Layout = () => {
   const { role } = useParams();
-  const { role: userRole,  } = useSelector((state) => state.auth);
+  const { role: userRole } = useSelector((state) => state.auth);
   const classes = useStyles();
 
   if (!(role === userRole)) {

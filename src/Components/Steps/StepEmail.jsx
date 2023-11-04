@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
-import useStyles from "./style";
-import { Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setError, setUser } from "../../Services/store/authSlice";
+import bgBlock from "../../Assets/images/bg_block.svg";
+import bgHeart from "../../Assets/images/bg_heart.svg";
+import flameLogo from "../../Assets/images/flame logo.svg";
 import { post } from "../../Services/api";
+import { setError, setUser } from "../../Services/store/authSlice";
+import useStyles from "./style";
 
 const StepEmail = ({ onNext, setStep }) => {
   const [email, setEmail] = useState("");
@@ -24,7 +27,7 @@ const StepEmail = ({ onNext, setStep }) => {
           onNext();
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
         dispatch(setError(error.response.data.message));
       }
     }
@@ -55,30 +58,52 @@ const StepEmail = ({ onNext, setStep }) => {
     // }
   };
   return (
-    <Container className={classes.container}>
-      <Typography variant="h5" className={classes.heading}>
-        Ready to find your next?
-      </Typography>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          dispatch(setError(""));
-        }}
-        placeholder="Enter your email here"
-        className={classes.input}
-      />
-      {error && <p className={classes.error}>{error}</p>}
-      <Button
-        type="button"
-        onClick={confirmSubmit}
-        variant="contained"
-        className={classes.btn}
-      >
-        next
-      </Button>
-    </Container>
+    <>
+      <img src={flameLogo} className={classes.logo} />
+      <img src={bgHeart} className={classes.heart_bg} />
+      <img src={bgBlock} className={classes.block_bg} />
+      <Box className={classes.mainBox}>
+        <Container className={classes.container}>
+          <Typography variant="h5" className={classes.heading}>
+            Please enter your email
+          </Typography>
+          <Box className={classes.fieldWrapper}>
+            <TextField
+              name="email"
+              onChange={(e) => {
+                setEmail(e.target.value);
+                dispatch(setError(""));
+              }}
+              value={email}
+              type="email"
+              placeholder="Enter your email address"
+              className={classes.input1}
+              fullWidth
+            />
+
+            {/* <input
+          type="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            dispatch(setError(""));
+          }}
+          placeholder="Enter your email address"
+          className={classes.input}
+        /> */}
+            {error && <p className={classes.error}>{error}</p>}
+            <Button
+              type="button"
+              onClick={confirmSubmit}
+              variant="contained"
+              className={classes.btn}
+            >
+              Next
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    </>
   );
 };
 
