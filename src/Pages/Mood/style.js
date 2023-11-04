@@ -210,6 +210,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontFamily: "Montserrat, sans-serif",
   },
+  gender_bg: {
+    bottom: 0,
+    right: 0,
+    position: "absolute",
+    width: "100%",
+    maxWidth: "230px",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "100%",
+    },
+  },
 }));
 
 export default useStyles;

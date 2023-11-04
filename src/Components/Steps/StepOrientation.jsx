@@ -36,7 +36,7 @@ const StepOrientation = () => {
   return (
     <>
       <img src={flameLogo} className={classes.logo} />
-      <img src={bgFrame} className={classes.block_bg} />
+      <img src={bgFrame} className={classes.gender_bg} />
 
       <Container className={classes.container}>
         <Typography variant="h4" className={classes.heading1}>

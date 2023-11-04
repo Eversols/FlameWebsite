@@ -62,9 +62,7 @@ const useStyles = makeStyles((theme) => ({
     height: "70%",
     display: "flex",
     flexDirection: "row",
-    [theme.breakpoints.down("md")]: {
-      height: "45%",
-    },
+
     [theme.breakpoints.down("sm")]: {
       height: "100%",
       flexWrap: "wrap",
@@ -123,6 +121,17 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "150px",
     [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  gender_bg: {
+    bottom: 0,
+    right: 0,
+    position: "absolute",
+    width: "100%",
+    maxWidth: "230px",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "100%",
       display: "none",
     },
   },

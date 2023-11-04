@@ -10,7 +10,7 @@ import StepPassword from "../../Components/Steps/StepPassword";
 import StepRegion from "../../Components/Steps/StepRegion";
 
 const steps = {
-  1: StepEmail,
+  1: StepName,
   // for testing
   // 1: StepEmail,
   // 2: StepOtp,

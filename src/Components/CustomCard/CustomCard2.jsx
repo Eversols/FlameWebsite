@@ -7,7 +7,7 @@ import checkradio from "../../Assets/images/checkradio.svg";
 import euorpe from "../../Assets/images/euorpe.svg";
 import sasia from "../../Assets/images/sasia.svg";
 import uncheckradio from "../../Assets/images/uncheckradio.svg";
-import useStyles from "./style";
+import useStyles from "./styleCard";
 
 const img = [euorpe, asia, sasia, africa];
 const name = ["Euorpe", "Asia", "S. Asia", "S. Africa"];

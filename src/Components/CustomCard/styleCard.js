@@ -82,9 +82,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     alignItems: "left",
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
-    },
+    // [theme.breakpoints.down("md")]: {
+    //   fontSize: "19px",
+    // },
   },
 
   divider: {
