@@ -34,7 +34,7 @@ const StepName = ({ onNext }) => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your email address"
+              placeholder="Enter your name"
               className={classes.input1}
               fullWidth
             />
