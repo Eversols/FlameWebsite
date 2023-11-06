@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import bgBlock from "../../Assets/images/bg_block.svg";
@@ -29,22 +29,26 @@ const StepName = ({ onNext }) => {
           <Typography variant="h5" className={classes.heading}>
             Ready to find your next?
           </Typography>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-            className={classes.input}
-          />
-          {error && <p className={classes.error}>{error}</p>}
-          <Button
-            type="button"
-            onClick={confirmSubmit}
-            variant="contained"
-            className={classes.btn}
-          >
-            next
-          </Button>
+          <Box className={classes.fieldWrapper}>
+            <TextField
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your email address"
+              className={classes.input1}
+              fullWidth
+            />
+
+            {error && <p className={classes.error}>{error}</p>}
+            <Button
+              type="button"
+              onClick={confirmSubmit}
+              variant="contained"
+              className={classes.btn}
+            >
+              next
+            </Button>
+          </Box>
         </Container>
       </Box>
     </>

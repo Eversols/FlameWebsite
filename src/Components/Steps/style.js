@@ -3,10 +3,11 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    height: "80%",
+    height: "100%",
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
+    minHeight: "360px",
   },
 
   fieldWrapper: {
@@ -19,11 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
   mainBox: {
     width: "100%",
-    maxWidth: "455px",
+    maxWidth: "380px",
     height: "100%",
     maxHeight: "450px",
     borderRadius: "24px",
-    // padding: "20px 40px",
     margin: "16px",
     display: "flex",
     justifyContent: "center",
@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       margin: 0,
       boxShadow: "none",
-      //   padding: "20px 20px",
     },
   },
   heading: {
@@ -64,12 +63,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   input1: {
-    // border: "1px solid #D8DADC",
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderRadius: "10px",
         border: "1px solid #D8DADC",
-        // border: "none",
       },
 
       "&:hover fieldset": {
@@ -107,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FB1F43",
     color: "#ffffff",
     borderRadius: "10px",
-    marginTop: "40px",
+    marginTop: "50px",
     marginBottom: "30px",
     "&:hover": {
       backgroundColor: "#dc697c",
@@ -160,32 +157,23 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "275px",
     [theme.breakpoints.down("sm")]: {
-      bottom: "-70%",
+      bottom: "-25%",
       left: "50%",
       maxWidth: "100%",
       transform: "translateX(-50%)",
-    },
-
-    [theme.breakpoints.down(480)]: {
-      bottom: "-45%",
-      // Your styles for 420px and below
-    },
-    [theme.breakpoints.down(420)]: {
-      bottom: "-35%",
-      // Your styles for 420px and below
-    },
-    [theme.breakpoints.down(376)]: {
-      bottom: "-48%",
-      // Your styles for 420px and below
-    },
-    [theme.breakpoints.down(320)]: {
-      bottom: "-35%",
-      // Your styles for 420px and below
     },
   },
   wrapper: {
     width: "100%",
     display: "flex",
+  },
+
+  passwordWrapper: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "column",
+    height: "115px",
   },
 }));
 

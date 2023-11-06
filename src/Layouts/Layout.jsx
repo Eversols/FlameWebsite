@@ -8,7 +8,7 @@ import { Navigate, Outlet, useParams } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   body: {
     width: "100vw",
-    height: "100vh",
+    minHeight: "100vh",
     position: "relative",
     // backgroundImage: `url(${BackgroundGradient})`,
     backgroundSize: "cover",
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    overflowY: "auto",
+    overflow: "hidden",
   },
 }));
 const Layout = () => {

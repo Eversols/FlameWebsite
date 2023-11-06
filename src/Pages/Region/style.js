@@ -3,72 +3,62 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    height: "85%",
+    maxWidth: "900px",
     border: "none",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     alignItems: "center",
     flexDirection: "column",
+    zIndex: 1,
     animation: `$popup 500ms ${theme.transitions.easing.easeInOut}`,
     [theme.breakpoints.down("md")]: {
-      height: "70%",
       width: "100%",
     },
     [theme.breakpoints.down("sm")]: {
-      height: "100%",
-      width: "100%",
       justifyContent: "center",
     },
   },
   paragraph_container: {
     width: "100%",
-    height: "30%",
     display: "flex",
-    justifyContent: "space-around",
+    gap: "30px",
+    marginBottom: "20px",
+    marginTop: "20px",
     alignItems: "center",
     flexDirection: "column",
+    [theme.breakpoints.down("md")]: {
+      marginTop: "100px",
+    },
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
-      height: "18%",
+      gap: 0,
       textAlign: "center",
-      marginTop: theme.spacing(5),
     },
   },
   heading1: {
     fontFamily: "Montserrat, sans-serif",
     fontWeight: "bold",
     color: "#000000",
-    [theme.breakpoints.down("md")]: {
-      fontSize: "40px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "20px",
-    },
+    fontSize: "40px",
   },
   heading2: {
     fontFamily: "Montserrat, sans-serif",
     fontWeight: "regular",
     color: "#000000",
-    [theme.breakpoints.down("md")]: {
-      fontSize: "30px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "15px",
-      marginTop: theme.spacing(3),
-    },
+    fontSize: "30px",
   },
+
   regionscontainer: {
     width: "100%",
-    height: "70%",
+    padding: "10px",
     display: "flex",
-    flexDirection: "row",
-
-    [theme.breakpoints.down("sm")]: {
-      height: "100%",
+    margin: "20px  0px",
+    gap: "10px",
+    [theme.breakpoints.down("md")]: {
       flexWrap: "wrap",
-      marginTop: theme.spacing(5),
     },
   },
+
   btn: {
     width: "20%",
     height: "10%",
@@ -103,16 +93,6 @@ const useStyles = makeStyles((theme) => ({
       transform: "scale(1)",
     },
   },
-  block_bg: {
-    bottom: 0,
-    right: 0,
-    position: "absolute",
-    width: "100%",
-    maxWidth: "230px",
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
 
   logo: {
     top: "4%",
@@ -132,7 +112,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "230px",
     [theme.breakpoints.down("sm")]: {
       maxWidth: "100%",
-      display: "none",
     },
   },
 }));
