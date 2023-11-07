@@ -40,7 +40,7 @@ const StepOtp = ({ onNext }) => {
 
           <Box className={classes.fieldWrapper}>
             <TextField
-              name="email"
+              name="otp"
               onChange={(e) => {
                 setOTP(e.target.value);
                 dispatch(setError(""));
@@ -51,17 +51,6 @@ const StepOtp = ({ onNext }) => {
               className={classes.input1}
               fullWidth
             />
-
-            {/* <input
-          type="text"
-          value={OTP}
-          onChange={(e) => {
-            setOTP(e.target.value);
-            dispatch(setError(""));
-          }}
-          placeholder="Confirm OTP sent to your Email ID"
-          className={classes.input}
-        /> */}
             {error && <p className={classes.error}>{error}</p>}
             <Button
               type="button"

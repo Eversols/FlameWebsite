@@ -81,16 +81,6 @@ const StepEmail = ({ onNext, setStep }) => {
               fullWidth
             />
 
-            {/* <input
-          type="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            dispatch(setError(""));
-          }}
-          placeholder="Enter your email address"
-          className={classes.input}
-        /> */}
             {error && <p className={classes.error}>{error}</p>}
             <Button
               type="button"
