@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
-import CallIcon from "../../Assets/images/call_icon.png";
-import ChatIcon from "../../Assets/images/chat_icon.png";
-import VideoCallIcon from "../../Assets/images/video_call.png";
+import CallIcon from "../../Assets/images/sayhi.svg";
+import MoreIcon from "../../Assets/images/more.svg";
+import ChatIcon from "../../Assets/images/message.svg";
+import VideoCallIcon from "../../Assets/images/video.svg";
 import ProfileImage from "../../Assets/images/male.jpg";
 import useStyles from "./style";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { getCurrentConversation } from "../../Services/utils";
-import Loader from '../Loader';
+import Loader from "../Loader";
 
-const ChatHistory = ({setShowChatBox, callUser}) => {
+const ChatHistory = ({ setShowChatBox, callUser }) => {
   const {
     vox_users: { conversations, users, currentUser },
     conversationHistory,
@@ -121,10 +122,8 @@ const ChatHistory = ({setShowChatBox, callUser}) => {
   }
 
   const call = (userId, video) => {
-    console.log(users)
-    const voxUser = users.find(
-      (item) => item.userId === userId
-    );
+    console.log(users);
+    const voxUser = users.find((item) => item.userId === userId);
     if (voxUser) {
       callUser(voxUser.userName, video);
     }
@@ -134,62 +133,134 @@ const ChatHistory = ({setShowChatBox, callUser}) => {
     <>
       {conversations.map((item) => {
         const users = getUserDetail(item.participants, item.direct);
-        console.log('LLLLLLLLLLLLLLLLLLL', users)
         const chatTitle = getChatTitle(item, users);
         const { lastMessage, timestamp } = getLastMessageAndTime(item);
         return (
           <>
-          {chatTitle?  <Box className={classes.box_single_user_history}>
-              <Box className={classes.avatar_box}>
-                <Box
-                  className={classes.single_image}
-                  style={{ backgroundImage: `url(${
-                    item.direct && users.first_name 
-                    ? `https://flame.bilalrugs.pk/livebk/public/uploads/${users.photo}`
-                    : ProfileImage})` }}
-                ></Box>
-                {chatTitle && <Box className={classes.single_user_history_text}>
-                  <Typography variant="h5" className={classes.history_name}>
-                    {chatTitle}
-                  </Typography>
-                  <Typography variant="h6" className={classes.history_lastseen}>
-                    {timestamp && formatTimestamp(timestamp)}
-                  </Typography>
-                </Box>}
+            {chatTitle ? (
+              <Box className={classes.box_single_user_history}>
+                <Box className={classes.avatar_box}>
+                  <Box
+                    className={classes.single_image}
+                    style={{
+                      backgroundImage: `url(${
+                        item.direct && users.first_name
+                          ? `https://flame.bilalrugs.pk/livebk/public/uploads/${users.photo}`
+                          : ProfileImage
+                      })`,
+                    }}
+                  ></Box>
+                  {chatTitle && (
+                    <Box className={classes.single_user_history_text}>
+                      <Typography variant="h5" className={classes.history_name}>
+                        {chatTitle}
+                      </Typography>
+                      <Box
+                        display="flex"
+                        justifyContent="start"
+                        alignItems="center"
+                      >
+                        <Box className={classes.online_indicator} />
+                        {/* <Box className={classes.offline_indicator} /> */}
+                        <Typography variant="body1" component="span" ml={1}>
+                          Online
+                        </Typography>
+                      </Box>
+                      <Box className={classes.history_actions}>
+                      <IconButton
+                          sx={{ margin: 0, padding: 0 }}
+                          size="small"
+                          onClick={() => call(users.userId, true)}
+                          className={classes.history_actions_btn}
+                        >
+                          <img
+                            src={VideoCallIcon}
+                            className={classes.history_actions_icons}
+                          />
+                        </IconButton>
+                        <IconButton
+                          sx={{ margin: 0, padding: 0 }}
+                          size="small"
+                          onClick={() => call(users.userId, false)}
+                          className={classes.history_actions_btn}
+                        >
+                          <img
+                            src={CallIcon}
+                            className={classes.history_actions_icons}
+                          />
+                        </IconButton>
+                        
+                        <IconButton
+                          sx={{ margin: 0, padding: 0 }}
+                          size="small"
+                          onClick={() => {
+                            getCurrentConversation(item.uuid);
+                            setShowChatBox(true);
+                          }}
+                          className={classes.history_actions_btn}
+                        >
+                          <img
+                            src={ChatIcon}
+                            className={classes.history_actions_icons}
+                          />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          // onClick={() => {
+                          //   getCurrentConversation(item.uuid);
+                          //   setShowChatBox(true);
+                          // }}
+                          // className={classes.history_actions_btn}
+                          sx={{ margin: 0, padding: 0, backgroundColor: "transparent", marginLeft: "3px" }}
+                        >
+                          <img
+                            src={MoreIcon}
+                            className={classes.history_actions_icons}
+                          />
+                        </IconButton>
+                      </Box>
+                    </Box>
+                  )}
+                </Box>
+                {/* <Box className={classes.history_actions}>
+                  <IconButton
+                    sx={{ margin: 0, padding: 0 }}
+                    size="small"
+                    onClick={() => call(users.userId, false)}
+                  >
+                    <img
+                      src={CallIcon}
+                      className={classes.history_actions_icons}
+                    />
+                  </IconButton>
+                  <IconButton
+                    sx={{ margin: 0, padding: 0 }}
+                    size="small"
+                    onClick={() => call(users.userId, true)}
+                  >
+                    <img
+                      src={VideoCallIcon}
+                      className={classes.history_actions_icons}
+                    />
+                  </IconButton>
+                  <IconButton
+                    sx={{ margin: 0, padding: 0 }}
+                    size="small"
+                    onClick={() => {
+                      getCurrentConversation(item.uuid);
+                      setShowChatBox(true);
+                    }}
+                  >
+                    <img
+                      src={ChatIcon}
+                      className={classes.history_actions_icons}
+                    />
+                  </IconButton>
+                </Box> */}
               </Box>
-              <Box className={classes.history_actions}>
-                <IconButton
-                  sx={{ margin: 0, padding: 0 }}
-                  size="small"
-                  onClick={() => call(users.userId, false)}
-                >
-                  <img
-                    src={CallIcon}
-                    className={classes.history_actions_icons}
-                  />
-                </IconButton>
-                <IconButton
-                  sx={{ margin: 0, padding: 0 }}
-                  size="small"
-                  onClick={() => call(users.userId, true)}
-                >
-                  <img
-                    src={VideoCallIcon}
-                    className={classes.history_actions_icons}
-                  />
-                </IconButton>
-                <IconButton
-                  sx={{ margin: 0, padding: 0 }}
-                  size="small"
-                  onClick={() => {getCurrentConversation(item.uuid);setShowChatBox(true)}}
-                >
-                  <img
-                    src={ChatIcon}
-                    className={classes.history_actions_icons}
-                  />
-                </IconButton>
-              </Box>
-            </Box>: <Loader/>}
+            ) : (
+              <Loader />
+            )}
           </>
         );
       })}

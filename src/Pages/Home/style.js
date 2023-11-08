@@ -3,29 +3,30 @@ import ProfileImage from "../../Assets/images/male.jpg";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: "99%",
-    height: "86%",
+    width: "100%",
+    height: "100vh",
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "start",
     flexDirection: "row",
+    paddingTop: "56px"
   },
   heading: {
-    color: "black",
+    color: "#3A4159",
     fontWeight: "bold",
     wordSpacing: "3px",
-    marginTop: "15px",
+    padding: "12px 0px 0px 12px"
   },
   box_left: {
-    width: "20%",
+    width: "24%",
     height: "92%",
     display: "flex",
     border: "1px solid white",
     flexDirection: "column",
     alignItems: "start",
     justifyContent: "start",
-    backgroundColor: "rgba(255,255,255,0.3)",
-    borderRadius: "15px",
+    borderRadius: "24px",
+    padding: "24px 32px"
   },
   box_leftInner: {
     width: "100%",
@@ -119,6 +120,39 @@ const useStyles = makeStyles((theme) => ({
     color: "#000000",
     fontSize: "15px",
     borderBottom: "1px solid rgba(255,255,255,0.3)",
+  },
+  block_bg: {
+    bottom: 0,
+    right: 0,
+    position: "absolute",
+    width: "100%",
+    maxWidth: "230px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+
+  logo: {
+    top: "4%",
+    left: "5%",
+    position: "absolute",
+    width: "100%",
+    maxWidth: "150px",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  heart_bg: {
+    bottom: 0,
+    left: 0,
+    position: "absolute",
+    width: "100%",
+    maxWidth: "310px",
+    [theme.breakpoints.down("sm")]: {
+      left: "50%",
+      maxWidth: "100%",
+      transform: "translateX(-50%)",
+    },
   },
 }));
 

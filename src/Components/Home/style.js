@@ -3,16 +3,39 @@ import BackgroundGradient from "../../Assets/images/background_gradient.png";
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    width: "99%",
-    height: "8%",
-    borderRadius: "0px 0px 10px 10px",
+    width: "100%",
+    height: "12%",
+    borderRadius: "0px 0px 0px 0px",
     position: "absolute",
-    backgroundColor: "rgba(255,255,255,0.3)",
+    backgroundColor: "white",
     top: "0",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
+    padding: "0px 92px",
+  },
+  logo: {
+    width: "152px",
+    maxWidth: "150px",
+  },
+  logout: {
+    width: "17px",
+    maxWidth: "150px",
+  },
+  online_indicator: {
+    width: 10,
+    height: 10,
+    backgroundColor: "#68D391",
+    border: "1px solid white",
+    borderRadius: "50%",
+  },
+  offline_indicator: {
+    width: 10,
+    height: 10,
+    backgroundColor: "#9A9A9A",
+    border: "1px solid white",
+    borderRadius: "50%",
   },
   header_left: {
     width: "5%",
@@ -20,21 +43,30 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "0%",
   },
   header_mid: {
-    width: "20%",
-    height: "100%",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "start",
     alignItems: "center",
     flexDirection: "row",
   },
   recharge_btn: {
-    width: "50%",
-    height: "30px",
-    backgroundColor: "#000000",
+    backgroundColor: "#FB1F43",
     color: "#ffffff",
-    borderRadius: "30px",
+    borderRadius: "24px",
+    padding: "8px, 20px, 8px, 20px",
     "&:hover": {
-      backgroundColor: "#535353",
+      backgroundColor: "#dc697c",
+    },
+  },
+  payout_btn: {
+    // backgroundColor: "#FB1F43",
+    color: "#868AA9",
+    fontWeight: "500",
+    lineHeight: "24px",
+    border: "1px solid #868AA9",
+    borderRadius: "24px",
+    padding: "8px, 20px, 8px, 20px",
+    "&:hover": {
+      backgroundColor: "#dc697c",
     },
   },
   profile_icon: {
@@ -264,8 +296,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar_box: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
+    alignItems: "start",
+    justifyContent: "center",
   },
   history_name: {
     color: "black",
@@ -280,11 +312,21 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-around",
+    marginTop: '2px'
+  },
+  history_actions_btn:{
+    width: '24px',
+    height: '24px',
+    backgroundColor: "#F0F0F0",
+    // padding: "4px",
+    borderRadius: "50%",
+    textAlign: 'center',
+    marginRight: "3px"
   },
   history_actions_icons: {
-    width: "14px",
-    height: "14px",
-    marginLeft: theme.spacing(1),
+    width: "12px",
+    height: "12px",
+    // marginLeft: theme.spacing(1),
   },
   single_user_history_text: {
     marginLeft: theme.spacing(1),

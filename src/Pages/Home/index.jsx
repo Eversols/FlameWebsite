@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from "react";
 import Header from "../../Components/Home/Header";
-import { Box, Container, IconButton, Typography } from "@mui/material";
+import { Box, Container, IconButton, Paper, Typography } from "@mui/material";
 import useStyles from "./style";
 
 import profile from "../../Assets/images/profile.png";
@@ -28,6 +28,9 @@ import { getAllUsers } from "../../Services/store/authSlice";
 import WorningDilog from "../../Components/Home/WorningDialog";
 import CallService from "../../Services/voximplant/call";
 import IncomingCallDialog from "../../Components/Home/IncomingCallDialog";
+import bgBlock from "../../Assets/images/bg_block.svg";
+import bgHeart from "../../Assets/images/bg_heart.svg";
+import flameLogo from "../../Assets/images/flame logo.svg";
 
 const index = () => {
   const { role, allUsers = [], userData } = useSelector((state) => state.auth);
@@ -147,10 +150,13 @@ const index = () => {
 
   return (
     <>
+    {/* <img src={flameLogo} className={classes.logo} /> */}
+      {/* <img src={bgHeart} className={classes.heart_bg} /> */}
+      {/* <img src={bgBlock} className={classes.block_bg} /> */}
       <Header />
-      <Box className={classes.container}>
-        <Container className={classes.box_left}>
-          <Typography variant="h4" className={classes.heading}>
+      <Container className={classes.container}>
+        <Paper className={classes.box_left}>
+          <Typography variant="body1" component="div" className={classes.heading}>
             History
           </Typography>
           <Box className={classes.box_leftInner}>
@@ -159,17 +165,12 @@ const index = () => {
               callUser={handleMakeAudioCall}
             />
           </Box>
-        </Container>
-        <Container className={classes.box_mid}>
+        </Paper>
+        {/* <Container className={classes.box_mid}>
           {currentCall ? (
             <Container className={classes.call_window}>
-              {/* <Container
-                id="voximplant_container"
-                className={classes.videoCall}
-              > */}
-              {/* <video id="localVideo" autoPlay muted></video> */}
+              
               <video id="remoteVideo" autoPlay></video>
-              {/* </Container> */}
               <Container className={classes.call_footer}>
                 <Box className={classes.call_action_container}>
                   <img src={CallPrev} className={classes.call_action}></img>
@@ -213,7 +214,7 @@ const index = () => {
               )}
             </>
           )}
-        </Container>
+        </Container> */}
         <Container className={classes.box_right}>
           <Box className={classes.avatar_box_profile}>
             <Container
@@ -263,7 +264,7 @@ const index = () => {
             </Typography>
           </Container>
         </Container>
-      </Box>
+      </Container>
       <ChatBox
         setDialog={setDialog}
         showChatBox={showChatBox}
