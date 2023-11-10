@@ -4,35 +4,37 @@ import ProfileImage from "../../Assets/images/male.jpg";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    height: "100vh",
+    height: "100%",
+    maxWidth: "1300px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "start",
     flexDirection: "row",
-    paddingTop: "56px"
+    paddingTop: "56px",
+    zIndex: 1,
+    alignItems: "center",
   },
   heading: {
     color: "#3A4159",
     fontWeight: "bold",
     wordSpacing: "3px",
-    padding: "12px 0px 0px 12px"
   },
   box_left: {
     width: "24%",
-    height: "92%",
+    height: "85vh",
     display: "flex",
     border: "1px solid white",
     flexDirection: "column",
     alignItems: "start",
     justifyContent: "start",
     borderRadius: "24px",
-    padding: "24px 32px"
+    padding: "24px 32px",
   },
   box_leftInner: {
     width: "100%",
   },
   box_mid: {
-    width: "60%",
+    width: "50%",
     height: "92%",
     display: "flex",
     flexDirection: "column",
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
-    padding: 0
+    padding: 0,
   },
   videoCall: {
     height: "85%",
@@ -76,19 +78,24 @@ const useStyles = makeStyles((theme) => ({
     width: "50px",
     height: "50px",
   },
+
   box_right: {
-    width: "20%",
-    height: "92%",
-    border: "1px solid white",
+    width: "24%",
+    height: "85vh",
+
+    maxHeight: "85vh",
     display: "flex",
+    border: "1px solid white",
     flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-around",
-    backgroundColor: "rgba(255,255,255,0.3)",
-    borderRadius: "15px",
+    alignItems: "start",
+    justifyContent: "start",
+    borderRadius: "24px",
+    padding: "24px 32px",
   },
+
   avatar_box_profile: {
     marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(3),
   },
   single_image_profile: {
     width: "100px",
@@ -104,21 +111,64 @@ const useStyles = makeStyles((theme) => ({
   },
   profile_answer_name: {
     color: "#000000",
+    marginTop: "15px",
     fontSize: "18px",
     fontWeight: "bold",
-    textAlign: "center",
   },
+
+  btn_love: {
+    background: "#93BF92",
+    borderRadius: "8px",
+    color: "#ffff",
+    fontSize: "8px",
+    fontWeight: 400,
+    textTransform: "uppercase",
+
+    "&:hover": {
+      background: "#93BF92",
+    },
+  },
+
+  btnContainer: {
+    width: "100%",
+    display: "flex",
+    gap: "15px",
+    flexWrap: "wrap",
+    marginBottom: "15px",
+    marginTop: "15px",
+  },
+
+  btn_hate: {
+    background: " #FB6B83",
+    borderRadius: "8px",
+    color: "#ffff",
+    fontSize: "8px",
+    fontWeight: 400,
+    textTransform: "uppercase",
+
+    "&:hover": {
+      background: " #FB6B83",
+    },
+  },
+
+  profile_answer: {
+    color: "#000000",
+    fontSize: "14px",
+    fontWeight: 400,
+    marginTop: "15px",
+  },
+
   profile_detail: {
     textAlign: "center",
   },
   profile_question_text: {
     color: "rgba(0,0,0,0.4)",
-    fontSize: "15px",
+    fontSize: "14px",
     borderBottom: "1px solid rgba(255,255,255,0.3)",
   },
   profile_answer_text: {
     color: "#000000",
-    fontSize: "15px",
+    fontSize: "14px",
     borderBottom: "1px solid rgba(255,255,255,0.3)",
   },
   block_bg: {

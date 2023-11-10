@@ -2,24 +2,24 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import {
+  A11y,
+  EffectCreative,
   Navigation,
   Pagination,
   Scrollbar,
-  A11y,
-  EffectCreative,
 } from "swiper/modules";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Box, IconButton } from "@mui/material";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/navigation";
-import useStyles from "./style";
-import { Box, IconButton } from "@mui/material";
-import CallIcon from "@mui/icons-material/Call";
-import VideocamIcon from "@mui/icons-material/Videocam";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import { useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import ChatIcon from "../../Assets/images/message.svg";
+import CallIcon from "../../Assets/images/sayhi.svg";
+import VideoCallIcon from "../../Assets/images/video.svg";
 import { getCurrentConversation } from "../../Services/utils";
-import { useSelector } from "react-redux";
+import useStyles from "./style";
 
 const MainScreenSlider = ({
   models = [],
@@ -81,30 +81,35 @@ const MainScreenSlider = ({
           {console.log("FFFFFFFFFFFFFF", item)}
           <Box className={classes.buttons}>
             <IconButton
-              className={classes.phoneBtn}
-              sx={{ marginRight: 10 }}
-              variant="contained"
-              label="Accept"
-              onClick={() => call(item.userData, false)}
-            >
-              <CallIcon />
-            </IconButton>
-            <IconButton
-              className={classes.videoBtn}
-              sx={{ marginRight: 10 }}
+              className={classes.messageBtn}
+              sx={{ marginRight: 3 }}
               variant="contained"
               label="Accept"
               onClick={() => call(item.userData, true)}
             >
-              <VideocamIcon />
+              <img
+                src={VideoCallIcon}
+                className={classes.history_actions_icon}
+              />
             </IconButton>
             <IconButton
               className={classes.messageBtn}
+              sx={{ marginRight: 3 }}
               variant="contained"
+              label="Accept"
+              onClick={() => call(item.userData, false)}
+            >
+              <img src={CallIcon} className={classes.history_actions_icon} />
+            </IconButton>
+
+            <IconButton
+              className={classes.messageBtn}
+              variant="contained"
+              sx={{ marginRight: 3 }}
               label="Accept"
               onClick={() => conversation(item.userData)}
             >
-              <ChatBubbleIcon />
+              <img src={ChatIcon} className={classes.history_actions_icon} />
             </IconButton>
           </Box>
         </SwiperSlide>

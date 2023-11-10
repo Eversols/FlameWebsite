@@ -1,18 +1,15 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
-import { Box, Container, IconButton, Paper, Typography } from "@mui/material";
-import React from "react";
-import ChatIcon from "@mui/icons-material/Chat";
 import { Send } from "@mui/icons-material";
-import useStyles from "./style";
+import { Box, Container, IconButton, Paper, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ChatIcon from "../../Assets/images/chatIcon.svg";
 import ProfileImage from "../../Assets/images/male.jpg";
-import { useRef } from "react";
-import { useState } from "react";
-import MessengerService from "../../Services/voximplant/messenger";
-import { useEffect } from "react";
 import { post } from "../../Services/api";
 import { setMessages } from "../../Services/store/authSlice";
+import MessengerService from "../../Services/voximplant/messenger";
+import useStyles from "./style";
 
 const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
   const {
@@ -61,7 +58,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
       setInputMessage("");
       post("/proccesSmsMunutes", { userID: userData.id, messages: 1 })
         .then((res) => {
-          dispatch(setMessages(+userData.messages - 1 ));
+          dispatch(setMessages(+userData.messages - 1));
         })
         .catch((error) => console.log(error));
     }
@@ -71,9 +68,15 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
       <IconButton
         color="primary"
         onClick={handleToggleChatBox}
-        style={{ position: "fixed", bottom: 20, right: 20 }}
+        style={{
+          position: "fixed",
+          bottom: 20,
+          right: 20,
+          background: "#ffff",
+          height: "53px",
+        }}
       >
-        <ChatIcon />
+        <img src={ChatIcon} />
       </IconButton>
 
       {showChatBox && (

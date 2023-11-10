@@ -1,37 +1,43 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import {
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import Header from "../../Components/Home/Header";
-import { Box, Container, IconButton, Paper, Typography } from "@mui/material";
 import useStyles from "./style";
 
-import profile from "../../Assets/images/profile.png";
-import logoutIcon from "../../Assets/images/logout.png";
-import ProfileImage from "../../Assets/images/male.jpg";
-import BackgroundGradient from "../../Assets/images/background_gradient.png";
+import CallEndIcon from "@mui/icons-material/CallEnd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Gift1 from "../../Assets/images/Gifts/gift_1.png";
 import Gift2 from "../../Assets/images/Gifts/gift_2.png";
 import Gift3 from "../../Assets/images/Gifts/gift_3.png";
 import Gift4 from "../../Assets/images/Gifts/gift_4.png";
 import Gift5 from "../../Assets/images/Gifts/gift_5.png";
+import BackgroundGradient from "../../Assets/images/background_gradient.png";
+import bgBlock from "../../Assets/images/bg_block.svg";
+import bgHeart from "../../Assets/images/bg_heart.svg";
 import CallEnd from "../../Assets/images/call_action_end.png";
 import CallNext from "../../Assets/images/call_action_next.png";
 import CallPrev from "../../Assets/images/call_action_prev.png";
-import CallEndIcon from "@mui/icons-material/CallEnd";
-import { useState } from "react";
-import { useEffect } from "react";
-import { get } from "../../Services/api";
-import MainScreenSlider from "../../Components/Home/MainScreenSlider";
+import flameLogo from "../../Assets/images/flame logo.svg";
+import logoutIcon from "../../Assets/images/logout.png";
+import ProfileImage from "../../Assets/images/male.jpg";
+import profile from "../../Assets/images/profile.png";
 import ChatBox from "../../Components/Home/ChatBox";
 import ChatHistory from "../../Components/Home/ChatHistory";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../Services/store/authSlice";
-import WorningDilog from "../../Components/Home/WorningDialog";
-import CallService from "../../Services/voximplant/call";
 import IncomingCallDialog from "../../Components/Home/IncomingCallDialog";
-import bgBlock from "../../Assets/images/bg_block.svg";
-import bgHeart from "../../Assets/images/bg_heart.svg";
-import flameLogo from "../../Assets/images/flame logo.svg";
-
+import MainScreenSlider from "../../Components/Home/MainScreenSlider";
+import WorningDilog from "../../Components/Home/WorningDialog";
+import { get } from "../../Services/api";
+import { getAllUsers } from "../../Services/store/authSlice";
+import CallService from "../../Services/voximplant/call";
+const buttonLabels = ["Button 1", "Button up nn", "Button 3", "Button 4"];
 const index = () => {
   const { role, allUsers = [], userData } = useSelector((state) => state.auth);
   const [modelData, setModelData] = useState(null);
@@ -150,13 +156,18 @@ const index = () => {
 
   return (
     <>
-    {/* <img src={flameLogo} className={classes.logo} /> */}
-      {/* <img src={bgHeart} className={classes.heart_bg} /> */}
-      {/* <img src={bgBlock} className={classes.block_bg} /> */}
+      {/* <img src={flameLogo} className={classes.logo} /> */}
+      <img src={bgHeart} className={classes.heart_bg} />
+      <img src={bgBlock} className={classes.block_bg} />
+
       <Header />
-      <Container className={classes.container}>
+      <Box className={classes.container}>
         <Paper className={classes.box_left}>
-          <Typography variant="body1" component="div" className={classes.heading}>
+          <Typography
+            variant="body1"
+            component="div"
+            className={classes.heading}
+          >
             History
           </Typography>
           <Box className={classes.box_leftInner}>
@@ -166,10 +177,9 @@ const index = () => {
             />
           </Box>
         </Paper>
-        {/* <Container className={classes.box_mid}>
+        <Container className={classes.box_mid}>
           {currentCall ? (
             <Container className={classes.call_window}>
-              
               <video id="remoteVideo" autoPlay></video>
               <Container className={classes.call_footer}>
                 <Box className={classes.call_action_container}>
@@ -214,8 +224,8 @@ const index = () => {
               )}
             </>
           )}
-        </Container> */}
-        <Container className={classes.box_right}>
+        </Container>
+        <Paper className={classes.box_left}>
           <Box className={classes.avatar_box_profile}>
             <Container
               sx={{
@@ -228,43 +238,52 @@ const index = () => {
               className={classes.single_image_profile}
             ></Container>
             <Typography variant="h6" className={classes.profile_answer_name}>
-              {modelData?.metaData?.displayName || ""}
+              {modelData?.metaData?.displayName || "Nimra Rehman"}
             </Typography>
+            <Typography variant="h6" className={classes.profile_question_text}>
+              city
+            </Typography>
+
+            <Typography variant="h6" className={classes.profile_answer_name}>
+              About me
+            </Typography>
+
+            <Typography variant="h6" className={classes.profile_question_text}>
+              What do I like to do outside work. How old am I. What do I do What
+              What do I dislike in a partner. do I like in a partner
+            </Typography>
+            <Typography variant="h6" className={classes.profile_answer}>
+              Things I Love
+            </Typography>
+            <Box className={classes.btnContainer}>
+              {buttonLabels.map((label, index) => (
+                <Button
+                  key={index}
+                  variant="contained"
+                  className={classes.btn_love}
+                >
+                  {label}
+                </Button>
+              ))}
+            </Box>
+            <Typography variant="h6" className={classes.profile_answer}>
+              Things I Hate
+            </Typography>
+            <Box className={classes.btnContainer}>
+              {buttonLabels.map((label, index) => (
+                <Button
+                  key={index}
+                  variant="contained"
+                  className={classes.btn_hate}
+                >
+                  {label}
+                </Button>
+              ))}
+            </Box>
           </Box>
-          <Container className={classes.profile_detail}>
-            <Typography variant="h6" className={classes.profile_question_text}>
-              How old am I?
-            </Typography>
-            <Typography variant="h6" className={classes.profile_answer_text}>
-              {modelData?.metaData?.age || ""}
-            </Typography>
-            <Typography variant="h6" className={classes.profile_question_text}>
-              What do I do?
-            </Typography>
-            <Typography variant="h6" className={classes.profile_answer_text}>
-              {modelData?.metaData?.profession || ""}
-            </Typography>
-            <Typography variant="h6" className={classes.profile_question_text}>
-              What do I like to do outside work?
-            </Typography>
-            <Typography variant="h6" className={classes.profile_answer_text}>
-              {modelData?.metaData?.outsideWork || ""}
-            </Typography>
-            <Typography variant="h6" className={classes.profile_question_text}>
-              What do I like in a partner?
-            </Typography>
-            <Typography variant="h6" className={classes.profile_answer_text}>
-              {modelData?.metaData?.like || ""}
-            </Typography>
-            <Typography variant="h6" className={classes.profile_question_text}>
-              What do I dislike in a partner?
-            </Typography>
-            <Typography variant="h6" className={classes.profile_answer_text}>
-              {modelData?.metaData?.dislike || ""}
-            </Typography>
-          </Container>
-        </Container>
-      </Container>
+        </Paper>
+      </Box>
+
       <ChatBox
         setDialog={setDialog}
         showChatBox={showChatBox}

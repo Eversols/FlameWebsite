@@ -1,5 +1,3 @@
-import React from "react";
-import useStyles from "./style";
 import {
   Avatar,
   Badge,
@@ -10,17 +8,19 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ChatIcon from "../../Assets/images/chat_icon.png";
-import profile from "../../Assets/images/profile.png";
+import flameLogo from "../../Assets/images/flame logo.svg";
 import power from "../../Assets/images/logout.png";
+import logoutLogo from "../../Assets/images/logout.svg";
+import profile from "../../Assets/images/profile.png";
 import VideoCallIcon from "../../Assets/images/video_call.png";
 import { post } from "../../Services/api";
-import { useSelector } from "react-redux";
 import { persistor } from "../../Services/store";
 import { voxService } from "../../Services/voximplant";
-import flameLogo from "../../Assets/images/flame logo.svg";
-import logoutLogo from "../../Assets/images/logout.svg";
+import useStyles from "./style";
 
 const Header = () => {
   const { role, userData } = useSelector((state) => state.auth);
@@ -97,12 +97,12 @@ const Header = () => {
         </Box>
       </Box>
       <Box className={classes.header_mid}>
-      <Box mr={2} display="flex" justifyContent="center" alignItems="center">
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        <Typography variant="body1" component="span" ml={1}>
-          My Account
-        </Typography>
-      </Box>
+        <Box mr={2} display="flex" justifyContent="center" alignItems="center">
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Typography variant="body1" component="span" ml={1}>
+            My Account
+          </Typography>
+        </Box>
         <IconButton onClick={logout}>
           <img src={logoutLogo} className={classes.logout} />
           <Typography variant="body1" component="span" ml={1}>

@@ -72,7 +72,11 @@ table {
   border-spacing: 0;
 }
 
-#remoteVideo{
+#remoteVideo {
   width: 100%;
-  height: 100%
+  height: 100%;
+}
+
+.swiper {
+  max-height: 545px !important;
 }

@@ -14,7 +14,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "row",
     padding: "0px 92px",
+    zIndex: 2,
   },
+
   logo: {
     width: "152px",
     maxWidth: "150px",
@@ -97,30 +99,42 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-around",
     "& .swiper-button-prev": {
-      background: theme.palette.secondary.main,
-      padding: "2rem",
+      background: "transparent",
+      padding: "1rem 1.2rem",
       borderRadius: "50%",
       fontSize: "14px",
-      color: "#fff",
+      left: "auto", // Remove the left property
+      right: "15%", // Add this property to move to the right side
+      bottom: "40%",
+      top: "auto",
+      border: "2px solid #3A41594D",
+      color: "#3A4159",
       "&:hover": {
-        background: theme.palette.secondary.light,
+        background: "transparent",
       },
     },
     "& .swiper-button-next": {
-      background: theme.palette.secondary.main,
-      padding: "2rem",
+      background: "transparent",
+      padding: "1rem 1.2rem",
       borderRadius: "50%",
       fontSize: "14px",
-      color: "#fff",
+      left: "auto", // Remove the left property
+      right: "5%", // Add this property to move to the right side
+      bottom: "40%",
+      top: "auto",
+      border: "2px solid #3A41594D",
+      color: "#3A4159",
       "&:hover": {
-        background: theme.palette.secondary.light,
+        background: "transparent",
       },
     },
     "& .swiper-button-prev:after": {
-      fontSize: "2rem",
+      fontSize: "1rem",
+      color: "#3A4159",
     },
     "& .swiper-button-next:after": {
-      fontSize: "2rem",
+      fontSize: "1rem",
+      color: "#3A4159",
     },
   },
   img: {
@@ -131,7 +145,7 @@ const useStyles = makeStyles((theme) => ({
   buttons: {
     width: "100%",
     position: "absolute",
-    bottom: 20,
+    bottom: "25%",
     left: 0,
     zIndex: 1,
     display: "flex",
@@ -156,10 +170,10 @@ const useStyles = makeStyles((theme) => ({
   },
   messageBtn: {
     padding: 12,
-    background: theme.palette.secondary.main,
+    background: "#ffff",
     color: "white",
     "&:hover": {
-      background: theme.palette.secondary.light,
+      background: "#FFFF",
     },
   },
   paper: {
@@ -225,7 +239,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   single_image: {
-    width: "40px",
+    width: "60px",
     height: "40px",
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: "200px",
@@ -297,7 +311,9 @@ const useStyles = makeStyles((theme) => ({
   avatar_box: {
     display: "flex",
     alignItems: "start",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    gap: "10px",
+    width: "100%",
   },
   history_name: {
     color: "black",
@@ -311,25 +327,35 @@ const useStyles = makeStyles((theme) => ({
   history_actions: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
-    marginTop: '2px'
+    gap: "7px",
+    width: "100%",
+    maxWidth: "120px",
+    marginTop: "2px",
   },
-  history_actions_btn:{
-    width: '24px',
-    height: '24px',
+  history_actions_btn: {
+    width: "24px",
+    height: "24px",
     backgroundColor: "#F0F0F0",
     // padding: "4px",
     borderRadius: "50%",
-    textAlign: 'center',
-    marginRight: "3px"
+    textAlign: "center",
+    marginRight: "3px",
   },
   history_actions_icons: {
     width: "12px",
     height: "12px",
     // marginLeft: theme.spacing(1),
   },
+
+  history_actions_icon: {
+    width: "25px",
+    height: "25px",
+    // marginLeft: theme.spacing(1),
+  },
+
   single_user_history_text: {
     marginLeft: theme.spacing(1),
+    width: "100%",
   },
   root: {
     "& .MuiPaper-root": {
