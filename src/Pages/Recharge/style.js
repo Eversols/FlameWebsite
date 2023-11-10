@@ -2,22 +2,25 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: "50%",
-    height: "80%",
+    width: "100%",
+    height: "100%",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
-    border: "1px solid white",
+
     animation: `$popup 500ms ${theme.transitions.easing.easeInOut}`,
   },
   customTab: {
-    minWidth: "50%", // Set the desired width here
-    // Add any other custom styles you want here
-    "& .Mui-selected": {
-      border: "3px solid red",
-    },
+    // minWidth: "50%", // Set the desired width here
+    // // Add any other custom styles you want here
+    // color: "green",
+    // "& .Mui-selected": {
+    //   border: "3px solid red",
+    //   color: "red",
+    // },
   },
   CustomTabPanel: {
-    padding: "12px",
+    padding: "2px",
+    margin: "10px",
   },
   "@keyframes popup": {
     "0%": {
@@ -29,6 +32,28 @@ const useStyles = makeStyles((theme) => ({
 
     "100%": {
       transform: "scale(1)",
+    },
+  },
+
+  btn: {
+    width: "100%",
+    maxWidth: "250px",
+    height: "40px",
+    marginTop: "10px",
+    backgroundColor: " #FB1F43",
+    color: "#ffffff",
+    borderRadius: "10px",
+    marginBottom: "10px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "20px",
+    },
+    "&:hover": {
+      backgroundColor: "#dc697c",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "14px",
+      marginTop: theme.spacing(5),
+      marginBottom: theme.spacing(5),
     },
   },
 }));

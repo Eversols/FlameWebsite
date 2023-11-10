@@ -1,25 +1,45 @@
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
-
   cardContainer: {
-    minWidth: "200px",
-    backgroundColor: "rgba(255,255,255,0.3)",
-    borderRadius: "15px",
-    border: "1px solid white",
-    marginLeft: 26,
-    marginRight: 12,
-    marginTop: 32,
+    minWidth: "140px",
+    padding: "16px",
+    borderRadius: "8px",
+    width: "100%",
+    maxWidth: "180px",
+    background: (arg) => (arg ? "#ECECFF" : "#ffff"),
+    border: (arg) => (arg ? "2px solid #FB1F43" : "1px solid #87A2F7"),
   },
+
   cardTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: "12px",
+    fontWeight: 400,
+    color: "#0A0E1A",
   },
+
+  cardTitle2: {
+    fontSize: "12px",
+    fontWeight: 400,
+
+    color: "#868AA9",
+    marginBottom: "20px",
+  },
+
   cardDesc: {
-    marginTop: 32,
-    fontSize: 22,
-    fontWeight: "bolder",
+    fontSize: "28px",
+    fontWeight: 700,
   },
+
+  cardText: {
+    fontSize: "12px",
+    fontWeight: 700,
+    color: " #868AA9",
+  },
+
+  circleImage: {
+    maxWidth: "20px",
+  },
+
   cardBtn: {
     marginTop: 0,
     fontSize: 16,
