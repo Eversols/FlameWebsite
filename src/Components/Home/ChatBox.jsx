@@ -1,11 +1,23 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import { Send } from "@mui/icons-material";
-import { Box, Container, IconButton, Paper, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Box,
+  Container,
+  IconButton,
+  InputAdornment,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ChatIcon from "../../Assets/images/chatIcon.svg";
+import ChatBoxIcon from "../../Assets/images/chatboxIcon.svg";
 import ProfileImage from "../../Assets/images/male.jpg";
+import CallIcon from "../../Assets/images/sayhi.svg";
+import VideoCallIcon from "../../Assets/images/video.svg";
 import { post } from "../../Services/api";
 import { setMessages } from "../../Services/store/authSlice";
 import MessengerService from "../../Services/voximplant/messenger";
@@ -81,6 +93,84 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
 
       {showChatBox && (
         <Paper elevation={3} className={classes.paper}>
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: "90%",
+              display: "flex",
+              marginTop: "10px",
+            }}
+          >
+            <Box
+              className={classes.single_chat_image}
+              style={{
+                backgroundImage: `url(${ProfileImage})`,
+              }}
+            ></Box>
+
+            <Box className={classes.single_user_chat_text}>
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  justifyContent: "flex-start",
+                }}
+              >
+                <Typography variant="h5" className={classes.history_name}>
+                  hhh
+                </Typography>
+                <Box display="flex" justifyContent="start" alignItems="center">
+                  <Box className={classes.online_indicator} />
+
+                  <Typography
+                    variant="body1"
+                    component="span"
+                    ml={1}
+                    sx={{ fontSize: "14px" }}
+                  >
+                    Online
+                  </Typography>
+                  {/* <Box className={classes.offline_indicator} /> */}
+                </Box>
+              </Box>
+              <Box className={classes.chat_actions}>
+                <IconButton
+                  sx={{ margin: 0, padding: 0 }}
+                  size="small"
+                  // onClick={() => call(users.userId, true)}
+                  className={classes.history_actions_btn}
+                >
+                  <img
+                    src={VideoCallIcon}
+                    className={classes.history_actions_icons}
+                  />
+                </IconButton>
+
+                <IconButton
+                  sx={{ margin: 0, padding: 0 }}
+                  size="small"
+                  // onClick={() => call(users.userId, false)}
+                  className={classes.history_actions_btn}
+                >
+                  <img
+                    src={CallIcon}
+                    className={classes.history_actions_icons}
+                  />
+                </IconButton>
+                <IconButton
+                  sx={{ margin: 0, padding: 0 }}
+                  size="small"
+                  // onClick={() => call(users.userId, true)}
+                  className={classes.history_actions_btn}
+                >
+                  <CloseIcon sx={{ fill: "#AAAAAA", width: "16px" }} />
+                </IconButton>
+              </Box>
+            </Box>
+          </Box>
+
           <Container className={classes.msg_window}>
             <Box className={classes.incoming_container}>
               {conversation.length > 0 ? (
@@ -134,10 +224,12 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
               <div ref={messagesEndRef} />
             </Box>
             <Box className={classes.outgoing_msg}>
-              <input
+              <TextField
+                name="chat"
                 value={inputMessage}
                 type="text"
                 placeholder="Type a message..."
+                className={classes.input1}
                 onChange={handleInputMessage}
                 onKeyUp={(event) => {
                   if (event.keyCode === 13) {
@@ -145,14 +237,26 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
                     sendMessage();
                   }
                 }}
-                className={classes.outgoing_text_box}
+                fullWidth
+                // onChange={(e) => handlevalueChange(e, "password")}
+                inputProps={{
+                  "data-cy": "password-Employeecredential", // Cypress ID assigned to the search input element
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        data-cy="password-credential"
+                        aria-label="toggle password visibility"
+                        onClick={sendMessage}
+                        edge="end"
+                      >
+                        <img src={ChatBoxIcon} className={classes.heart_bg} />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
-              <IconButton
-                className={classes.single_image}
-                onClick={sendMessage}
-              >
-                <Send />
-              </IconButton>
             </Box>
           </Container>
         </Paper>

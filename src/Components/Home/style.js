@@ -176,26 +176,62 @@ const useStyles = makeStyles((theme) => ({
       background: "#FFFF",
     },
   },
+
+  input1: {
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+
+      "&:hover fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+      "&.Mui-focused fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+        outline: "none",
+      },
+      "&.Mui-disabled fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+
+      border: "none",
+      borderRadius: "10px",
+      backgroundColor:
+        "linear-gradient(0deg, #D8DADC, #D8DADC), linear-gradient(0deg, #FFFFFF, #FFFFFF)",
+      color: "#00000080",
+      width: "100%",
+      height: "45px",
+      "& .MuiOutlinedInput-input": {
+        padding: "18px 16px 18px 16px",
+        "&::placeholder": {
+          color: "#00000080",
+        },
+      },
+    },
+  },
   paper: {
-    maxWidth: 400,
-    maxHeight: 400,
-    height: 320,
-    bottom: 2,
-    right: 72,
+    maxWidth: 430,
+    width: "100%",
+    height: "75vh",
+    bottom: "5%",
+    right: "10%",
     overflow: "hidden",
     position: "fixed",
-    backgroundImage: `url(${BackgroundGradient})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    background: "#ffff",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     fontFamily: "Montserrat, sans-serif",
     zIndex: 1,
+    borderRadius: "24px",
   },
   msg_window: {
-    width: "108%",
+    width: "100%",
     height: "100%",
     borderRadius: "15px",
     display: "flex",
@@ -250,6 +286,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
+
+  single_chat_image: {
+    width: "40px",
+    height: "35px",
+    backgroundColor: "rgba(255,255,255,0.4)",
+    borderRadius: "10px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+
   outgo_text_box: {
     width: "70%",
     height: "100%",
@@ -280,11 +330,13 @@ const useStyles = makeStyles((theme) => ({
   },
   outgoing_msg: {
     width: "100%",
+    maxWidth: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "end",
     marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3),
   },
   outgoing_text_box: {
     color: "black",
@@ -332,6 +384,16 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "120px",
     marginTop: "2px",
   },
+
+  chat_actions: {
+    display: "flex",
+    alignItems: "center",
+    gap: "7px",
+    width: "100%",
+    maxWidth: "93px",
+    marginTop: "2px",
+  },
+
   history_actions_btn: {
     width: "24px",
     height: "24px",
@@ -357,6 +419,13 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     width: "100%",
   },
+  single_user_chat_text: {
+    marginLeft: theme.spacing(1),
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+  },
+
   root: {
     "& .MuiPaper-root": {
       backgroundImage: `url(${BackgroundGradient})`,
