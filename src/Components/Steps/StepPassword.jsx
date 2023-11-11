@@ -27,7 +27,9 @@ import useStyles from "./style";
 
 const StepPassword = () => {
   const [password, setPassword] = useState("");
+  const [cPassword, setCPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
   const { error, user, role, mood, region, userData } = useSelector(
     (state) => state.auth
   );
@@ -35,6 +37,10 @@ const StepPassword = () => {
   const navigate = useNavigate();
   const classes = useStyles();
   const confirmSubmit = async (e) => {
+    if (password !== cPassword) {
+      dispatch(setError("Confirm password not match!"));
+      return;
+    }
     if (password) {
       try {
         let res;
@@ -134,12 +140,11 @@ const StepPassword = () => {
               <TextField
                 name="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="password"
+                placeholder="Password"
                 className={classes.input1}
                 value={password}
                 fullWidth
                 onChange={(e) => {
-                  console.log("hh");
                   setPassword(e.target.value);
                   dispatch(setError(""));
                 }}
@@ -152,7 +157,7 @@ const StepPassword = () => {
                       <IconButton
                         data-cy="password-credential"
                         aria-label="toggle password visibility"
-                        // onClick={handleClickShowPassword}
+                        onClick={() => setShowPassword((prev) => !prev)}
                         // onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
@@ -170,16 +175,16 @@ const StepPassword = () => {
                   ),
                 }}
               />
-              {error && <p className={classes.error}>{error}</p>}
+              {/* {error && <p className={classes.error}>{error}</p>} */}
               <TextField
                 name="cPassword"
                 // type={showPassword ? "text" : "password"}
                 // value={password}
                 type="text"
-                placeholder="Confirm password"
+                placeholder="Confirm Password"
                 className={classes.input1}
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  setCPassword(e.target.value);
                   dispatch(setError(""));
                 }}
                 fullWidth
@@ -193,11 +198,11 @@ const StepPassword = () => {
                       <IconButton
                         data-cy="password-credential"
                         aria-label="toggle password visibility"
-                        // onClick={handleClickShowPassword}
+                        onClick={() => setShowCPassword((prev) => !prev)}
                         // onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showPassword ? (
+                        {showCPassword ? (
                           <RemoveRedEyeOutlinedIcon
                             sx={{ fill: "#00000099", fontSize: "18px" }}
                           />
@@ -211,8 +216,8 @@ const StepPassword = () => {
                   ),
                 }}
               />
-              {error && <p className={classes.error}>{error}</p>}
             </Box>
+            {error && <p className={classes.error}>{error}</p>}
             <Button
               type="button"
               onClick={confirmSubmit}

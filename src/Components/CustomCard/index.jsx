@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Paper, Typography } from "@mui/material";
 import React from "react";
 import casual from "../../Assets/images/casual.svg";
 import love from "../../Assets/images/love.svg";
@@ -19,7 +19,8 @@ const index = ({
 }) => {
   const classes = useStyles();
   return (
-    <Container
+    <Paper
+      elevation={8}
       key={index}
       className={selected === id ? classes.selected : classes.unselected}
       onClick={() => setSelected(id)}
@@ -35,15 +36,10 @@ const index = ({
         }}
       >
         <Box className={classes.text}>
-          <Typography className={classes.text1}>
-            hhh
-            {/* {text} */}
-          </Typography>
+          <Typography className={classes.text1}>{text}</Typography>
         </Box>{" "}
         <Box className={classes.text}>
-          <Typography className={classes.text2}>
-            {/* {description}   */}KKKK
-          </Typography>
+          <Typography className={classes.text2}>{description}</Typography>
         </Box>
       </Box>
       <Box className={classes.divider}></Box>
@@ -52,7 +48,7 @@ const index = ({
       {/* {description}   */}
       {/* </Typography>
         )} */}
-    </Container>
+    </Paper>
   );
 };
 

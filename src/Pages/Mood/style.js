@@ -51,8 +51,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "10px",
     display: "flex",
-    margin: "20px  0px",
-    gap: "10px",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "18px",
     [theme.breakpoints.down("md")]: {
       flexWrap: "wrap",
     },

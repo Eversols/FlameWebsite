@@ -27,7 +27,9 @@ const index = ({
       className={selected === id ? classes.selected : classes.unselected}
       onClick={() => setSelected(id)}
     >
-      <img src={img[id]} className={classes.img} />
+      <Box className={classes.imgbox}>
+        <img src={img[id]} className={classes.img} />
+      </Box>
       <Box className={classes.divider}></Box>
       <Box
         sx={{
@@ -41,8 +43,10 @@ const index = ({
           <Typography className={classes.text1}>{name[id]}</Typography>
         </Box>{" "}
         <Box className={classes.name}>
+          {selected === id ? 
           <img src={checkradio} className={classes.checkbox} />
-          <img src={uncheckradio} className={classes.uncheckbox} />
+          :
+          <img src={uncheckradio} className={classes.uncheckbox} />}
         </Box>
       </Box>
       <Box className={classes.divider}></Box>

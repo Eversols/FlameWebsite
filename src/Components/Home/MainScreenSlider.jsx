@@ -78,7 +78,6 @@ const MainScreenSlider = ({
               className={classes.img}
             />
           )}
-          {console.log("FFFFFFFFFFFFFF", item)}
           <Box className={classes.buttons}>
             <IconButton
               className={classes.messageBtn}

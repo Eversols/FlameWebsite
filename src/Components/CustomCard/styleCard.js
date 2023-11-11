@@ -4,8 +4,10 @@ import BackgroundGradient from "../../Assets/images/background_gradient.png";
 const useStyles = makeStyles((theme) => ({
   selected: {
     width: "100%",
-    maxWidth: "260px",
-    background: "#ffff",
+    maxWidth: "257px",
+    height: "100%",
+    maxHeight: "367px",
+    background: "transparent",
     borderRadius: "15px",
     display: "flex",
     transition: "0.3s ease",
@@ -15,14 +17,20 @@ const useStyles = makeStyles((theme) => ({
   },
   unselected: {
     width: "100%",
-    maxWidth: "260px",
-    background: "#ffff",
+    maxWidth: "257px",
+    height: "100%",
+    maxHeight: "367px",
+    background: "transparent",
     borderRadius: "15px",
     display: "flex",
     transition: "0.3s ease",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
+  },
+  imgbox:{
+    background: "#FB1F43",
+    borderRadius: "12px"
   },
   img: {
     maxWidth: "160px",

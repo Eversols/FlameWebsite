@@ -3,8 +3,10 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   selected: {
     width: "100%",
-    maxWidth: "310px",
-    // backgroundColor: "rgba(255,255,255,0.9)",
+    maxWidth: "397px",
+    height: "100%",
+    maxHeight: "436px",
+    backgroundColor: "#FB1F43",
     background: "#ffff",
     borderRadius: "15px",
     display: "flex",
@@ -12,10 +14,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
+    padding: "48px 24px"
   },
   unselected: {
     width: "100%",
-    maxWidth: "310px",
+    maxWidth: "397px",
+    height: "100%",
+    maxHeight: "436px",
     background: "#ffff",
     borderRadius: "15px",
     display: "flex",
@@ -23,22 +28,23 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
+    padding: "48px 24px",
   },
   img: {
-    maxWidth: "250px",
+    width: '100%',
     [theme.breakpoints.down("sm")]: {
       maxWidth: "200px",
     },
   },
   text1: {
     fontFamily: "Montserrat, sans-serif",
-    fontSize: "20px",
+    fontSize: "24px",
     fontWeight: 700,
     color: "#000000",
   },
   text2: {
     fontFamily: "Montserrat, sans-serif",
-    fontSize: "10px",
+    fontSize: "16px",
     fontWeight: 400,
     color: "#000000",
   },

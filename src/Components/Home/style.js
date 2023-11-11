@@ -89,8 +89,10 @@ const useStyles = makeStyles((theme) => ({
   },
   window: {
     width: "100%",
+    maxWidth: "509px",
     border: "1px solid white",
     height: "100%",
+    maxHeight: '601px',
     position: "relative",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
