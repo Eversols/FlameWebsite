@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "14px",
       left: "auto", // Remove the left property
       right: "15%", // Add this property to move to the right side
-      bottom: "40%",
+      bottom: "8%",
       top: "auto",
       border: "2px solid #3A41594D",
       color: "#3A4159",
@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "14px",
       left: "auto", // Remove the left property
       right: "5%", // Add this property to move to the right side
-      bottom: "40%",
+      bottom: "8%",
       top: "auto",
       border: "2px solid #3A41594D",
       color: "#3A4159",
@@ -139,15 +139,21 @@ const useStyles = makeStyles((theme) => ({
       color: "#3A4159",
     },
   },
+  slide: {
+    "&.swiper-slide.swiper-slide-active":{
+      height: "542px",
+      maxHeight: '601px',
+    }
+  },
   img: {
     width: "100%",
-    height: "100%",
+    height: "inherit",
     borderRadius: "15px",
   },
   buttons: {
     width: "100%",
     position: "absolute",
-    bottom: "25%",
+    bottom: "18%  ",
     left: 0,
     zIndex: 1,
     display: "flex",

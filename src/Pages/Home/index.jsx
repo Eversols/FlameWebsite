@@ -37,7 +37,8 @@ import WorningDilog from "../../Components/Home/WorningDialog";
 import { get } from "../../Services/api";
 import { getAllUsers } from "../../Services/store/authSlice";
 import CallService from "../../Services/voximplant/call";
-const buttonLabels = ["Button 1", "Button up nn", "Button 3", "Button 4"];
+const loveLabels = ["Sport", "food", "fashion"];
+const hateLabels = ["Make up", "books", "tv"];
 const index = () => {
   const { role, allUsers = [], userData } = useSelector((state) => state.auth);
   const [modelData, setModelData] = useState(null);
@@ -256,7 +257,7 @@ const index = () => {
               Things I Love
             </Typography>
             <Box className={classes.btnContainer}>
-              {buttonLabels.map((label, index) => (
+              {loveLabels.map((label, index) => (
                 <Button
                   key={index}
                   variant="contained"
@@ -270,7 +271,7 @@ const index = () => {
               Things I Hate
             </Typography>
             <Box className={classes.btnContainer}>
-              {buttonLabels.map((label, index) => (
+              {hateLabels.map((label, index) => (
                 <Button
                   key={index}
                   variant="contained"

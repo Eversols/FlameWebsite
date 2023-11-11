@@ -71,7 +71,7 @@ const MainScreenSlider = ({
       onSlideChange={handleSlideChange}
     >
       {models.map((item, i) => (
-        <SwiperSlide key={i}>
+        <SwiperSlide key={i} className={classes.slide}>
           {item?.userData?.profileImage && (
             <img
               src={`https://flame.bilalrugs.pk/livebk/public/uploads/${item.userData.profileImage}`}

@@ -95,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
 
   avatar_box_profile: {
     marginBottom: theme.spacing(1),
-    marginTop: theme.spacing(3),
   },
   single_image_profile: {
     width: "100px",
