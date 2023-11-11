@@ -3,10 +3,10 @@ import { Box, Button, Grid, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import CustomCard from "../../Components/Recharge/CustomCard";
-import CustomTabPanel from "../../Components/Recharge/CustomTabPanel";
+import CustomCard from "./CustomCard";
+import CustomTabPanel from "./CustomTabPanel";
 import { get } from "../../Services/api";
-import useStyles from "./style";
+import useStyles from "../../Pages/Recharge/style";
 
 function a11yProps(index) {
   return {

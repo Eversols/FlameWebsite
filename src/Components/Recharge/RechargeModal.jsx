@@ -4,6 +4,8 @@ import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import RechargeTabs from "./RechargeTabs";
+import { useDispatch, useSelector } from "react-redux";
+import { setRechargeModel } from "../../Services/store/authSlice";
 
 // ---------Component style------------
 
@@ -17,16 +19,18 @@ const mainContainer = {
 };
 
 const RechargeModal = () => {
+  const {rechargeModel}= useSelector((state)=> state.auth)
   const theme = useTheme();
+  const dispatch = useDispatch()
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleClose = (e) => {};
+  const handleClose = (e) => dispatch(setRechargeModel(!rechargeModel));
 
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={false}
+      open={rechargeModel}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{

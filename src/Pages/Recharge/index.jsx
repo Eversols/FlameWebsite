@@ -1,5 +1,5 @@
 import React from "react";
-import RechargeModal from "./RechargeModal";
+import RechargeModal from "../../Components/Recharge/RechargeModal";
 
 const index = () => {
   return (

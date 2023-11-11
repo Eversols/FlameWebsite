@@ -37,10 +37,11 @@ import WorningDilog from "../../Components/Home/WorningDialog";
 import { get } from "../../Services/api";
 import { getAllUsers } from "../../Services/store/authSlice";
 import CallService from "../../Services/voximplant/call";
+import RechargeModal from "../../Components/Recharge/RechargeModal";
 const loveLabels = ["Sport", "food", "fashion"];
 const hateLabels = ["Make up", "books", "tv"];
 const index = () => {
-  const { role, allUsers = [], userData } = useSelector((state) => state.auth);
+  const { role, allUsers = [], userData, rechargeModel } = useSelector((state) => state.auth);
   const [modelData, setModelData] = useState(null);
   const [models, setModels] = useState([]);
   const [dialog, setDialog] = useState(false);
@@ -301,6 +302,7 @@ const index = () => {
           onReject={handleRejectCall}
         />
       )}
+        <RechargeModal />
     </>
   );
 };

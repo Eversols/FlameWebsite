@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ChatIcon from "../../Assets/images/chat_icon.png";
 import flameLogo from "../../Assets/images/flame logo.svg";
@@ -21,11 +21,13 @@ import { post } from "../../Services/api";
 import { persistor } from "../../Services/store";
 import { voxService } from "../../Services/voximplant";
 import useStyles from "./style";
+import { setRechargeModel } from "../../Services/store/authSlice";
 
 const Header = () => {
-  const { role, userData } = useSelector((state) => state.auth);
+  const { role, userData,rechargeModel } = useSelector((state) => state.auth);
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const logout = async () => {
     try {
@@ -37,6 +39,9 @@ const Header = () => {
       console.log(error);
     }
   };
+  const recharge = ()=>{
+    dispatch(setRechargeModel(!rechargeModel))
+  }
   return (
     <Paper elevation={1} className={classes.header}>
       <Box width={100}>
@@ -47,7 +52,7 @@ const Header = () => {
           className={classes.recharge_btn}
           type="button"
           variant="contained"
-          onClick={() => navigate(`/${role}/recharge`)}
+          onClick={recharge}
         >
           Recharge
         </Button>

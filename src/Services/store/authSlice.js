@@ -30,6 +30,7 @@ export const authSlice = createSlice({
     region: "",
     isLoading: false,
     error: "",
+    rechargeModel: false,
   },
   reducers: {
     setError: (state, { payload }) => {
@@ -61,6 +62,9 @@ export const authSlice = createSlice({
     userData: (state, { payload }) => {
       state.userData = payload;
       state.role = payload?.role;
+    },
+    setRechargeModel: (state, {payload})=>{
+      state.rechargeModel = payload
     },
     setMessages: (state, { payload }) => {
       state.userData.messages = payload;
@@ -118,7 +122,8 @@ export const {
   setToken,
   setMood,
   setRegion,
-  setMessages
+  setMessages,
+  setRechargeModel
 } = authSlice.actions;
 
 export default authSlice.reducer;
