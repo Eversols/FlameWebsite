@@ -12,6 +12,8 @@ const UserLandingPage = lazy(() =>
 const Authenticate = lazy(() => import("./Pages/Authenticate"));
 const Mood = lazy(() => import("./Pages/Mood"));
 const Region = lazy(() => import("./Pages/Region"));
+const Orientation = lazy(() => import("./Pages/Orientation"));
+const Gender = lazy(() => import("./Pages/Gender"));
 const Home = lazy(() => import("./Pages/Home"));
 const Profile = lazy(() => import("./Pages/Profile"));
 const Recharge = lazy(() => import("./Pages/Recharge"));
@@ -27,6 +29,8 @@ function App() {
         <Route path="authentication" element={<Authenticate />} />
         <Route path="mood" element={<Mood />} />
         <Route path="region" element={<Region />} />
+        <Route path="orientation" element={<Orientation />} />
+        <Route path="gender" element={<Gender />} />
         <Route path="home" element={<Home />} />
         <Route path="profile/:id" element={<Profile />} />
         <Route path="profile" element={<Profile />} />
