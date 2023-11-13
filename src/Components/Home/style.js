@@ -4,7 +4,8 @@ import BackgroundGradient from "../../Assets/images/background_gradient.png";
 const useStyles = makeStyles((theme) => ({
   header: {
     width: "100%",
-    height: "12%",
+    height: "100%",
+    maxWidth: "1300px",
     borderRadius: "0px 0px 0px 0px",
     position: "absolute",
     backgroundColor: "white",
@@ -13,14 +14,66 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    padding: "0px 92px",
+    // padding: "0px 92px",
+    zIndex: 2,
+    [theme.breakpoints.down("lg")]: {
+      padding: "0 6px", // Set padding to 0 when screen width is below 1200px
+    },
+  },
+
+  headermain: {
+    width: "100%",
+    height: "12%",
+    borderRadius: "0px 0px 0px 0px",
+    position: "absolute",
+    backgroundColor: "white",
+    top: "0",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    // padding: "0px 92px",
     zIndex: 2,
   },
 
-  logo: {
-    width: "152px",
-    maxWidth: "150px",
+  marginHandler: {
+    marginLeft: "16px",
+    marginRight: "16px",
+    [theme.breakpoints.down("lg")]: {
+      marginLeft: "8px",
+      marginRight: "8px", // Set padding to 0 when screen width is below 1200px
+    },
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "4px",
+      marginRight: "4px", // Set padding to 0 when screen width is below 1200px
+    },
   },
+
+  fontadjust: {
+    fontSize: "16px",
+
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "14px",
+    },
+  },
+
+  logo: {
+    width: "100%",
+    maxWidth: "150px",
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "125px", // Set padding to 0 when screen width is below 1200px
+    },
+  },
+
+  drawer_logo: {
+    width: "100%",
+    display: "none",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "125px",
+
+      display: "flex",
+    },
+  },
+
   logout: {
     width: "17px",
     maxWidth: "150px",
@@ -49,12 +102,22 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "start",
     alignItems: "center",
     flexDirection: "row",
+    boxSshadow:
+      "0px 4px 6px -1px rgba(0, 0, 0, 0.2), 0px 2px 4px 0px rgba(0, 0, 0, 0.14), 0px 4px 6px -1px rgba(0, 0, 0, 0.12)",
+
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   recharge_btn: {
     backgroundColor: "#FB1F43",
     color: "#ffffff",
     borderRadius: "24px",
-    padding: "8px, 20px, 8px, 20px",
+    padding: "6px 14px 6px 14px",
+    textTransform: "capitalize",
+    [theme.breakpoints.down("md")]: {
+      padding: "4px 12px",
+    },
     "&:hover": {
       backgroundColor: "#dc697c",
     },
@@ -66,7 +129,11 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "24px",
     border: "1px solid #868AA9",
     borderRadius: "24px",
-    padding: "8px, 20px, 8px, 20px",
+    padding: "6px 14px 6px 14px",
+    textTransform: "capitalize",
+    [theme.breakpoints.down("md")]: {
+      padding: "4px 12px",
+    },
     "&:hover": {
       backgroundColor: "#dc697c",
     },
@@ -92,7 +159,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "509px",
     border: "1px solid white",
     height: "100%",
-    maxHeight: '601px',
+    maxHeight: "601px",
     position: "relative",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
@@ -140,10 +207,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   slide: {
-    "&.swiper-slide.swiper-slide-active":{
+    "&.swiper-slide.swiper-slide-active": {
       height: "542px",
-      maxHeight: '601px',
-    }
+      maxHeight: "601px",
+      [theme.breakpoints.down("md")]: {
+        height: "400px",
+      },
+    },
   },
   img: {
     width: "100%",
@@ -455,6 +525,32 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: "red",
     padding: 12,
+  },
+
+  remove: {
+    [theme.breakpoints.down("lg")]: {
+      display: "none",
+    },
+  },
+
+  animatedDrawer: {
+    [theme.breakpoints.down("md")]: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "red",
+      animation: "$slideInFromLeft 0.5s ease-in-out",
+    },
+  },
+  "@keyframes slideInFromLeft": {
+    "0%": {
+      transform: "translateX(-100%)",
+    },
+    "100%": {
+      transform: "translateX(0)",
+    },
   },
 }));
 

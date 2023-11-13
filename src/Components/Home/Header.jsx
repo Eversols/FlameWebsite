@@ -8,10 +8,10 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ChatIcon from "../../Assets/images/chat_icon.png";
+import drawer from "../../Assets/images/drawer.svg";
 import flameLogo from "../../Assets/images/flame logo.svg";
 import power from "../../Assets/images/logout.png";
 import logoutLogo from "../../Assets/images/logout.svg";
@@ -19,16 +19,16 @@ import profile from "../../Assets/images/profile.png";
 import VideoCallIcon from "../../Assets/images/video_call.png";
 import { post } from "../../Services/api";
 import { persistor } from "../../Services/store";
+import { setRechargeModel } from "../../Services/store/authSlice";
 import { voxService } from "../../Services/voximplant";
 import useStyles from "./style";
-import { setRechargeModel } from "../../Services/store/authSlice";
 
 const Header = () => {
-  const { role, userData,rechargeModel } = useSelector((state) => state.auth);
+  const { role, userData, rechargeModel } = useSelector((state) => state.auth);
   const classes = useStyles();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
   const logout = async () => {
     try {
       const res = await post("/logout", userData);
@@ -39,81 +39,144 @@ const Header = () => {
       console.log(error);
     }
   };
-  const recharge = ()=>{
-    dispatch(setRechargeModel(!rechargeModel))
-  }
+  const recharge = () => {
+    dispatch(setRechargeModel(!rechargeModel));
+  };
+  const handleDrawerClick = () => {
+    setDrawerOpen(!isDrawerOpen);
+  };
+
   return (
-    <Paper elevation={1} className={classes.header}>
-      <Box width={100}>
-        <img src={flameLogo} className={classes.logo} />
-      </Box>
-      <Box className={classes.header_mid}>
-        <Button
-          className={classes.recharge_btn}
-          type="button"
-          variant="contained"
-          onClick={recharge}
-        >
-          Recharge
-        </Button>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          color="#868AA9"
-        >
-          <Box textAlign="center" mx={2}>
-            <Typography variant="body1" component="span" fontWeight="bold">
-              {userData.minutes}
-            </Typography>
-            <Typography variant="body1" component="span" ml={1}>
-              min
-            </Typography>
+    <Paper elevation={1} className={classes.headermain}>
+      <Box className={classes.header}>
+        <Box width={160} sx={{ marginRight: "10px" }}>
+          <img src={flameLogo} className={classes.logo} />
+        </Box>
+        <Box width={25} sx={{ marginLeft: "10px" }} onClick={handleDrawerClick}>
+          <img src={drawer} className={classes.drawer_logo} alt="drawer" />
+        </Box>
+        {isDrawerOpen && (
+          <div className={classes.animatedDrawer}>
+            {/* Content of the animated drawer */}
+            Animated drawer
+          </div>
+        )}
+        <Box className={classes.header_mid}>
+          <Button
+            className={classes.recharge_btn}
+            type="button"
+            variant="contained"
+            onClick={recharge}
+          >
+            Recharge
+          </Button>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            color="#868AA9"
+          >
+            <Box textAlign="center" className={classes.marginHandler}>
+              <Typography
+                variant="body1"
+                component="span"
+                fontWeight="bold"
+                className={classes.fontadjust}
+              >
+                {userData.minutes}
+              </Typography>
+              <Typography
+                variant="body1"
+                component="span"
+                ml={1}
+                className={classes.fontadjust}
+              >
+                min
+              </Typography>
+            </Box>
+            <Box textAlign="center" className={classes.marginHandler}>
+              <Typography
+                variant="body1"
+                component="span"
+                fontWeight="bold"
+                className={classes.fontadjust}
+              >
+                {userData.messages}
+              </Typography>
+              <Typography
+                variant="body1"
+                component="span"
+                className={classes.fontadjust}
+                ml={1}
+              >
+                messages
+              </Typography>
+            </Box>
+            <Box
+              textAlign="center"
+              display={"flex"}
+              alignItems={"center"}
+              flexWrap={"noWrap"}
+              className={classes.marginHandler}
+            >
+              <Typography
+                variant="body1"
+                component="span"
+                className={classes.fontadjust}
+                fontWeight="bold"
+                color="#FB1F43"
+              >
+                206
+              </Typography>
+              <Typography
+                variant="body1"
+                component="span"
+                className={classes.fontadjust}
+                ml={1}
+                mr={1}
+              >
+                points
+              </Typography>
+              <Button
+                className={classes.payout_btn}
+                type="button"
+                variant="outlined"
+                onClick={() => navigate(`/${role}/recharge`)}
+              >
+                Payout
+              </Button>
+            </Box>
           </Box>
-          <Box textAlign="center" mx={2}>
-            <Typography variant="body1" component="span" fontWeight="bold">
-              {userData.messages}
-            </Typography>
-            <Typography variant="body1" component="span" ml={1}>
-              messages
-            </Typography>
-          </Box>
-          <Box textAlign="center" mx={2}>
+        </Box>
+        <Box className={classes.header_mid}>
+          <Box
+            mr={2}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
             <Typography
               variant="body1"
               component="span"
-              fontWeight="bold"
-              color="#FB1F43"
+              ml={1}
+              className={classes.remove}
             >
-              206
+              My Account
             </Typography>
-            <Typography variant="body1" component="span" ml={1} mr={2}>
-              points
-            </Typography>
-            <Button
-              className={classes.payout_btn}
-              type="button"
-              variant="outlined"
-              onClick={() => navigate(`/${role}/recharge`)}
-            >
-              Payout
-            </Button>
           </Box>
+          <IconButton onClick={logout}>
+            <img src={logoutLogo} className={classes.logout} />
+            <Typography
+              variant="body1"
+              component="span"
+              ml={1}
+              className={classes.remove}
+            >
+              Logout
+            </Typography>
+          </IconButton>
         </Box>
-      </Box>
-      <Box className={classes.header_mid}>
-        <Box mr={2} display="flex" justifyContent="center" alignItems="center">
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          <Typography variant="body1" component="span" ml={1}>
-            My Account
-          </Typography>
-        </Box>
-        <IconButton onClick={logout}>
-          <img src={logoutLogo} className={classes.logout} />
-          <Typography variant="body1" component="span" ml={1}>
-            Logout
-          </Typography>
-        </IconButton>
       </Box>
     </Paper>
   );

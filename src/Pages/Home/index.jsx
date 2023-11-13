@@ -34,14 +34,19 @@ import ChatHistory from "../../Components/Home/ChatHistory";
 import IncomingCallDialog from "../../Components/Home/IncomingCallDialog";
 import MainScreenSlider from "../../Components/Home/MainScreenSlider";
 import WorningDilog from "../../Components/Home/WorningDialog";
+import RechargeModal from "../../Components/Recharge/RechargeModal";
 import { get } from "../../Services/api";
 import { getAllUsers } from "../../Services/store/authSlice";
 import CallService from "../../Services/voximplant/call";
-import RechargeModal from "../../Components/Recharge/RechargeModal";
 const loveLabels = ["Sport", "food", "fashion"];
 const hateLabels = ["Make up", "books", "tv"];
 const index = () => {
-  const { role, allUsers = [], userData, rechargeModel } = useSelector((state) => state.auth);
+  const {
+    role,
+    allUsers = [],
+    userData,
+    rechargeModel,
+  } = useSelector((state) => state.auth);
   const [modelData, setModelData] = useState(null);
   const [models, setModels] = useState([]);
   const [dialog, setDialog] = useState(false);
@@ -227,6 +232,22 @@ const index = () => {
             </>
           )}
         </Container>
+        {/* box for history_actions */}
+        <Paper className={classes.box_left_history}>
+          <Typography
+            variant="body1"
+            component="div"
+            className={classes.heading}
+          >
+            History
+          </Typography>
+          <Box className={classes.box_leftInner}>
+            <ChatHistory
+              setShowChatBox={setShowChatBox}
+              callUser={handleMakeAudioCall}
+            />
+          </Box>
+        </Paper>
         <Paper className={classes.box_left}>
           <Box className={classes.avatar_box_profile}>
             <Container
@@ -302,7 +323,7 @@ const index = () => {
           onReject={handleRejectCall}
         />
       )}
-        <RechargeModal />
+      <RechargeModal />
     </>
   );
 };
