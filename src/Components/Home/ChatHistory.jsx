@@ -131,7 +131,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
 
   return (
     <Box sx={{ maxHeight: "500px", overflowY: "auto", margin: "20px 0px" }}>
-      <Box sx={{ height: "100%", width: "100%" }}>
+      <Box className={classes.flexContainer}>
         {conversations.map((item) => {
           const users = getUserDetail(item.participants, item.direct);
           const chatTitle = getChatTitle(item, users);

@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
   headermain: {
     width: "100%",
-    height: "12%",
+    height: "100%",
+    maxHeight: "85px",
     borderRadius: "0px 0px 0px 0px",
     position: "absolute",
     backgroundColor: "white",
@@ -159,7 +160,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "509px",
     border: "1px solid white",
     height: "100%",
-    maxHeight: "548px",
+    maxHeight: "510px",
     position: "relative",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
@@ -185,6 +186,11 @@ const useStyles = makeStyles((theme) => ({
       "&:hover": {
         background: "transparent",
       },
+
+      [theme.breakpoints.down("md")]: {
+        left: "25%", // Remove the left property
+        right: "auto", // Add this property to move to the right side
+      },
     },
     "& .swiper-button-next": {
       background: "transparent",
@@ -200,6 +206,11 @@ const useStyles = makeStyles((theme) => ({
       "&:hover": {
         background: "transparent",
       },
+
+      [theme.breakpoints.down("md")]: {
+        left: "auto", // Remove the left property
+        right: "25%", // Add this property to move to the right side
+      },
     },
     "& .swiper-button-prev:after": {
       fontSize: "1rem",
@@ -212,8 +223,8 @@ const useStyles = makeStyles((theme) => ({
   },
   slide: {
     "&.swiper-slide.swiper-slide-active": {
-      height: "542px",
-      maxHeight: "601px",
+      height: "510px",
+      maxHeight: "510px",
       [theme.breakpoints.down("md")]: {
         height: "400px",
       },
@@ -340,6 +351,17 @@ const useStyles = makeStyles((theme) => ({
       background: "rgba(255,255,255,1)",
     },
   },
+
+  flexContainer: {
+    height: "100%",
+    width: "100%",
+    [theme.breakpoints.down("md")]: {
+      display: "flex",
+      gap: "10px",
+      justifyContent: "space-between",
+    },
+  },
+
   outgo_msg: {
     width: "100%",
     display: "flex",
@@ -441,6 +463,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: theme.spacing(1),
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "160px",
+      minWidth: "155px",
+    },
   },
   avatar_box: {
     display: "flex",
@@ -458,6 +484,12 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
     fontSize: "12px",
   },
+
+  ideaImage: {
+    width: "100%",
+    maxWidth: "45px",
+  },
+
   history_actions: {
     display: "flex",
     alignItems: "center",
@@ -465,6 +497,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "120px",
     marginTop: "2px",
+    [theme.breakpoints.down("sm")]: {
+      flexWrap: "wrap",
+      justifyContent: "center",
+    },
   },
 
   chat_actions: {

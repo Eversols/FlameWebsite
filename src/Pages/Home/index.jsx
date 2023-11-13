@@ -168,6 +168,7 @@ const index = () => {
       <img src={bgBlock} className={classes.block_bg} />
 
       <Header />
+
       <Box className={classes.container}>
         <Paper className={classes.box_left}>
           <Typography

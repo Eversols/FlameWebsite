@@ -10,15 +10,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "start",
     flexDirection: "row",
-    paddingTop: "56px",
+    paddingTop: "75px",
     zIndex: 1,
     [theme.breakpoints.down("md")]: {
       display: "flex",
       flexDirection: "column",
       paddingTop: "0",
-      gap: "120px",
+      gap: "30px",
       justifyContent: "center",
       alignItems: "center",
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      gap: "20px",
     },
   },
   heading: {
@@ -28,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
   box_left: {
     width: "24%",
-    height: "85vh",
+    minHeight: "580px",
+    height: "100%",
     display: "flex",
     border: "1px solid white",
     flexDirection: "column",
@@ -44,16 +49,15 @@ const useStyles = makeStyles((theme) => ({
 
   box_left_history: {
     width: "80%",
-    height: "400px",
+    height: "200px",
     display: "none",
     border: "1px solid white",
     boxShadow: "5px 22px 83px -12px #0000001A",
-
     flexDirection: "column",
     alignItems: "start",
     justifyContent: "start",
     borderRadius: "24px",
-    padding: "0px 24px",
+    padding: "16px",
     [theme.breakpoints.down("md")]: {
       display: "flex",
     },
@@ -75,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     [theme.breakpoints.down("md")]: {
       width: "80%",
-      padding: 0,
+      padding: "135px 0px 0px 0px",
     },
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -239,6 +243,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "310px",
     [theme.breakpoints.down("sm")]: {
       left: "50%",
+      top: "70%",
       maxWidth: "100%",
       transform: "translateX(-50%)",
     },

@@ -15,6 +15,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ChatIcon from "../../Assets/images/chatIcon.svg";
 import ChatBoxIcon from "../../Assets/images/chatboxIcon.svg";
+import ideaIcon from "../../Assets/images/idea_icons.svg";
 import ProfileImage from "../../Assets/images/male.jpg";
 import CallIcon from "../../Assets/images/sayhi.svg";
 import VideoCallIcon from "../../Assets/images/video.svg";
@@ -86,10 +87,64 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
           right: 20,
           background: "#ffff",
           height: "53px",
+          zIndex: 1,
         }}
       >
         <img src={ChatIcon} />
       </IconButton>
+      {/* // when not open */}
+      <IconButton
+        color="primary"
+        onClick={handleToggleChatBox}
+        style={{
+          position: "fixed",
+          bottom: 20,
+          left: 20,
+          background: "#ffff",
+          height: "53px",
+          zIndex: 1,
+        }}
+      >
+        <img src={ideaIcon} className={classes.ideaImage} alt="no data" />
+      </IconButton>
+
+      {/* when open  */}
+      {/* <Box
+        sx={{
+          position: "fixed",
+          bottom: 20,
+          left: 20,
+          background: "#ffff",
+          padding: "6px",
+          zIndex: 1,
+          display: "flex",
+          width: "100%",
+          gap: "5px",
+          borderRadius: "20px",
+          alignItems: "center",
+          maxWidth: "410px",
+        }}
+      >
+        <IconButton color="primary">
+          <img src={ideaIcon} className={classes.ideaImage} alt="no data" />
+        </IconButton>
+        <Box
+          sx={{
+            fontSize: "14px",
+            fontFamily: "Montserrat, sans-serif",
+            fontWeight: 400,
+            lineHeight: "20px",
+            background: "#ffff",
+            height: "40px",
+            maxWidth: "225px",
+            minWidth: "225px",
+            width: "100%",
+          }}
+        >
+          Two line text string. One to two lines s preferable on mobile and
+          tablet.
+        </Box>
+      </Box> */}
 
       {showChatBox && (
         <Paper elevation={3} className={classes.paper}>
