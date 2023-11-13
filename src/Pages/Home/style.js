@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       display: "flex",
       flexDirection: "column",
-      gap: "10px",
+      paddingTop: "0",
+      gap: "120px",
       justifyContent: "center",
       alignItems: "center",
     },
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "start",
     borderRadius: "24px",
     padding: "24px 32px",
+    boxShadow: "5px 22px 83px -12px #0000001A",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -45,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
     height: "400px",
     display: "none",
     border: "1px solid white",
+    boxShadow: "5px 22px 83px -12px #0000001A",
+
     flexDirection: "column",
     alignItems: "start",
     justifyContent: "start",
@@ -67,10 +71,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    padding: "50px 0px 0px 0px",
     justifyContent: "space-between",
     [theme.breakpoints.down("md")]: {
-      marginTop: "45px",
       width: "80%",
+      padding: 0,
     },
     [theme.breakpoints.down("sm")]: {
       width: "100%",

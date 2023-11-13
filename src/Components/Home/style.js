@@ -159,12 +159,16 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "509px",
     border: "1px solid white",
     height: "100%",
-    maxHeight: "601px",
+    maxHeight: "548px",
     position: "relative",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
     display: "flex",
     flexDirection: "column",
+    [theme.breakpoints.down("md")]: {
+      maxHeight: "410px",
+      maxWidth: "100%",
+    },
     alignItems: "center",
     justifyContent: "space-around",
     "& .swiper-button-prev": {
