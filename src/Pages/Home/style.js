@@ -141,8 +141,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   single_image_profile: {
-    width: "100px",
-    height: "100px",
+    width: "90px",
+    height: "90px",
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: "200px",
     display: "flex",
@@ -154,7 +154,7 @@ const useStyles = makeStyles((theme) => ({
   },
   profile_answer_name: {
     color: "#000000",
-    marginTop: "15px",
+    marginTop: "12px",
     fontSize: "18px",
     fontWeight: "bold",
   },
@@ -175,10 +175,10 @@ const useStyles = makeStyles((theme) => ({
   btnContainer: {
     width: "100%",
     display: "flex",
-    gap: "15px",
+    gap: "10px",
     flexWrap: "wrap",
-    marginBottom: "15px",
-    marginTop: "15px",
+    marginBottom: "10px",
+    marginTop: "10px",
   },
 
   btn_hate: {
@@ -198,7 +198,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#000000",
     fontSize: "14px",
     fontWeight: 400,
-    marginTop: "15px",
+    marginTop: "12px",
   },
 
   profile_detail: {

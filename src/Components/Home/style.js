@@ -170,6 +170,11 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: "410px",
       maxWidth: "100%",
     },
+
+    [theme.breakpoints.down("sm")]: {
+      maxHeight: "285px",
+    },
+
     alignItems: "center",
     justifyContent: "space-around",
     "& .swiper-button-prev": {
@@ -228,6 +233,9 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down("md")]: {
         height: "400px",
       },
+      [theme.breakpoints.down("sm")]: {
+        height: "285px",
+      },
     },
   },
   img: {
@@ -238,12 +246,15 @@ const useStyles = makeStyles((theme) => ({
   buttons: {
     width: "100%",
     position: "absolute",
-    bottom: "18%  ",
+    bottom: "18% ",
     left: 0,
     zIndex: 1,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      bottom: "28%",
+    },
   },
   phoneBtn: {
     padding: 12,
