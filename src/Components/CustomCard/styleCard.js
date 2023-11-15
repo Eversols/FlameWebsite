@@ -5,7 +5,6 @@ const useStyles = makeStyles((theme) => ({
   selected: {
     width: "100%",
     maxWidth: "257px",
-    height: "100%",
     maxHeight: "367px",
     background: "transparent",
     borderRadius: "15px",
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   unselected: {
     width: "100%",
     maxWidth: "257px",
-    height: "100%",
     maxHeight: "367px",
     background: "transparent",
     borderRadius: "15px",
@@ -28,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "column",
   },
-  imgbox:{
+  imgbox: {
     background: "#FB1F43",
-    borderRadius: "12px"
+    borderRadius: "12px",
   },
   img: {
     maxWidth: "160px",

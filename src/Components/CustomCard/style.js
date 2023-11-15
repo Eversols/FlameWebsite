@@ -14,12 +14,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "column",
     padding: "30px 24px",
+    cursor: "pointer",
     [theme.breakpoints.down("sm")]: {
       maxHeight: "280px",
     },
   },
   unselected: {
     width: "100%",
+    cursor: "pointer",
     maxWidth: "315px",
     maxHeight: "436px",
     background: "#ffff",

@@ -61,21 +61,23 @@ const useStyles = makeStyles((theme) => ({
 
   btn: {
     width: "20%",
-    height: "10%",
+    height: "40px",
+    marginTop: "40px",
     backgroundColor: " #FB1F43",
     color: "#ffffff",
     borderRadius: "30px",
-    marginBottom: "10px",
+    marginBottom: "40px",
     [theme.breakpoints.down("md")]: {
       height: "50px",
       fontSize: "20px",
       width: "35%",
     },
     "&:hover": {
-      backgroundColor: "#535353",
+      backgroundColor: "#dc697c",
     },
     [theme.breakpoints.down("sm")]: {
-      width: "45%",
+      width: "70%",
+      borderRadius: "5px",
       fontSize: "14px",
       marginTop: theme.spacing(5),
       marginBottom: theme.spacing(5),
