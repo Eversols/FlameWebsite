@@ -130,104 +130,106 @@ const StepPassword = () => {
       <img src={flameLogo} className={classes.logo} />
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
-      <Box className={classes.mainBox}>
-        <Container className={classes.container}>
-          <Typography variant="h5" className={classes.heading}>
-            Set your password
-          </Typography>
-          <Box className={classes.fieldWrapper}>
-            <Box className={classes.passwordWrapper}>
-              <TextField
-                name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                className={classes.input1}
-                value={password}
-                fullWidth
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  dispatch(setError(""));
-                }}
-                inputProps={{
-                  "data-cy": "password-Employeecredential", // Cypress ID assigned to the search input element
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        data-cy="password-credential"
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword((prev) => !prev)}
-                        // onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <RemoveRedEyeOutlinedIcon
-                            sx={{ fill: "#00000099", fontSize: "18px" }}
-                          />
-                        ) : (
-                          <VisibilityOffOutlinedIcon
-                            sx={{ fill: "#00000099", fontSize: "18px" }}
-                          />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              {/* {error && <p className={classes.error}>{error}</p>} */}
-              <TextField
-                name="cPassword"
-                // type={showPassword ? "text" : "password"}
-                // value={password}
-                type="text"
-                placeholder="Confirm Password"
-                className={classes.input1}
-                onChange={(e) => {
-                  setCPassword(e.target.value);
-                  dispatch(setError(""));
-                }}
-                fullWidth
-                // onChange={(e) => handlevalueChange(e, "password")}
-                inputProps={{
-                  "data-cy": "password-Employeecredential", // Cypress ID assigned to the search input element
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        data-cy="password-credential"
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowCPassword((prev) => !prev)}
-                        // onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showCPassword ? (
-                          <RemoveRedEyeOutlinedIcon
-                            sx={{ fill: "#00000099", fontSize: "18px" }}
-                          />
-                        ) : (
-                          <VisibilityOffOutlinedIcon
-                            sx={{ fill: "#00000099", fontSize: "18px" }}
-                          />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+      <Box className={classes.mainWrapperBox}>
+        <Box className={classes.mainBox}>
+          <Container className={classes.container}>
+            <Typography variant="h5" className={classes.heading}>
+              Set your password
+            </Typography>
+            <Box className={classes.fieldWrapper}>
+              <Box className={classes.passwordWrapper}>
+                <TextField
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  className={classes.input1}
+                  value={password}
+                  fullWidth
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    dispatch(setError(""));
+                  }}
+                  inputProps={{
+                    "data-cy": "password-Employeecredential", // Cypress ID assigned to the search input element
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          data-cy="password-credential"
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          // onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <RemoveRedEyeOutlinedIcon
+                              sx={{ fill: "#00000099", fontSize: "18px" }}
+                            />
+                          ) : (
+                            <VisibilityOffOutlinedIcon
+                              sx={{ fill: "#00000099", fontSize: "18px" }}
+                            />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                {/* {error && <p className={classes.error}>{error}</p>} */}
+                <TextField
+                  name="cPassword"
+                  // type={showPassword ? "text" : "password"}
+                  // value={password}
+                  type="text"
+                  placeholder="Confirm Password"
+                  className={classes.input1}
+                  onChange={(e) => {
+                    setCPassword(e.target.value);
+                    dispatch(setError(""));
+                  }}
+                  fullWidth
+                  // onChange={(e) => handlevalueChange(e, "password")}
+                  inputProps={{
+                    "data-cy": "password-Employeecredential", // Cypress ID assigned to the search input element
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          data-cy="password-credential"
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowCPassword((prev) => !prev)}
+                          // onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showCPassword ? (
+                            <RemoveRedEyeOutlinedIcon
+                              sx={{ fill: "#00000099", fontSize: "18px" }}
+                            />
+                          ) : (
+                            <VisibilityOffOutlinedIcon
+                              sx={{ fill: "#00000099", fontSize: "18px" }}
+                            />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+              {error && <p className={classes.error}>{error}</p>}
+              <Button
+                type="button"
+                onClick={confirmSubmit}
+                variant="contained"
+                className={classes.btn}
+              >
+                next
+              </Button>
             </Box>
-            {error && <p className={classes.error}>{error}</p>}
-            <Button
-              type="button"
-              onClick={confirmSubmit}
-              variant="contained"
-              className={classes.btn}
-            >
-              next
-            </Button>
-          </Box>
-        </Container>
+          </Container>
+        </Box>
       </Box>
     </>
   );

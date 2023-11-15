@@ -3,8 +3,7 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   selected: {
     width: "100%",
-    maxWidth: "397px",
-    height: "100%",
+    maxWidth: "315px",
     maxHeight: "436px",
     backgroundColor: "#FB1F43",
     background: "#ffff",
@@ -14,12 +13,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
-    padding: "48px 24px"
+    padding: "30px 24px",
+    [theme.breakpoints.down("sm")]: {
+      maxHeight: "280px",
+    },
   },
   unselected: {
     width: "100%",
-    maxWidth: "397px",
-    height: "100%",
+    maxWidth: "315px",
     maxHeight: "436px",
     background: "#ffff",
     borderRadius: "15px",
@@ -28,13 +29,17 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
-    padding: "48px 24px",
+    padding: "30px 24px",
+    [theme.breakpoints.down("sm")]: {
+      maxHeight: "280px",
+    },
   },
   img: {
-    width: '100%',
-    [theme.breakpoints.down("sm")]: {
-      maxWidth: "200px",
-    },
+    maxWidth: "280px",
+    width: "100%",
+    // [theme.breakpoints.down("sm")]: {
+    //   maxWidth: "200px",
+    // },
   },
   text1: {
     fontFamily: "Montserrat, sans-serif",
@@ -58,14 +63,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  divider: {
-    width: "100%",
-    height: "20px",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      height: "10px",
-    },
-  },
   uncheckbox: {
     maxWidth: "20px",
   },

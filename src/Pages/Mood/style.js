@@ -18,35 +18,7 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "center",
     },
   },
-  paragraph_container: {
-    width: "100%",
-    display: "flex",
-    gap: "30px",
-    marginTop: "20px",
-    alignItems: "center",
-    flexDirection: "column",
-    [theme.breakpoints.down("md")]: {
-      marginTop: "20px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
-      gap: 0,
-      textAlign: "center",
-    },
-  },
-  heading1: {
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "bold",
-    marginTop: "20px",
-    color: "#000000",
-    fontSize: "40px",
-  },
-  heading2: {
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "regular",
-    color: "#000000",
-    fontSize: "20px",
-  },
+
   moodcontainer: {
     width: "100%",
     padding: "10px",
@@ -60,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     width: "20%",
-    height: "10%",
-    marginTop: "10px",
+    height: "40px",
+    marginTop: "40px",
     backgroundColor: " #FB1F43",
     color: "#ffffff",
     borderRadius: "30px",
-    marginBottom: "10px",
+    marginBottom: "40px",
     [theme.breakpoints.down("md")]: {
       height: "50px",
       fontSize: "20px",
@@ -75,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#dc697c",
     },
     [theme.breakpoints.down("sm")]: {
-      width: "45%",
+      width: "70%",
+      borderRadius: "5px",
       fontSize: "14px",
       marginTop: theme.spacing(5),
       marginBottom: theme.spacing(5),
@@ -134,50 +107,22 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "column",
   },
-  mainWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    width: "100%",
-    gap: "20px",
-    maxWidth: "460px",
-  },
-  male: {
-    marginBottom: "20px",
-  },
 
-  female: {
-    marginBottom: "20px",
-  },
-
-  checkBoxWrapper: {
-    display: "flex",
+  paragraph_container: {
     width: "100%",
-    maxWidth: "110px",
-    flexDirection: "column",
-    gap: "15px",
-  },
-
-  paragraph: {
-    width: "100%",
-    height: "5%",
     display: "flex",
-    justifyContent: "space-around",
+    gap: "30px",
+    marginTop: "20px",
     alignItems: "center",
     flexDirection: "column",
+    [theme.breakpoints.down("md")]: {
+      marginTop: "20px",
+    },
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
-      height: "18%",
+      gap: 0,
       textAlign: "center",
-      marginTop: theme.spacing(5),
     },
-  },
-
-  checkBox: { display: "flex", gap: "10px", alignItems: "center" },
-
-  checkBoxLabel: {
-    fontSize: "16px",
-    fontWeight: 500,
-    fontFamily: "Montserrat, sans-serif",
   },
   gender_bg: {
     bottom: 0,

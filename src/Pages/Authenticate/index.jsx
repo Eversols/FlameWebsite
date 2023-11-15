@@ -4,6 +4,9 @@ import StepEmail from "../../Components/Steps/StepEmail";
 import StepName from "../../Components/Steps/StepName";
 import StepOtp from "../../Components/Steps/StepOtp";
 import StepPassword from "../../Components/Steps/StepPassword";
+// import Gender from "../Gender/index";
+// import Mood from "../Mood/index";
+// import Orientation from "../Orientation/index";
 
 const steps = {
   1: StepEmail,

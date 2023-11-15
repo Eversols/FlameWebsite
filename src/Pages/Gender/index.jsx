@@ -23,59 +23,60 @@ const index = () => {
     <>
       <img src={flameLogo} className={classes.logo} />
       <img src={bgFrame} className={classes.gender_bg} />
+      <Box className={classes.mainWrapperBox}>
+        <Container className={classes.container}>
+          <Container className={classes.paragraph_container}>
+            <Typography variant="h4" className={classes.heading}>
+              Welcome to Flame
+            </Typography>
+            <Typography variant="h6" className={classes.heading2}>
+              here are few quick questions
+            </Typography>
+            <Typography variant="h4" className={classes.heading1}>
+              What is your gender?
+            </Typography>
+          </Container>
 
-      <Container className={classes.container}>
-        <Container className={classes.paragraph_container}>
-          <Typography variant="h4" className={classes.heading1}>
-            Welcome to Flame
-          </Typography>
-          <Typography variant="h6" className={classes.heading2}>
-            here are few quick questions
-          </Typography>
-          <Typography variant="h4" className={classes.heading1}>
-            What is your gender?
-          </Typography>
+          <Box className={classes.mainWrapper}>
+            <Box className={classes.genderWrapper}>
+              <img src={genderMale} className={classes.male} />
+              <Typography variant="h6" className={classes.heading2}>
+                Male
+              </Typography>
+              <Radio
+                checked={selectedValue === "a"}
+                onChange={() => handleChange()}
+                value="a"
+                name="radio-buttons"
+                inputProps={{ "aria-label": "A" }}
+              />
+            </Box>
+
+            <Box className={classes.genderWrapper}>
+              <img src={genderFemale} className={classes.female} />
+              <Typography variant="h6" className={classes.heading2}>
+                Female
+              </Typography>
+              <Radio
+                checked={selectedValue === "b"}
+                onChange={() => handleChange()}
+                value="b"
+                name="radio-buttons"
+                inputProps={{ "aria-label": "B" }}
+              />
+            </Box>
+          </Box>
+
+          <Button
+            type="submit"
+            //   onClick={confirmSubmit}
+            variant="contained"
+            className={classes.btn}
+          >
+            next
+          </Button>
         </Container>
-
-        <Box className={classes.mainWrapper}>
-          <Box className={classes.genderWrapper}>
-            <img src={genderMale} className={classes.male} />
-            <Typography variant="h6" className={classes.heading2}>
-              Male
-            </Typography>
-            <Radio
-              checked={selectedValue === "a"}
-              onChange={() => handleChange()}
-              value="a"
-              name="radio-buttons"
-              inputProps={{ "aria-label": "A" }}
-            />
-          </Box>
-
-          <Box className={classes.genderWrapper}>
-            <img src={genderFemale} className={classes.female} />
-            <Typography variant="h6" className={classes.heading2}>
-              Female
-            </Typography>
-            <Radio
-              checked={selectedValue === "b"}
-              onChange={() => handleChange()}
-              value="b"
-              name="radio-buttons"
-              inputProps={{ "aria-label": "B" }}
-            />
-          </Box>
-        </Box>
-
-        <Button
-          type="submit"
-          //   onClick={confirmSubmit}
-          variant="contained"
-          className={classes.btn}
-        >
-          next
-        </Button>
-      </Container>
+      </Box>
     </>
   );
 };

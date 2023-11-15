@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   mainBox: {
     width: "100%",
     maxWidth: "380px",
-    height: "100%",
+    // height: "100%",
     maxHeight: "450px",
     borderRadius: "24px",
     margin: "16px",
@@ -174,6 +174,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     flexDirection: "column",
     height: "115px",
+  },
+
+  mainWrapperBox: {
+    width: "100%",
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 

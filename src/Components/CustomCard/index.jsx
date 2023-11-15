@@ -33,6 +33,7 @@ const index = ({
           width: "100%",
           gap: "10px",
           flexDirection: "column",
+          maxWidth: "280px",
         }}
       >
         <Box className={classes.text}>
@@ -42,7 +43,7 @@ const index = ({
           <Typography className={classes.text2}>{description}</Typography>
         </Box>
       </Box>
-      <Box className={classes.divider}></Box>
+
       {/* {description && (
           <Typography className={classes.text2}> */}
       {/* {description}   */}

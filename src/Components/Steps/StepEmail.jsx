@@ -62,36 +62,38 @@ const StepEmail = ({ onNext, setStep }) => {
       <img src={flameLogo} className={classes.logo} />
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
-      <Box className={classes.mainBox}>
-        <Container className={classes.container}>
-          <Typography variant="h5" className={classes.heading}>
-            Please enter your email
-          </Typography>
-          <Box className={classes.fieldWrapper}>
-            <TextField
-              name="email"
-              onChange={(e) => {
-                setEmail(e.target.value);
-                dispatch(setError(""));
-              }}
-              value={email}
-              type="email"
-              placeholder="Enter your email address"
-              className={classes.input1}
-              fullWidth
-            />
+      <Box className={classes.mainWrapperBox}>
+        <Box className={classes.mainBox}>
+          <Container className={classes.container}>
+            <Typography variant="h5" className={classes.heading}>
+              Please enter your email
+            </Typography>
+            <Box className={classes.fieldWrapper}>
+              <TextField
+                name="email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  dispatch(setError(""));
+                }}
+                value={email}
+                type="email"
+                placeholder="Enter your email address"
+                className={classes.input1}
+                fullWidth
+              />
 
-            {error && <p className={classes.error}>{error}</p>}
-            <Button
-              type="button"
-              onClick={confirmSubmit}
-              variant="contained"
-              className={classes.btn}
-            >
-              Next
-            </Button>
-          </Box>
-        </Container>
+              {error && <p className={classes.error}>{error}</p>}
+              <Button
+                type="button"
+                onClick={confirmSubmit}
+                variant="contained"
+                className={classes.btn}
+              >
+                Next
+              </Button>
+            </Box>
+          </Container>
+        </Box>
       </Box>
     </>
   );

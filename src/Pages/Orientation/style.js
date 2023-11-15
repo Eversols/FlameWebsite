@@ -14,26 +14,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       width: "100%",
     },
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
-    },
   },
-  paragraph_container: {
-    width: "100%",
-    display: "flex",
-    gap: "30px",
-    marginTop: "20px",
-    alignItems: "center",
-    flexDirection: "column",
-    [theme.breakpoints.down("md")]: {
-      marginTop: "20px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
-      gap: 0,
-      textAlign: "center",
-    },
-  },
+
   heading1: {
     fontFamily: "Montserrat, sans-serif",
     fontWeight: "bold",
@@ -41,30 +23,15 @@ const useStyles = makeStyles((theme) => ({
     color: "#000000",
     fontSize: "40px",
   },
-  heading2: {
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "regular",
-    color: "#000000",
-    fontSize: "20px",
-  },
-  moodcontainer: {
-    width: "100%",
-    padding: "10px",
-    display: "flex",
-    margin: "20px  0px",
-    gap: "10px",
-    [theme.breakpoints.down("md")]: {
-      flexWrap: "wrap",
-    },
-  },
+
   btn: {
     width: "20%",
-    height: "10%",
-    marginTop: "10px",
+    height: "40px",
+    marginTop: "40px",
     backgroundColor: " #FB1F43",
     color: "#ffffff",
     borderRadius: "30px",
-    marginBottom: "10px",
+    marginBottom: "40px",
     [theme.breakpoints.down("md")]: {
       height: "50px",
       fontSize: "20px",
@@ -74,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#dc697c",
     },
     [theme.breakpoints.down("sm")]: {
-      width: "45%",
+      width: "70%",
+      borderRadius: "5px",
       fontSize: "14px",
       marginTop: theme.spacing(5),
       marginBottom: theme.spacing(5),
@@ -92,17 +60,6 @@ const useStyles = makeStyles((theme) => ({
       transform: "scale(1)",
     },
   },
-  block_bg: {
-    bottom: 0,
-    right: 0,
-    position: "absolute",
-    width: "100%",
-    maxWidth: "230px",
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
-
   logo: {
     top: "4%",
     left: "5%",
@@ -113,62 +70,13 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  heart_bg: {
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-    width: "100%",
-    maxWidth: "310px",
-    [theme.breakpoints.down("sm")]: {
-      left: "50%",
-      maxWidth: "100%",
-      transform: "translateX(-50%)",
-    },
-  },
-
-  genderWrapper: {
-    display: "flex",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-  },
-  mainWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    width: "100%",
-    gap: "20px",
-    maxWidth: "460px",
-  },
-  male: {
-    marginBottom: "20px",
-  },
-
-  female: {
-    marginBottom: "20px",
-  },
 
   checkBoxWrapper: {
     display: "flex",
     width: "100%",
     maxWidth: "110px",
     flexDirection: "column",
-    gap: "15px",
-  },
-
-  paragraph: {
-    width: "100%",
-    height: "5%",
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    flexDirection: "column",
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
-      height: "18%",
-      textAlign: "center",
-      marginTop: theme.spacing(5),
-    },
+    gap: "10px",
   },
 
   checkBox: { display: "flex", gap: "10px", alignItems: "center" },

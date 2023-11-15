@@ -43,10 +43,11 @@ const index = ({
           <Typography className={classes.text1}>{name[id]}</Typography>
         </Box>{" "}
         <Box className={classes.name}>
-          {selected === id ? 
-          <img src={checkradio} className={classes.checkbox} />
-          :
-          <img src={uncheckradio} className={classes.uncheckbox} />}
+          {selected === id ? (
+            <img src={checkradio} className={classes.checkbox} />
+          ) : (
+            <img src={uncheckradio} className={classes.uncheckbox} />
+          )}
         </Box>
       </Box>
       <Box className={classes.divider}></Box>

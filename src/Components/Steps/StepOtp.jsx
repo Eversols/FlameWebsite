@@ -31,37 +31,38 @@ const StepOtp = ({ onNext }) => {
       <img src={flameLogo} className={classes.logo} />
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
+      <Box className={classes.mainWrapperBox}>
+        <Box className={classes.mainBox}>
+          <Container className={classes.container}>
+            <Typography variant="h5" className={classes.heading}>
+              Check your email for an OTP
+            </Typography>
 
-      <Box className={classes.mainBox}>
-        <Container className={classes.container}>
-          <Typography variant="h5" className={classes.heading}>
-            Check your email for an OTP
-          </Typography>
-
-          <Box className={classes.fieldWrapper}>
-            <TextField
-              name="otp"
-              onChange={(e) => {
-                setOTP(e.target.value);
-                dispatch(setError(""));
-              }}
-              type="text"
-              value={OTP}
-              placeholder="Confirm OTP sent to your Email ID"
-              className={classes.input1}
-              fullWidth
-            />
-            {error && <p className={classes.error}>{error}</p>}
-            <Button
-              type="button"
-              onClick={confirmSubmit}
-              variant="contained"
-              className={classes.btn}
-            >
-              next
-            </Button>
-          </Box>
-        </Container>
+            <Box className={classes.fieldWrapper}>
+              <TextField
+                name="otp"
+                onChange={(e) => {
+                  setOTP(e.target.value);
+                  dispatch(setError(""));
+                }}
+                type="text"
+                value={OTP}
+                placeholder="Confirm OTP sent to your Email ID"
+                className={classes.input1}
+                fullWidth
+              />
+              {error && <p className={classes.error}>{error}</p>}
+              <Button
+                type="button"
+                onClick={confirmSubmit}
+                variant="contained"
+                className={classes.btn}
+              >
+                next
+              </Button>
+            </Box>
+          </Container>
+        </Box>
       </Box>
     </>
   );
