@@ -3,11 +3,11 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    height: "100%",
+    // height: "100%",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
 
-    animation: `$popup 500ms ${theme.transitions.easing.easeInOut}`,
+    // animation: `$popup 500ms ${theme.transitions.easing.easeInOut}`,
   },
   customTab: {
     // minWidth: "50%", // Set the desired width here
@@ -44,9 +44,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
     borderRadius: "10px",
     marginBottom: "10px",
-    [theme.breakpoints.down("md")]: {
-      fontSize: "20px",
-    },
+
     "&:hover": {
       backgroundColor: "#dc697c",
     },

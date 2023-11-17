@@ -25,6 +25,7 @@ const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
           justifyContent: "center",
           gap: "6px",
           marginBottom: "30px",
+          flexWrap: "wrap",
         }}
       >
         <IconButton onClick={onSelect}>

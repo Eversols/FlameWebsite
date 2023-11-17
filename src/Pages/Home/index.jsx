@@ -185,7 +185,7 @@ const index = () => {
             />
           </Box>
         </Paper>
-        <Container className={classes.box_mid}>
+        <Box className={classes.box_mid}>
           {currentCall ? (
             <Container className={classes.call_window}>
               <video id="remoteVideo" autoPlay></video>
@@ -232,7 +232,7 @@ const index = () => {
               )}
             </>
           )}
-        </Container>
+        </Box>
         {/* box for history_actions */}
         <Paper className={classes.box_left_history}>
           <Typography

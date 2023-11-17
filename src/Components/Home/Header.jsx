@@ -21,6 +21,7 @@ import { post } from "../../Services/api";
 import { persistor } from "../../Services/store";
 import { setRechargeModel } from "../../Services/store/authSlice";
 import { voxService } from "../../Services/voximplant";
+import Drawer from "./Drawer";
 import useStyles from "./style";
 
 const Header = () => {
@@ -28,7 +29,7 @@ const Header = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(null);
   const logout = async () => {
     try {
       const res = await post("/logout", userData);
@@ -46,6 +47,8 @@ const Header = () => {
     setDrawerOpen(!isDrawerOpen);
   };
 
+  console.log(isDrawerOpen, "drawer");
+
   return (
     <Paper elevation={1} className={classes.headermain}>
       <Box className={classes.header}>
@@ -55,12 +58,28 @@ const Header = () => {
         <Box width={25} sx={{ marginLeft: "10px" }} onClick={handleDrawerClick}>
           <img src={drawer} className={classes.drawer_logo} alt="drawer" />
         </Box>
+
         {isDrawerOpen && (
-          <div className={classes.animatedDrawer}>
+          <div
+            className={`${classes.animatedDrawer} ${
+              isDrawerOpen === null
+                ? ""
+                : isDrawerOpen
+                ? classes.slideOut
+                : classes.slideIn
+            }`}
+          >
             {/* Content of the animated drawer */}
-            Animated drawer
+            <Drawer
+              handleDrawerClick={handleDrawerClick}
+              isDrawerOpen={isDrawerOpen}
+              recharge={recharge}
+              role={role}
+              userData={userData}
+            />
           </div>
         )}
+
         <Box className={classes.header_mid}>
           <Button
             className={classes.recharge_btn}
@@ -150,6 +169,7 @@ const Header = () => {
         </Box>
         <Box className={classes.header_mid}>
           <Box
+            onClick={() => navigate(`/${role}/profile/${userData.id}`)}
             mr={2}
             display="flex"
             justifyContent="center"

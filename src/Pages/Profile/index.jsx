@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from "react";
-import useStyles from "./style";
-import { Box, Button, Container, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { useEffect } from "react";
-import { getProfile } from "../../Services/store/authSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import ProfileModal from "../../Components/Profile/ProfileModal";
 import { post } from "../../Services/api";
-import { useParams } from "react-router-dom";
+import { getProfile } from "../../Services/store/authSlice";
+import useStyles from "./style";
 
 const index = () => {
   const { id } = useParams();
@@ -97,6 +95,8 @@ const index = () => {
   };
   return (
     <>
+      <ProfileModal />
+
       {id && (
         <Box
           sx={{ height: "92%", marginLeft: "12px", cursor: "pointer" }}

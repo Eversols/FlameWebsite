@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { setRechargeModel } from "../../Services/store/authSlice";
-import RechargeTabs from "./RechargeTabs";
+import ProfileTabs from "./ProfileTabs";
 
 // ---------Component style------------
 
@@ -19,7 +19,7 @@ const mainContainer = {
   width: "100%",
 };
 
-const RechargeModal = () => {
+const ProfileModal = () => {
   const { rechargeModel } = useSelector((state) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -31,18 +31,18 @@ const RechargeModal = () => {
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={rechargeModel}
+      open={false}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{
         "& .MuiDialog-paper": {
-          width: { xs: "280px", sm: "400px", md: "780px" },
+          width: { xs: "280px", sm: "450px", md: "800px" },
           maxHeight: "600px",
           minHeight: "500px",
           height: "100%",
           background: "#fff",
           boxShadow: "none",
-          borderRadius: "24px",
+          borderRadius: "10px",
         },
         "& .MuiDialog-container": {
           background: "rgba(255, 255, 255, 0.02)",
@@ -67,10 +67,10 @@ const RechargeModal = () => {
       </Box>
 
       <Box sx={mainContainer}>
-        <RechargeTabs />
+        <ProfileTabs />
       </Box>
     </Dialog>
   );
 };
 
-export default RechargeModal;
+export default ProfileModal;

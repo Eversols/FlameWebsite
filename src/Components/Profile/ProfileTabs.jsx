@@ -3,10 +3,9 @@ import { Box, Button, Grid, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useStyles from "../../Pages/Recharge/style";
 import { get } from "../../Services/api";
-import CustomCard from "./CustomCard";
 import CustomTabPanel from "./CustomTabPanel";
+import useStyles from "./style";
 
 function a11yProps(index) {
   return {
@@ -15,23 +14,13 @@ function a11yProps(index) {
   };
 }
 
-const RechargeTabs = () => {
+const ProfileTabs = () => {
   const [value, setValue] = useState(0);
   const [plans, setPlans] = useState([]);
   const [selectedCard, setSelectedCard] = useState(0);
   const { role } = useSelector((state) => state.auth);
   const classes = useStyles();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    get("/getPlan")
-      .then((res) => {
-        if (res.data.result) {
-          setPlans(res.data.data);
-        }
-      })
-      .catch((err) => {});
-  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -55,9 +44,9 @@ const RechargeTabs = () => {
               //  justifyContent: "flex-start",
             },
             "& .MuiTab-root": {
-              color: "#868AA9",
+              color: "#000",
               textTransform: "none",
-              background: " #EFE9FD",
+              background: "#ffff",
               width: "50%",
             },
 
@@ -77,13 +66,13 @@ const RechargeTabs = () => {
         >
           <Tab
             value={0}
-            label="Message Packs"
+            label=" My Profile"
             {...a11yProps(0)}
             className={classes.customTab}
           />
           <Tab
             value={1}
-            label="Video Call Packs"
+            label=" Payout"
             {...a11yProps(1)}
             className={classes.customTab}
           />
@@ -103,36 +92,16 @@ const RechargeTabs = () => {
           index={0}
           className={classes.CustomTabPanel}
         >
-          {plans.map((item, i) => (
-            <Grid xs={2} sm={4} md={4} key={i}>
-              <CustomCard
-                price={item.price}
-                description={item.messages}
-                text={"messages"}
-                isSelected={selectedCard === i}
-                onSelect={() => handleCardSelect(item, i)}
-              />
-            </Grid>
-          ))}
+          My Profile
         </CustomTabPanel>
         <CustomTabPanel
           value={value}
           index={1}
           className={classes.CustomTabPanel}
         >
-          {plans.map((item, i) => (
-            <Grid xs={2} sm={4} md={4} key={i}>
-              <CustomCard
-                price={item.price}
-                description={item.minutes}
-                text={"minutes"}
-                isSelected={selectedCard === i}
-                onSelect={() => handleCardSelect(i)}
-              />
-            </Grid>
-          ))}
+          Payout
         </CustomTabPanel>
-        <Box sx={{ width: "100%", justifyContent: "center", display: "flex" }}>
+        {/* <Box sx={{ width: "100%", justifyContent: "center", display: "flex" }}>
           <Button
             // onClick={onSelect}
             variant="contained"
@@ -140,10 +109,10 @@ const RechargeTabs = () => {
           >
             Confirm
           </Button>
-        </Box>
+        </Box> */}
       </Box>
     </>
   );
 };
 
-export default RechargeTabs;
+export default ProfileTabs;

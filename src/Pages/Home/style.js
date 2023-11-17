@@ -4,7 +4,6 @@ import ProfileImage from "../../Assets/images/male.jpg";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    height: "100%",
     maxWidth: "1300px",
     display: "flex",
     justifyContent: "space-between",
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       paddingTop: "0",
       gap: "30px",
-      justifyContent: "center",
+      justifyContent: "unset",
       alignItems: "center",
     },
 
@@ -33,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
   box_left: {
     width: "24%",
     minHeight: "580px",
-    height: "100%",
     display: "flex",
     border: "1px solid white",
     flexDirection: "column",
@@ -71,18 +69,20 @@ const useStyles = makeStyles((theme) => ({
   },
   box_mid: {
     width: "50%",
-    height: "92%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     padding: "50px 0px 0px 0px",
     justifyContent: "space-between",
+    maxHeight: "570px",
     [theme.breakpoints.down("md")]: {
       width: "80%",
       padding: "135px 0px 0px 0px",
+      maxHeight: "600px",
     },
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
+      width: "91%",
+      padding: "100px 0px 0px 0px",
     },
   },
   call_window: {

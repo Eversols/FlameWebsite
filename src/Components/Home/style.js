@@ -158,16 +158,16 @@ const useStyles = makeStyles((theme) => ({
   window: {
     width: "100%",
     maxWidth: "509px",
-    border: "1px solid white",
-    height: "100%",
-    maxHeight: "510px",
+    // border: "1px solid white",
+
+    // maxHeight: "510px",
     position: "relative",
-    backgroundColor: "rgba(255,255,255,0.3)",
+    // backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
     display: "flex",
     flexDirection: "column",
     [theme.breakpoints.down("md")]: {
-      maxHeight: "410px",
+      // maxHeight: "410px",
       maxWidth: "100%",
     },
 
@@ -195,6 +195,7 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down("md")]: {
         left: "25%", // Remove the left property
         right: "auto", // Add this property to move to the right side
+        bottom: 0,
       },
     },
     "& .swiper-button-next": {
@@ -215,6 +216,7 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down("md")]: {
         left: "auto", // Remove the left property
         right: "25%", // Add this property to move to the right side
+        bottom: 0,
       },
     },
     "& .swiper-button-prev:after": {
@@ -234,7 +236,7 @@ const useStyles = makeStyles((theme) => ({
         height: "400px",
       },
       [theme.breakpoints.down("sm")]: {
-        height: "285px",
+        height: "220px",
       },
     },
   },
@@ -364,7 +366,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   flexContainer: {
-    height: "100%",
     width: "100%",
     [theme.breakpoints.down("md")]: {
       display: "flex",
@@ -592,15 +593,31 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       height: "100%",
       backgroundColor: "red",
-      animation: "$slideInFromLeft 0.5s ease-in-out",
     },
   },
+
+  slideIn: {
+    animation: "slideInFromLeft 0.5s ease-in-out",
+  },
+  slideOut: {
+    animation: "slideOutToLeft 0.5s ease-in-out",
+  },
+
   "@keyframes slideInFromLeft": {
     "0%": {
       transform: "translateX(-100%)",
     },
     "100%": {
       transform: "translateX(0)",
+    },
+  },
+
+  "@keyframes slideOutToLeft": {
+    " 0%": {
+      transform: "translateX(0)",
+    },
+    "100%": {
+      transform: "translateX(-100)",
     },
   },
 }));
