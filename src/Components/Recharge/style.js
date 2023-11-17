@@ -39,6 +39,16 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "20px",
   },
 
+  detail_wrapper: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "6px",
+    marginBottom: "30px",
+    flexWrap: "wrap",
+  },
+
   cardBtn: {
     marginTop: 0,
     fontSize: 16,

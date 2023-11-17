@@ -4,7 +4,6 @@ import React from "react";
 
 const CustomTabPanel = (props) => {
   const { children, value, index, ...other } = props;
-  const gridStyle = { display: "flex", alignItems: "center", gap: "10px" };
 
   return (
     <div
@@ -14,16 +13,7 @@ const CustomTabPanel = (props) => {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Grid
-          container
-          // spacing={{ xs: 2, md: 3 }}
-          // columns={{ xs: 4, sm: 8, md: 12 }}
-          sx={gridStyle}
-        >
-          {children}
-        </Grid>
-      )}
+      {value === index && <>{children}</>}
     </div>
   );
 };

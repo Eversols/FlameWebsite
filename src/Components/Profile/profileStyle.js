@@ -22,11 +22,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   heading: {
-    color: "black",
+    color: "#333333",
     fontFamily: "Montserrat, sans-serif",
-    fontWeight: "bold",
-    wordSpacing: "3px",
-    marginTop: "15px",
+    fontWeight: 400,
+    fontSize: "14px",
+    marginBottom: "2px",
   },
   box_inner: {
     height: "80%",
@@ -56,20 +56,27 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   single_image: {
-    width: "120px",
-    height: "120px",
+    width: "100px",
+    height: "100px",
     backgroundColor: "rgba(255,255,255,0.4)",
-    borderRadius: "200px",
+    borderRadius: "50%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    [theme.breakpoints.down("md")]: {
-      borderRadius: "100px",
-      width: "70px",
-      height: "70px",
-    },
   },
+
+  single_image_circle: {
+    width: "110px",
+    height: "110px",
+    backgroundColor: "rgba(255,255,255,0.4)",
+    borderRadius: "50%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
   body_text: {
     color: "black",
     fontFamily: "Montserrat, sans-serif",
@@ -142,6 +149,43 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       width: "90%",
       fontSize: "11px",
+    },
+  },
+
+  input1: {
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+
+      "&:hover fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+      "&.Mui-focused fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+        outline: "none",
+      },
+      "&.Mui-disabled fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+
+      border: "none",
+      borderRadius: "10px",
+      backgroundColor:
+        "linear-gradient(0deg, #D8DADC, #D8DADC), linear-gradient(0deg, #FFFFFF, #FFFFFF)",
+      color: "#00000080",
+      width: "100%",
+      height: "45px",
+      "& .MuiOutlinedInput-input": {
+        padding: "18px 16px 18px 16px",
+        "&::placeholder": {
+          color: "#00000080",
+        },
+      },
     },
   },
 }));

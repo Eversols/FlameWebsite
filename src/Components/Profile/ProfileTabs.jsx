@@ -41,6 +41,13 @@ const ProfileTabs = () => {
               overflowX: "auto !important", // Use "auto" or "scroll" for scrolling
               maxWidth: "100%", // Set a maximum width
             },
+
+            "& .MuiTab-root .MuiButtonBase-root": {
+              // Your styles here for MuiButtonBase-root inside MuiTab-root
+              // For example:
+              maxWidth: "100%",
+            },
+
             "& .MuiTabs-flexContainer": {
               //  justifyContent: "flex-start",
             },
@@ -49,6 +56,7 @@ const ProfileTabs = () => {
               textTransform: "none",
               background: "#ffff",
               width: "50%",
+              maxWidth: "100%",
             },
 
             "& .MuiTabs-indicator": {

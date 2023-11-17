@@ -1,13 +1,29 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Box, Button, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import ProfileImage from "../../Assets/images/male.jpg";
 import ProfileModal from "../../Components/Profile/ProfileModal";
 import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
+
+const gridStyle = {
+  padding: "10px",
+  gap: "25px",
+  maxWidth: "550px",
+  justifyContent: "center",
+  display: "flex",
+};
 
 const ProfileForm = () => {
   const { id } = useParams();
@@ -95,140 +111,179 @@ const ProfileForm = () => {
   };
   return (
     <>
-      {id && (
-        <Box
-          sx={{ height: "92%", marginLeft: "12px", cursor: "pointer" }}
-          onClick={() => navigate(`/${role}/home`)}
-        >
-          <ArrowBackIcon color="black" />
-        </Box>
-      )}
-      <Container className={classes.container}>
-        <Typography variant="h4" className={classes.heading}>
-          Your profile
-        </Typography>
-        <Container className={classes.box_inner}>
-          <Box className={classes.box_left}>
-            <Box className={classes.image_container}>
-              {profile?.profileImage ? (
-                <Box className={classes.single_image}>
-                  <img
-                    src={`https://flame.bilalrugs.pk/livebk/public/uploads/${profile.profileImage}`}
-                    alt={`Image`}
-                    className={classes.single_image}
-                  />
-                </Box>
+      <Grid container sx={gridStyle}>
+        <Grid item xs={12} md={4}>
+          <Box className={classes.single_image_circle}>
+            <img
+              // src={`https://flame.bilalrugs.pk/livebk/public/uploads/${profile.profileImage}`}
+              src={ProfileImage}
+              alt={`Image`}
+              className={classes.single_image}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box></Box>
+          <Box></Box>
+          <Box></Box>
+        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        // spacing={{ xs: 2, md: 3 }}
+        // columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={gridStyle}
+      >
+        <Grid item xs={12} md={5.5}>
+          <Typography variant="h5" className={classes.heading}>
+            Ready to find your next?
+          </Typography>
+          <TextField
+            type="text"
+            name="displayName"
+            onChange={handleInputChange}
+            value={profile.displayName}
+            placeholder="Enter screen name"
+            className={classes.input1}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} md={5.5}>
+          <Typography variant="h5" className={classes.heading}>
+            Ready to find your next?
+          </Typography>
+          <TextField
+            type="text"
+            name="language"
+            onChange={handleInputChange}
+            value={profile.language}
+            placeholder="Select your language"
+            className={classes.input1}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} md={11.5}>
+          <Typography variant="h5" className={classes.heading}>
+            Ready to find your next?
+          </Typography>
+          <TextField
+            type="text"
+            name="age"
+            onChange={handleInputChange}
+            value={profile.age}
+            placeholder="How old are you?"
+            className={classes.input1}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} md={5.5}>
+          <Typography variant="h5" className={classes.heading}>
+            Ready to find your next?
+          </Typography>
+          <TextField
+            type="text"
+            name="profession"
+            onChange={handleInputChange}
+            value={profile.profession}
+            placeholder="What do you do?"
+            className={classes.input1}
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} md={5.5}>
+          <Typography variant="h5" className={classes.heading}>
+            Ready to find your next?
+          </Typography>
+          <TextField
+            type="text"
+            name="like"
+            onChange={handleInputChange}
+            value={profile.like}
+            placeholder="What do you like in a partner?"
+            className={classes.input1}
+            fullWidth
+          />
+        </Grid>
+        {/* <Container className={classes.container}>
+          <Container className={classes.box_inner}>
+            <Box className={classes.box_left}> 
+              <Box className={classes.image_container}>
+                {profile?.profileImage ? (
+                  <Box className={classes.single_image}>
+                    <img
+                      src={`https://flame.bilalrugs.pk/livebk/public/uploads/${profile.profileImage}`}
+                      alt={`Image`}
+                      className={classes.single_image}
+                    />
+                  </Box>
+                ) : (
+                  <Grid
+                    container
+                    className={classes.gridStyle}
+                    // spacing={{ xs: 2, md: 3 }}
+                    // columns={{ xs: 4, sm: 8, md: 12 }}
+                  >
+                    <>
+                      <Grid item xs={6} md={4}>
+                        <input
+                          type="file"
+                          id="additionalImages"
+                          name="images"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          style={{ display: "none" }}
+                        />
+                      </Grid>
+                      <label htmlFor="additionalImages">
+                        <Box className={classes.single_image}>
+                          <Typography
+                            variant="h6"
+                            className={classes.body_text}
+                          >
+                            Upload a picture
+                          </Typography>
+                        </Box>
+                      </label>
+                    </>
+                  </Grid>
+                )}
+              </Box>
+              {id ? (
+                <Button
+                  type="submit"
+                  onClick={confirmSubmit}
+                  variant="contained"
+                  className={classes.btn}
+                >
+                  Update
+                </Button>
               ) : (
-                <>
-                  <input
-                    type="file"
-                    id="additionalImages"
-                    name="images"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    style={{ display: "none" }}
-                  />
-                  <label htmlFor="additionalImages">
-                    <Box className={classes.single_image}>
-                      <Typography variant="h6" className={classes.body_text}>
-                        Upload a picture
-                      </Typography>
-                    </Box>
-                  </label>
-                </>
+                <Button
+                  type="submit"
+                  onClick={confirmSubmit}
+                  variant="contained"
+                  className={classes.btn}
+                >
+                  next
+                </Button>
               )}
             </Box>
-            {id ? (
-              <Button
-                type="submit"
-                onClick={confirmSubmit}
-                variant="contained"
-                className={classes.btn}
-              >
-                Update
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                onClick={confirmSubmit}
-                variant="contained"
-                className={classes.btn}
-              >
-                next
-              </Button>
-            )}
-          </Box>
-          <Container className={classes.box_mid}>
-            <Typography variant="paragraph" className={classes.percentage}>
-              {calculatePercentage()}%
-            </Typography>
-            <Box className={classes.box_midInner}>
-              <Box
-                className={classes.progress}
-                sx={{ height: `${calculatePercentage()}%` }}
-              ></Box>
-            </Box>
+            <Container className={classes.box_mid}>
+              <Typography variant="paragraph" className={classes.percentage}>
+                {calculatePercentage()}%
+              </Typography>
+              <Box className={classes.box_midInner}>
+                <Box
+                  className={classes.progress}
+                  sx={{ height: `${calculatePercentage()}%` }}
+                ></Box>
+              </Box>
+            </Container>
           </Container>
-          <Box className={classes.box_right}>
-            <input
-              type="text"
-              name="displayName"
-              value={profile.displayName}
-              placeholder="Enter screen name"
-              className={classes.input}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="language"
-              value={profile.language}
-              placeholder="Select your language"
-              className={classes.input}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="age"
-              value={profile.age}
-              placeholder="How old are you?"
-              className={classes.input}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="profession"
-              value={profile.profession}
-              placeholder="What do you do?"
-              className={classes.input}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="like"
-              value={profile.like}
-              placeholder="What do you like in a partner?"
-              className={classes.input}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="dislike"
-              value={profile.dislike}
-              placeholder="What do you dislike in a parnter?"
-              className={classes.input}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="outsideWork"
-              value={profile.outsideWork}
-              placeholder="What do you like to do outside work?"
-              className={classes.input}
-              onChange={handleInputChange}
-            />
-          </Box>
-        </Container>
-      </Container>
+        </Container>{" "}
+        */}
+      </Grid>
     </>
   );
 };

@@ -17,17 +17,7 @@ const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
   const classes = useStyles(isSelected);
   return (
     <Card className={classes.cardContainer}>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "6px",
-          marginBottom: "30px",
-          flexWrap: "wrap",
-        }}
-      >
+      <Box className={classes.detail_wrapper}>
         <IconButton onClick={onSelect}>
           {isSelected ? (
             <img src={colorCircle} className={classes.circleImage} />

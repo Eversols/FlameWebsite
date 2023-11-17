@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(5),
     },
   },
+  gridStyle: { gap: "10px" },
 }));
 
 export default useStyles;
