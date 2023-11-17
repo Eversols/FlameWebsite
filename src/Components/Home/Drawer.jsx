@@ -19,49 +19,13 @@ const Drawer = ({
   const navigate = useNavigate();
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "20px",
-        justifyContent: "center",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          width: "80%",
-          position: "absolute",
-          top: "20px",
-          gap: 2,
-          justifyContent: "space-between",
-        }}
-      >
+    <Box className={classes.drawerContainer}>
+      <Box className={classes.drawer_header_wrapper}>
         <img src={drawerLogo} />
         <img src={drawerCross} onClick={handleDrawerClick} />
       </Box>
-      <Box
-        sx={{
-          width: "80%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "fex-start",
-          gap: "40px",
-          justifyContent: "center",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            gap: "60px",
-          }}
-        >
+      <Box className={classes.drawer_action_container}>
+        <Box className={classes.drawer_text}>
           <Box textAlign="center">
             <Typography
               variant="body1"

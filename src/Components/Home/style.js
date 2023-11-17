@@ -654,6 +654,39 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#dc697c",
     },
   },
+
+  drawerContainer: {
+    width: "100%",
+    height: "100%",
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "20px",
+    justifyContent: "center",
+  },
+  drawer_header_wrapper: {
+    display: "flex",
+    width: "80%",
+    position: "absolute",
+    top: "20px",
+    gap: 2,
+    justifyContent: "space-between",
+  },
+  drawer_action_container: {
+    width: "80%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "fex-start",
+    gap: "40px",
+    justifyContent: "center",
+  },
+  drawer_text: {
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    gap: "60px",
+  },
 }));
 
 export default useStyles;
