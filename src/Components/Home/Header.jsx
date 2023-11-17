@@ -76,6 +76,7 @@ const Header = () => {
               recharge={recharge}
               role={role}
               userData={userData}
+              logout={logout}
             />
           </div>
         )}

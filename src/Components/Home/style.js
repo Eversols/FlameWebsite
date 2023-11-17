@@ -586,13 +586,15 @@ const useStyles = makeStyles((theme) => ({
   },
 
   animatedDrawer: {
+    display: "none",
     [theme.breakpoints.down("md")]: {
+      display: "flex",
       position: "fixed",
       top: 0,
       left: 0,
       width: "100%",
       height: "100%",
-      backgroundColor: "red",
+      backgroundColor: " #FB1F43",
     },
   },
 
@@ -618,6 +620,38 @@ const useStyles = makeStyles((theme) => ({
     },
     "100%": {
       transform: "translateX(-100)",
+    },
+  },
+
+  recharge_drawer_btn: {
+    backgroundColor: "#ffff",
+    color: "#FB1F43",
+    borderRadius: "24px",
+    fontWeight: 700,
+    maxWidth: "100px",
+    padding: "6px 14px 6px 14px",
+    textTransform: "capitalize",
+    [theme.breakpoints.down("md")]: {
+      padding: "4px 12px",
+    },
+    "&:hover": {
+      backgroundColor: "#dc697c",
+    },
+  },
+  payout_drawer_btn: {
+    color: "#ffff",
+    fontWeight: 400,
+    maxWidth: "100px",
+    lineHeight: "24px",
+    border: "1px solid #ffff",
+    borderRadius: "24px",
+    padding: "6px 14px 6px 14px",
+    textTransform: "capitalize",
+    [theme.breakpoints.down("md")]: {
+      padding: "4px 12px",
+    },
+    "&:hover": {
+      backgroundColor: "#dc697c",
     },
   },
 }));

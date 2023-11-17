@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { get } from "../../Services/api";
 import CustomTabPanel from "./CustomTabPanel";
+import ProfileForm from "./ProfileForm";
 import useStyles from "./style";
 
 function a11yProps(index) {
@@ -92,7 +93,7 @@ const ProfileTabs = () => {
           index={0}
           className={classes.CustomTabPanel}
         >
-          My Profile
+          <ProfileForm />
         </CustomTabPanel>
         <CustomTabPanel
           value={value}
