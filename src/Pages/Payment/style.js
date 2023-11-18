@@ -22,28 +22,46 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   heading: {
-    color: "black",
+    color: "#333333",
     fontFamily: "Montserrat, sans-serif",
-    fontWeight: "bold",
-    marginTop: "15px",
-    [theme.breakpoints.down("md")]: {
-      fontSize: "40px",
-    },
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "16px",
-    },
+    fontWeight: 400,
+    fontSize: "14px",
+    marginBottom: "2px",
   },
-  input: {
-    color: "black",
-    width: "85%",
-    height: "50px",
-    borderRadius: "15px",
-    backgroundColor: "rgba(255,255,255,0.3)",
-    border: "none",
-    textAlign: "center",
-    marginBottom: "15px",
-    "&:focus": {
-      outline: "none",
+  input1: {
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+
+      "&:hover fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+      "&.Mui-focused fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+        outline: "none",
+      },
+      "&.Mui-disabled fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+
+      border: "none",
+      borderRadius: "10px",
+      backgroundColor:
+        "linear-gradient(0deg, #D8DADC, #D8DADC), linear-gradient(0deg, #FFFFFF, #FFFFFF)",
+      color: "#00000080",
+      width: "100%",
+      height: "45px",
+      "& .MuiOutlinedInput-input": {
+        padding: "18px 16px 18px 16px",
+        "&::placeholder": {
+          color: "#00000080",
+        },
+      },
     },
   },
   inputOne: {
@@ -92,6 +110,10 @@ const useStyles = makeStyles((theme) => ({
     "100%": {
       transform: "scale(1)",
     },
+  },
+
+  download: {
+    maxWidth: "150px",
   },
 }));
 

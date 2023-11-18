@@ -3,6 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   TextField,
@@ -16,12 +17,19 @@ import ProfileModal from "../../Components/Profile/ProfileModal";
 import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
-
 const gridStyle = {
-  padding: "10px",
+  padding: "10px 20px",
   gap: "25px",
-  maxWidth: "550px",
+  maxWidth: "600px",
   justifyContent: "center",
+  display: "flex",
+};
+
+const gridContainer = {
+  padding: " 10px 20px",
+  gap: "25px",
+  maxWidth: "600px",
+  justifyContent: "space-between",
   display: "flex",
 };
 
@@ -31,6 +39,7 @@ const ProfileForm = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
+  const progressValue = 50;
   //   console.log('qqqqqqqqqqqqqqq',userData)
   const [profile, setProfile] = useState({
     profileImage: userData?.profileImage ?? "",
@@ -111,22 +120,98 @@ const ProfileForm = () => {
   };
   return (
     <>
-      <Grid container sx={gridStyle}>
-        <Grid item xs={12} md={4}>
+      <Grid container sx={gridContainer}>
+        <Box sx={{ display: "flex", width: "100%", alignItems: "self-start" }}>
           <Box className={classes.single_image_circle}>
-            <img
-              // src={`https://flame.bilalrugs.pk/livebk/public/uploads/${profile.profileImage}`}
-              src={ProfileImage}
-              alt={`Image`}
-              className={classes.single_image}
-            />
+            {/* <CircularProgress variant="determinate" value={75} /> */}
+
+            <div style={{ position: "relative", width: 100, height: 100 }}>
+              <Typography variant="paragraph" className={classes.percentage}>
+                {calculatePercentage()}%
+              </Typography>
+              <img
+                // src={`https://flame.bilalrugs.pk/livebk/public/uploads/${profile.profileImage}`}
+                src={ProfileImage}
+                alt={`Image`}
+                className={classes.single_image}
+              />
+              {/* CircularProgress for the remaining area */}
+              <CircularProgress
+                variant="determinate"
+                value={100} // Value set to 100 for the full circle
+                size={110}
+                thickness={1.5}
+                sx={{
+                  color: "#DADEE6", // Color for the circular track
+                  position: "absolute",
+                  opacity: 0.3, // Adjust opacity to suit your design
+                }}
+              />
+
+              {/* CircularProgress for the progress */}
+              <CircularProgress
+                variant="determinate"
+                value={progressValue}
+                size={110}
+                thickness={1.7}
+                sx={{
+                  color: (theme) =>
+                    progressValue <= 50 ? " #FB1F43" : " #DADEE6", // Color for the progress area
+                  position: "absolute",
+                }}
+              />
+            </div>
           </Box>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
-        </Grid>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              maxWidth: "400px",
+              flexDirection: "column",
+            }}
+          >
+            <Typography variant="paragraph" sx={{ fontWeight: 900 }}>
+              upload
+            </Typography>
+            <Typography variant="paragraph" sx={{ marginBottom: "15px" }}>
+              Upto 2 images &lt; 1mb each 1 video &lt; 20 mb
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                width: "95%",
+                gap: "10px",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "90px",
+                  height: "90px",
+                  background: "red",
+                }}
+              ></Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "90px",
+                  height: "90px",
+                  background: "red",
+                }}
+              ></Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "130px",
+                  height: "90px",
+                  background: "red",
+                }}
+              ></Box>
+            </Box>
+          </Box>
+        </Box>
       </Grid>
 
       <Grid

@@ -3,6 +3,7 @@ import { Box, Button, Grid, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Payment from "../../Pages/Payment/index";
 import { get } from "../../Services/api";
 import CustomTabPanel from "./CustomTabPanel";
 import ProfileForm from "./ProfileForm";
@@ -91,7 +92,7 @@ const ProfileTabs = () => {
         sx={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           flexDirection: "column",
           height: "100%",
         }}
@@ -108,7 +109,7 @@ const ProfileTabs = () => {
           index={1}
           className={classes.CustomTabPanel}
         >
-          Payout
+          <Payment />
         </CustomTabPanel>
         {/* <Box sx={{ width: "100%", justifyContent: "center", display: "flex" }}>
           <Button
