@@ -15,7 +15,7 @@ import { post } from "../../Services/api";
 import useStyles from "./style";
 
 const gridStyle = {
-  padding: " 30px 10px",
+  padding: " 10px 20px",
   gap: "25px",
   maxWidth: "600px",
   justifyContent: "center",
