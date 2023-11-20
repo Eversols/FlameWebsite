@@ -78,7 +78,7 @@ const index = () => {
     >
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>
-          Ready to find your next?
+          Country of receiving bank
         </Typography>
         <TextField
           type="text"
@@ -88,14 +88,14 @@ const index = () => {
             setError("");
             setCardNo(e.target.value);
           }}
-          placeholder="Enter your card No"
+          placeholder="your text"
           className={classes.input1}
           fullWidth
         />
       </Grid>
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>
-          Ready to find your next?
+          Currency of receiving bank
         </Typography>
         <TextField
           type="text"
@@ -104,18 +104,19 @@ const index = () => {
             setError("");
             setCardExpire(e.target.value);
           }}
-          placeholder="Enter your card expire"
+          placeholder="your text"
           className={classes.input1}
           fullWidth
         />
       </Grid>
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>
-          Ready to find your next?
+          Bank name
         </Typography>
         <TextField
           type="text"
           value={cvvNo}
+          placeholder="your text"
           onChange={(e) => {
             setError("");
             setCvvNo(e.target.value);
@@ -127,50 +128,51 @@ const index = () => {
       <Grid item xs={12} md={5.5}></Grid>
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>
-          Ready to find your next?
+          First name
         </Typography>
         <TextField
           type="text"
           value={cardAddress}
           onChange={(e) => setCardAddress(e.target.value)}
-          placeholder="Enter your card address"
+          placeholder="your text"
           className={classes.input1}
           fullWidth
         />
       </Grid>
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>
-          Ready to find your next?
+          Last name
         </Typography>
         <TextField
           type="text"
           value={cardAddress}
           onChange={(e) => setCardAddress(e.target.value)}
-          placeholder="Enter your card address"
+          placeholder="your text"
           className={classes.input1}
           fullWidth
         />
       </Grid>
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>
-          Ready to find your next?
+          Phone number
         </Typography>
         <TextField
           type="text"
           value={cardAddress}
           onChange={(e) => setCardAddress(e.target.value)}
-          placeholder="Enter your card address"
+          placeholder="your text"
           className={classes.input1}
           fullWidth
         />
       </Grid>
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>
-          Ready to find your next?
+          Card number
         </Typography>
         <TextField
           type="text"
           value={cvvNo}
+          placeholder="your text"
           onChange={(e) => {
             setError("");
             setCvvNo(e.target.value);
@@ -180,8 +182,15 @@ const index = () => {
         />
       </Grid>
       <Grid itemxs={12} md={5.5}>
-        <Box sx={{ display: "flex", width: "100%", gap: "10px" }}>
-          <Typography variant="h5" className={classes.heading}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            gap: "10px",
+            maxWidth: "200px",
+          }}
+        >
+          <Typography variant="h5" className={classes.heading_file}>
             Upload a Passport for proof an identity
           </Typography>
           <img src={downloadFile} className={classes.dowload} />

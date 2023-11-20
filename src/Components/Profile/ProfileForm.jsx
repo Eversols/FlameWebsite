@@ -19,7 +19,7 @@ import { getProfile } from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
 const gridStyle = {
   padding: "10px 20px",
-  gap: "25px",
+  gap: "15px 25px",
   maxWidth: "600px",
   justifyContent: "center",
   display: "flex",
@@ -222,70 +222,86 @@ const ProfileForm = () => {
       >
         <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.heading}>
-            Ready to find your next?
+            Screen Name
           </Typography>
           <TextField
             type="text"
             name="displayName"
             onChange={handleInputChange}
             value={profile.displayName}
-            placeholder="Enter screen name"
+            placeholder="your text"
             className={classes.input1}
             fullWidth
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.heading}>
-            Ready to find your next?
+            Region
           </Typography>
           <TextField
             type="text"
             name="language"
             onChange={handleInputChange}
             value={profile.language}
-            placeholder="Select your language"
+            placeholder="your text"
             className={classes.input1}
             fullWidth
           />
         </Grid>
         <Grid item xs={12} md={11.5}>
           <Typography variant="h5" className={classes.heading}>
-            Ready to find your next?
+            About you
           </Typography>
-          <TextField
-            type="text"
-            name="age"
-            onChange={handleInputChange}
-            value={profile.age}
-            placeholder="How old are you?"
-            className={classes.input1}
-            fullWidth
+          <textarea
+            placeholder="Label Placeholder"
+            name="currentaddress"
+            className={classes.placeholderStyle}
+            // value={values.currentaddress || ""}
+            // onChange={handleChange}
+            style={{
+              width: "100%",
+              height: "90px",
+              resize: "none",
+              padding: "11.5px 0px 11.5px 12px",
+              border: "none",
+              borderRadius: "6px",
+
+              backgroundColor: "#F2F2F2",
+              color: "#828282",
+              fontSize: "14px",
+              fontWeight: 400,
+              // fontFamily: "inherit",
+              // background: !edit && !add ? "white" : "white",
+              outline: "none",
+              // color:
+              //   !edit && !add ? "rgba(141, 141, 141, 141)" : "rgba(0, 0, 0, 1)",
+            }}
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.heading}>
-            Ready to find your next?
+            Three things you love
           </Typography>
           <TextField
             type="text"
             name="profession"
             onChange={handleInputChange}
             value={profile.profession}
-            placeholder="What do you do?"
+            // placeholder="What do you do?"
             className={classes.input1}
             fullWidth
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.heading}>
-            Ready to find your next?
+            Three things that you hate
           </Typography>
           <TextField
             type="text"
             name="like"
             onChange={handleInputChange}
             value={profile.like}
-            placeholder="What do you like in a partner?"
+            // placeholder="What do you like in a partner?"
             className={classes.input1}
             fullWidth
           />

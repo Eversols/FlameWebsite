@@ -156,36 +156,51 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderRadius: "10px",
-        border: "1px solid #D8DADC",
+        border: "none",
       },
 
       "&:hover fieldset": {
         borderRadius: "10px",
-        border: "1px solid #D8DADC",
+        border: "none",
       },
       "&.Mui-focused fieldset": {
         borderRadius: "10px",
-        border: "1px solid #D8DADC",
+        border: "none",
         outline: "none",
       },
       "&.Mui-disabled fieldset": {
         borderRadius: "10px",
-        border: "1px solid #D8DADC",
+        border: "none",
       },
 
       border: "none",
-      borderRadius: "10px",
-      backgroundColor:
-        "linear-gradient(0deg, #D8DADC, #D8DADC), linear-gradient(0deg, #FFFFFF, #FFFFFF)",
-      color: "#00000080",
+      borderRadius: "6px",
+
+      backgroundColor: "#F2F2F2",
+      color: "#828282",
+      fontSize: "14px",
+      fontWeight: 400,
       width: "100%",
-      height: "45px",
+      height: "40px",
       "& .MuiOutlinedInput-input": {
         padding: "18px 16px 18px 16px",
         "&::placeholder": {
-          color: "#00000080",
+          color: "#828282",
         },
       },
+    },
+  },
+
+  placeholderStyle: {
+    "&::placeholder": {
+      fontSize: "13.5px",
+      letterSpacing: "inherit",
+      color: "#aaaaaa",
+      textAlign: "left",
+      fontFamily: "Montserrat, sans-serif",
+      fontWeight: 400,
+      opacity: 0.8,
+      /* Additional placeholder styles if needed */
     },
   },
 }));
