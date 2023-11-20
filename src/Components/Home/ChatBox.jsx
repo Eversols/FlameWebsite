@@ -81,29 +81,16 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
       <IconButton
         color="primary"
         onClick={handleToggleChatBox}
-        style={{
-          position: "fixed",
-          bottom: 20,
-          right: 20,
-          background: "#ffff",
-          height: "53px",
-          zIndex: 1,
-        }}
+        className={classes.chatbox_container}
       >
         <img src={ChatIcon} />
       </IconButton>
+
       {/* // when not open */}
       <IconButton
         color="primary"
         onClick={handleToggleChatBox}
-        style={{
-          position: "fixed",
-          bottom: 20,
-          left: 20,
-          background: "#ffff",
-          height: "53px",
-          zIndex: 1,
-        }}
+        className={classes.ideaIcon}
       >
         <img src={ideaIcon} className={classes.ideaImage} alt="no data" />
       </IconButton>
@@ -148,14 +135,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
 
       {showChatBox && (
         <Paper elevation={3} className={classes.paper}>
-          <Box
-            sx={{
-              width: "100%",
-              maxWidth: "90%",
-              display: "flex",
-              marginTop: "10px",
-            }}
-          >
+          <Box className={classes.chat_wrapper}>
             <Box
               className={classes.single_chat_image}
               style={{
@@ -174,7 +154,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
                 }}
               >
                 <Typography variant="h5" className={classes.history_name}>
-                  hhh
+                  name
                 </Typography>
                 <Box display="flex" justifyContent="start" alignItems="center">
                   <Box className={classes.online_indicator} />

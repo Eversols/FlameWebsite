@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     // padding: "0px 92px",
     zIndex: 2,
+    [theme.breakpoints.down("sm")]: {
+      boxShadow: "unset",
+    },
   },
 
   marginHandler: {
@@ -103,8 +106,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "start",
     alignItems: "center",
     flexDirection: "row",
-    boxSshadow:
-      "0px 4px 6px -1px rgba(0, 0, 0, 0.2), 0px 2px 4px 0px rgba(0, 0, 0, 0.14), 0px 4px 6px -1px rgba(0, 0, 0, 0.12)",
+    // boxShadow:
+    //   "0px 4px 6px -1px rgba(0, 0, 0, 0.2), 0px 2px 4px 0px rgba(0, 0, 0, 0.14), 0px 4px 6px -1px rgba(0, 0, 0, 0.12)",
 
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -324,7 +327,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "75vh",
     bottom: "5%",
-    right: "10%",
+    right: "5%",
     overflow: "hidden",
     position: "fixed",
     background: "#ffff",
@@ -333,8 +336,26 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     fontFamily: "Montserrat, sans-serif",
-    zIndex: 1,
+    zIndex: 2,
     borderRadius: "24px",
+    [theme.breakpoints.down("sm")]: {
+      height: "93vh",
+      top: "7%",
+      bottom: "unset",
+      maxWidth: "100%",
+      right: "unset",
+      borderRadius: "0px",
+      boxShadow: "unset",
+    },
+    [theme.breakpoints.down("380")]: {
+      height: "92vh",
+      top: "8%",
+      bottom: "unset",
+      maxWidth: "100%",
+      right: "unset",
+      borderRadius: "0px",
+      boxShadow: "unset",
+    },
   },
   msg_window: {
     width: "100%",
@@ -502,6 +523,17 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "45px",
   },
 
+  ideaIcon: {
+    position: "fixed",
+    bottom: 20,
+    left: 20,
+    background: "#ffff",
+    height: "53px",
+    zIndex: 1,
+    [theme.breakpoints.down("sm")]: {
+      left: "25%",
+    },
+  },
   history_actions: {
     display: "flex",
     alignItems: "center",
@@ -686,6 +718,29 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     alignItems: "center",
     gap: "60px",
+  },
+
+  chatbox_container: {
+    position: "fixed",
+    bottom: 20,
+    right: 20,
+    background: "#ffff",
+    height: "53px",
+    zIndex: 1,
+    [theme.breakpoints.down("sm")]: {
+      right: "25%",
+    },
+  },
+
+  chat_wrapper: {
+    width: "100%",
+    maxWidth: "90%",
+    display: "flex",
+    marginTop: "10px",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "100%",
+      padding: "0 6px",
+    },
   },
 }));
 

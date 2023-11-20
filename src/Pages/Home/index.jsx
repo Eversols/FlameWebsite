@@ -12,6 +12,7 @@ import Header from "../../Components/Home/Header";
 import useStyles from "./style";
 
 import CallEndIcon from "@mui/icons-material/CallEnd";
+import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Gift1 from "../../Assets/images/Gifts/gift_1.png";
@@ -32,6 +33,7 @@ import profile from "../../Assets/images/profile.png";
 import ChatBox from "../../Components/Home/ChatBox";
 import ChatHistory from "../../Components/Home/ChatHistory";
 import IncomingCallDialog from "../../Components/Home/IncomingCallDialog";
+import InfoModal from "../../Components/Home/InfoModal";
 import MainScreenSlider from "../../Components/Home/MainScreenSlider";
 import WorningDilog from "../../Components/Home/WorningDialog";
 import RechargeModal from "../../Components/Recharge/RechargeModal";
@@ -48,6 +50,7 @@ const index = () => {
     rechargeModel,
   } = useSelector((state) => state.auth);
   const [modelData, setModelData] = useState(null);
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [models, setModels] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [currentCall, setCurrentCall] = useState(null);
@@ -159,16 +162,70 @@ const index = () => {
     callService.toggleMic();
   };
 
-  console.log("HHHHHHHHHHHH", currentCall);
+  const userInfo = () => {
+    return (
+      <Paper className={classes.box_left_info}>
+        <Box className={classes.avatar_box_profile}>
+          <Container
+            sx={{
+              backgroundImage: `url(${
+                modelData?.userData?.profileImage
+                  ? `https://flame.bilalrugs.pk/livebk/public/uploads/${modelData.userData.profileImage}`
+                  : ProfileImage
+              })`,
+            }}
+            className={classes.single_image_profile}
+          ></Container>
+          <Typography variant="h6" className={classes.profile_answer_name}>
+            {modelData?.metaData?.displayName || "Nimra Rehman"}
+          </Typography>
+          <Typography variant="h6" className={classes.profile_question_text}>
+            city
+          </Typography>
 
-  return (
-    <>
-      {/* <img src={flameLogo} className={classes.logo} /> */}
-      <img src={bgHeart} className={classes.heart_bg} />
-      <img src={bgBlock} className={classes.block_bg} />
+          <Typography variant="h6" className={classes.profile_answer_name}>
+            About me
+          </Typography>
 
-      <Header />
+          <Typography variant="h6" className={classes.profile_question_text}>
+            What do I like to do outside work. How old am I. What do I do What
+            What do I dislike in a partner. do I like in a partner
+          </Typography>
+          <Typography variant="h6" className={classes.profile_answer}>
+            Things I Love
+          </Typography>
+          <Box className={classes.btnContainer}>
+            {loveLabels.map((label, index) => (
+              <Button
+                key={index}
+                variant="contained"
+                className={classes.btn_love}
+              >
+                {label}
+              </Button>
+            ))}
+          </Box>
+          <Typography variant="h6" className={classes.profile_answer}>
+            Things I Hate
+          </Typography>
+          <Box className={classes.btnContainer}>
+            {hateLabels.map((label, index) => (
+              <Button
+                key={index}
+                variant="contained"
+                className={classes.btn_hate}
+              >
+                {label}
+              </Button>
+            ))}
+          </Box>
+        </Box>
+      </Paper>
+    );
+  };
 
+  const codeDivider = () => {
+    return (
       <Box className={classes.container}>
         <Paper className={classes.box_left}>
           <Typography
@@ -249,64 +306,29 @@ const index = () => {
             />
           </Box>
         </Paper>
-        <Paper className={classes.box_left}>
-          <Box className={classes.avatar_box_profile}>
-            <Container
-              sx={{
-                backgroundImage: `url(${
-                  modelData?.userData?.profileImage
-                    ? `https://flame.bilalrugs.pk/livebk/public/uploads/${modelData.userData.profileImage}`
-                    : ProfileImage
-                })`,
-              }}
-              className={classes.single_image_profile}
-            ></Container>
-            <Typography variant="h6" className={classes.profile_answer_name}>
-              {modelData?.metaData?.displayName || "Nimra Rehman"}
-            </Typography>
-            <Typography variant="h6" className={classes.profile_question_text}>
-              city
-            </Typography>
-
-            <Typography variant="h6" className={classes.profile_answer_name}>
-              About me
-            </Typography>
-
-            <Typography variant="h6" className={classes.profile_question_text}>
-              What do I like to do outside work. How old am I. What do I do What
-              What do I dislike in a partner. do I like in a partner
-            </Typography>
-            <Typography variant="h6" className={classes.profile_answer}>
-              Things I Love
-            </Typography>
-            <Box className={classes.btnContainer}>
-              {loveLabels.map((label, index) => (
-                <Button
-                  key={index}
-                  variant="contained"
-                  className={classes.btn_love}
-                >
-                  {label}
-                </Button>
-              ))}
-            </Box>
-            <Typography variant="h6" className={classes.profile_answer}>
-              Things I Hate
-            </Typography>
-            <Box className={classes.btnContainer}>
-              {hateLabels.map((label, index) => (
-                <Button
-                  key={index}
-                  variant="contained"
-                  className={classes.btn_hate}
-                >
-                  {label}
-                </Button>
-              ))}
-            </Box>
-          </Box>
-        </Paper>
+        {isSmallScreen === true ? (
+          <InfoModal userInfo={userInfo} />
+        ) : (
+          userInfo()
+        )}
       </Box>
+    );
+  };
+
+  return (
+    <>
+      {/* <img src={flameLogo} className={classes.logo} /> */}
+      <img src={bgHeart} className={classes.heart_bg} />
+      <img src={bgBlock} className={classes.block_bg} />
+      <Header />
+
+      {isSmallScreen === false ? (
+        <>{codeDivider()}</>
+      ) : isSmallScreen === true && showChatBox !== true ? (
+        <>{codeDivider()}</>
+      ) : isSmallScreen === true && showChatBox === true ? (
+        <></>
+      ) : null}
 
       <ChatBox
         setDialog={setDialog}
@@ -330,3 +352,7 @@ const index = () => {
 };
 
 export default index;
+
+const ChatHistorySection = ({ setShowChatBox, handleMakeAudioCall }) => (
+  <Paper className={classes.box_left}>{/* ... */}</Paper>
+);

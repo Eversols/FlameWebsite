@@ -45,6 +45,28 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  box_left_info: {
+    width: "24%",
+    minHeight: "580px",
+    display: "flex",
+    border: "1px solid white",
+    flexDirection: "column",
+    alignItems: "start",
+    justifyContent: "start",
+    borderRadius: "24px",
+    padding: "24px 32px",
+    boxShadow: "5px 22px 83px -12px #0000001A",
+    [theme.breakpoints.down("md")]: {
+      width: "80%",
+      minHeight: "450px",
+      margin: "0 auto 70px auto",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      margin: 0,
+    },
+  },
+
   box_left_history: {
     width: "80%",
     height: "200px",
