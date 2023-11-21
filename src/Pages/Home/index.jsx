@@ -27,8 +27,8 @@ import CallEnd from "../../Assets/images/call_action_end.png";
 import CallNext from "../../Assets/images/call_action_next.png";
 import CallPrev from "../../Assets/images/call_action_prev.png";
 import flameLogo from "../../Assets/images/flame logo.svg";
-import logoutIcon from "../../Assets/images/logout.png";
 import ProfileImage from "../../Assets/images/girl-profile.png";
+import logoutIcon from "../../Assets/images/logout.png";
 import profile from "../../Assets/images/profile.png";
 import ChatBox from "../../Components/Home/ChatBox";
 import ChatHistory from "../../Components/Home/ChatHistory";
@@ -36,8 +36,10 @@ import IncomingCallDialog from "../../Components/Home/IncomingCallDialog";
 import InfoModal from "../../Components/Home/InfoModal";
 import MainScreenSlider from "../../Components/Home/MainScreenSlider";
 import WorningDilog from "../../Components/Home/WorningDialog";
+import CardPaymentModal from "../../Components/Payment/CardPayment";
+import PayoutModal from "../../Components/Payment/PayoutModal";
+import ProfileModal from "../../Components/Profile/ProfileModal";
 import RechargeModal from "../../Components/Recharge/RechargeModal";
-import ProfileModal from "../../Components/Profile/ProfileModal"
 import { get } from "../../Services/api";
 import { getAllUsers } from "../../Services/store/authSlice";
 import CallService from "../../Services/voximplant/call";
@@ -322,7 +324,6 @@ const index = () => {
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
       <Header />
-
       {isSmallScreen === false ? (
         <>{codeDivider()}</>
       ) : isSmallScreen === true && showChatBox !== true ? (
@@ -348,7 +349,7 @@ const index = () => {
         />
       )}
       <RechargeModal />
-      <ProfileModal/>
+      <ProfileModal />
     </>
   );
 };

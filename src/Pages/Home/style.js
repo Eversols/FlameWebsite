@@ -3,7 +3,7 @@ import ProfileImage from "../../Assets/images/male.jpg";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: "82%",
+    width: "100%",
     maxWidth: "1300px",
     display: "flex",
     justifyContent: "space-between",
@@ -102,6 +102,7 @@ const useStyles = makeStyles((theme) => ({
       width: "80%",
       padding: "135px 0px 0px 0px",
       maxHeight: "600px",
+      minHeight: "unset",
     },
     [theme.breakpoints.down("sm")]: {
       width: "91%",
@@ -181,7 +182,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "24px",
     fontWeight: "700",
   },
-  profile_heading:{
+  profile_heading: {
     color: "#000000",
     marginTop: "12px",
     fontSize: "16px",
@@ -237,13 +238,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#868AA9",
     fontSize: "16px",
     borderBottom: "1px solid rgba(255,255,255,0.3)",
-    fontWeight: 400
+    fontWeight: 400,
   },
   profile_text: {
     color: "#868AA9",
     fontSize: "14px",
     borderBottom: "1px solid rgba(255,255,255,0.3)",
-    fontWeight: 400
+    fontWeight: 400,
   },
   block_bg: {
     bottom: 0,

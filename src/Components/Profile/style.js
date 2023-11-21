@@ -63,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   gridStyle: { gap: "10px" },
+  CustomTabPanel: {
+    padding: "15px 0px",
+    margin: "10px 0px",
+  },
 }));
 
 export default useStyles;

@@ -5,7 +5,6 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileModel } from "../../Services/store/authSlice";
-import ProfileTabs from "./ProfileTabs";
 
 // ---------Component style------------
 
@@ -19,7 +18,7 @@ const mainContainer = {
   width: "100%",
 };
 
-const PayoutModal = () => {
+const CardPaymentModal = () => {
   const { profileModel } = useSelector((state) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -36,10 +35,10 @@ const PayoutModal = () => {
       onClose={handleClose}
       sx={{
         "& .MuiDialog-paper": {
-          width: { xs: "280px", sm: "450px", md: "650px" },
+          width: { xs: "280px", sm: "450px", md: "550px" },
           maxWidth: "900px",
-          maxHeight: "600px",
-          minHeight: "500px",
+          maxHeight: "500px",
+          minHeight: "400px",
           height: "100%",
           background: "#fff",
           boxShadow: "none",
@@ -54,16 +53,31 @@ const PayoutModal = () => {
       <Box
         sx={{
           position: "absolute",
-          right: 9,
-          top: 8,
+          background: "#ffff",
           cursor: "pointer",
           zIndex: 1,
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          p: "10px",
         }}
         data-cy={`activity-close`}
         onClick={handleClose}
       >
+        <Typography
+          variant="body1"
+          component="span"
+          color="#000"
+          fontFamily="Inter, sans-serif"
+          fontWeight={700}
+          ml={2}
+        >
+          Card Payment
+        </Typography>
+
         <IconButton sx={{ width: "35px", height: "35px" }}>
-          <CloseIcon sx={{ fill: "#AAAAAA", width: "20px" }} />
+          <CloseIcon sx={{ fill: "#AAAAA", width: "20px" }} />
         </IconButton>
       </Box>
 
@@ -72,4 +86,4 @@ const PayoutModal = () => {
   );
 };
 
-export default PayoutModal;
+export default CardPaymentModal;

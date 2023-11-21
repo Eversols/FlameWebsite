@@ -19,13 +19,18 @@ import profile from "../../Assets/images/profile.png";
 import VideoCallIcon from "../../Assets/images/video_call.png";
 import { post } from "../../Services/api";
 import { persistor } from "../../Services/store";
-import { setRechargeModel, setProfileModel } from "../../Services/store/authSlice";
+import {
+  setProfileModel,
+  setRechargeModel,
+} from "../../Services/store/authSlice";
 import { voxService } from "../../Services/voximplant";
 import Drawer from "./Drawer";
 import useStyles from "./style";
 
 const Header = () => {
-  const { role, userData, rechargeModel, profileModel } = useSelector((state) => state.auth);
+  const { role, userData, rechargeModel, profileModel } = useSelector(
+    (state) => state.auth
+  );
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -164,7 +169,7 @@ const Header = () => {
                 className={classes.payout_btn}
                 type="button"
                 variant="outlined"
-                onClick={() => navigate(`/${role}/recharge`)}
+                onClick={profileHandle}
               >
                 Payout
               </Button>
