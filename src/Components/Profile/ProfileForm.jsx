@@ -17,6 +17,10 @@ import ProfileModal from "../../Components/Profile/ProfileModal";
 import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
+import img1 from '../../Assets/images/img1.png'
+import img2 from '../../Assets/images/img2.png'
+import video1 from '../../Assets/images/video1.png'
+
 const gridStyle = {
   padding: "10px 20px",
   gap: "15px 25px",
@@ -170,13 +174,14 @@ const ProfileForm = () => {
               flexDirection: "column",
             }}
           >
-            <Typography variant="paragraph" sx={{ fontWeight: 900 }}>
+          <Box sx={{display: 'flex', flexDirection: 'column', marginBottom: '12px'}}>
+            <Typography variant="paragraph" className={classes.heading}>
               upload
             </Typography>
-            <Typography variant="paragraph" sx={{ marginBottom: "15px" }}>
+            <Typography variant="paragraph" className={classes.subHeading}>
               Upto 2 images &lt; 1mb each 1 video &lt; 20 mb
             </Typography>
-
+            </Box>
             <Box
               sx={{
                 display: "flex",
@@ -190,25 +195,27 @@ const ProfileForm = () => {
                   width: "100%",
                   maxWidth: "90px",
                   height: "90px",
-                  background: "red",
+                  // background: "red",
                 }}
-              ></Box>
+              >
+                <img src={img1} width="100%" height="90px" />
+              </Box>
               <Box
                 sx={{
                   width: "100%",
                   maxWidth: "90px",
                   height: "90px",
-                  background: "red",
+                  // background: "red",
                 }}
-              ></Box>
+              ><img src={img1} width="100%" height="90px" /></Box>
               <Box
                 sx={{
                   width: "100%",
                   maxWidth: "130px",
                   height: "90px",
-                  background: "red",
+                  // background: "red",
                 }}
-              ></Box>
+              ><img src={video1} width="100%" height="90px" /></Box>
             </Box>
           </Box>
         </Box>
@@ -221,7 +228,7 @@ const ProfileForm = () => {
         sx={gridStyle}
       >
         <Grid item xs={12} md={5.5}>
-          <Typography variant="h5" className={classes.heading}>
+          <Typography variant="h5" className={classes.label}>
             Screen Name
           </Typography>
           <TextField
@@ -235,7 +242,7 @@ const ProfileForm = () => {
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
-          <Typography variant="h5" className={classes.heading}>
+          <Typography variant="h5" className={classes.label}>
             Region
           </Typography>
           <TextField
@@ -249,7 +256,7 @@ const ProfileForm = () => {
           />
         </Grid>
         <Grid item xs={12} md={11.5}>
-          <Typography variant="h5" className={classes.heading}>
+          <Typography variant="h5" className={classes.label}>
             About you
           </Typography>
           <textarea
@@ -279,7 +286,7 @@ const ProfileForm = () => {
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
-          <Typography variant="h5" className={classes.heading}>
+          <Typography variant="h5" className={classes.label}>
             Three things you love
           </Typography>
           <TextField
@@ -293,7 +300,7 @@ const ProfileForm = () => {
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
-          <Typography variant="h5" className={classes.heading}>
+          <Typography variant="h5" className={classes.label}>
             Three things that you hate
           </Typography>
           <TextField

@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "100%",
     maxWidth: "194px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       display: "none",
     },
   },
@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "420px",
     height: "532px",
     [theme.breakpoints.down("sm")]: {
-      bottom: "-36%",
+      // bottom: "-36%",
       left: "50%",
       maxWidth: "100%",
       transform: "translateX(-50%)",
@@ -143,12 +143,20 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     color: "#000000",
     fontSize: "48px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "24px",
+      
+    }
   },
   heading2: {
     fontFamily: "Inter, sans-serif",
     fontWeight: 300,
     color: "#000000",
     fontSize: "24px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "16px",
+      
+    }
   },
 }));
 

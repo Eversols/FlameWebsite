@@ -33,13 +33,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+
   heading: {
     fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     color: "#000000",
     fontSize: "40px",
+    "& .text":{
+      color: '#FB1F43'
+    },
+    [theme.breakpoints.down("md")]: {
+      fontSize: "24px"
+    }
   },
-
+  
   heading1: {
     fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
@@ -47,14 +54,20 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "20px",
     color: "#000000",
     fontSize: "40px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "16px"
+    }
   },
-
+  
   heading2: {
     color: "black",
     fontFamily: "Inter, Montserrat, sans-serif",
     fontWeight: "300",
     fontSize: "24px",
     textAlign: "center",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "16px"
+    }
   },
 
   btn: {
@@ -100,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "100%",
     maxWidth: "194px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       display: "none",
     },
   },

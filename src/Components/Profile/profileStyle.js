@@ -22,6 +22,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   heading: {
+    color: "#000000",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 700,
+    fontSize: "14px",
+    marginBottom: "2px",
+  },
+  subHeading: {
+    color: "#3A4159",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 400,
+    fontSize: "14px",
+    marginBottom: "2px",
+  },
+  label: {
     color: "#333333",
     fontFamily: "Inter, sans-serif",
     fontWeight: 400,

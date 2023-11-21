@@ -14,7 +14,17 @@ import { persistor, store } from "./Services/store/index.js";
 import { Suspense } from "react";
 import Loader from "./Components/Loader";
 
-const theme = createTheme({});
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 610,
+      md: 1024,
+      lg: 1440,
+      xl: 1636,
+    }
+  }
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Suspense fallback={<Loader />}>
