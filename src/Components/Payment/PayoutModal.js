@@ -19,7 +19,7 @@ const mainContainer = {
   width: "100%",
 };
 
-const ProfileModal = () => {
+const PayoutModal = () => {
   const { profileModel } = useSelector((state) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const ProfileModal = () => {
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={profileModel}
+      open={true}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{
@@ -67,11 +67,9 @@ const ProfileModal = () => {
         </IconButton>
       </Box>
 
-      <Box sx={mainContainer}>
-        <ProfileTabs />
-      </Box>
+      <Box sx={mainContainer}></Box>
     </Dialog>
   );
 };
 
-export default ProfileModal;
+export default PayoutModal;

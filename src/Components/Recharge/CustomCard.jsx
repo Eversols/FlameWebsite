@@ -26,7 +26,7 @@ const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
           )}
         </IconButton>
         <Typography className={classes.cardDesc} color="text.secondary">
-          {description}
+          {description || "no"}
         </Typography>
         <Typography className={classes.cardText}>&nbsp;&nbsp;{text}</Typography>
       </Box>
@@ -36,7 +36,7 @@ const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
         color="text.secondary"
         gutterBottom
       >
-        $ {price}
+        $ {price || "no"}
       </Typography>
 
       <Typography

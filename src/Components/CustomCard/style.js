@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     padding: "32px 20px",
     cursor: "pointer",
-    [theme.breakpoints.down("sm")]: {
-      maxHeight: "280px",
-    },
+    // [theme.breakpoints.down("sm")]: {
+    //   maxHeight: "280px",
+    // },
   },
   unselected: {
     width: "397px",
@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "column",
     padding: "32px 20px",
-    [theme.breakpoints.down("sm")]: {
-      maxHeight: "280px",
-    },
+    // [theme.breakpoints.down("sm")]: {
+    //   maxHeight: "280px",
+    // },
   },
   img: {
     width: "100%",

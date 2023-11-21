@@ -142,7 +142,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Inter, sans-serif",
     fontWeight: 700,
     color: "#000000",
-    fontSize: "40px",
+    fontSize: "48px",
   },
   heading2: {
     fontFamily: "Inter, sans-serif",

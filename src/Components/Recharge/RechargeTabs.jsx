@@ -42,6 +42,18 @@ const RechargeTabs = () => {
     navigate(`/${role}/payment/${card.id}`);
   };
 
+  const plansContent = Array.from({ length: 5 }).map((_, index) => (
+    <>
+      <CustomCard
+        price={plans[index]?.price} // Assuming plans array has the prices
+        description={plans[index]?.messages} // Assuming plans array has the messages
+        text={"messages"}
+        isSelected={selectedCard === index}
+        onSelect={() => handleCardSelect(plans[index], index)}
+      />
+    </>
+  ));
+
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
@@ -59,6 +71,7 @@ const RechargeTabs = () => {
               textTransform: "none",
               background: " #EFE9FD",
               width: "50%",
+              maxWidth: "50%",
             },
 
             "& .MuiTabs-indicator": {
@@ -93,9 +106,8 @@ const RechargeTabs = () => {
         sx={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           flexDirection: "column",
-          height: "100%",
         }}
       >
         <CustomTabPanel
@@ -103,34 +115,14 @@ const RechargeTabs = () => {
           index={0}
           className={classes.CustomTabPanel}
         >
-          {plans.map((item, i) => (
-            <Grid xs={2} sm={4} md={4} key={i}>
-              <CustomCard
-                price={item.price}
-                description={item.messages}
-                text={"messages"}
-                isSelected={selectedCard === i}
-                onSelect={() => handleCardSelect(item, i)}
-              />
-            </Grid>
-          ))}
+          {plansContent}
         </CustomTabPanel>
         <CustomTabPanel
           value={value}
           index={1}
           className={classes.CustomTabPanel}
         >
-          {plans.map((item, i) => (
-            <Grid xs={2} sm={4} md={4} key={i}>
-              <CustomCard
-                price={item.price}
-                description={item.minutes}
-                text={"minutes"}
-                isSelected={selectedCard === i}
-                onSelect={() => handleCardSelect(i)}
-              />
-            </Grid>
-          ))}
+          {plansContent}
         </CustomTabPanel>
         <Box sx={{ width: "100%", justifyContent: "center", display: "flex" }}>
           <Button

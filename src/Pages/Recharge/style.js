@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     // },
   },
   CustomTabPanel: {
-    padding: "2px",
+    padding: "15px 0px",
     margin: "10px",
   },
   "@keyframes popup": {

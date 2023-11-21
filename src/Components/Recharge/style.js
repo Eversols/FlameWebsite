@@ -5,7 +5,9 @@ const useStyles = makeStyles((theme) => ({
     padding: "16px",
     borderRadius: "8px",
     width: "100%",
-    maxWidth: "180px",
+    maxWidth: "200px",
+    minHeight: "200px",
+    minWidth: "180px",
     background: (arg) => (arg ? "#ECECFF" : "#ffff"),
     border: (arg) => (arg ? "2px solid #FB1F43" : "1px solid #87A2F7"),
   },
@@ -71,6 +73,16 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(5),
       marginBottom: theme.spacing(5),
     },
+  },
+  drawer_header_wrapper: {
+    display: "flex",
+    width: "100%",
+    padding: "16px 8px",
+    gap: 2,
+    justifyContent: "space-between",
+  },
+  logo: {
+    maxWidth: "194px",
   },
 }));
 

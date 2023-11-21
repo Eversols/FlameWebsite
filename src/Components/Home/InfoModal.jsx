@@ -14,7 +14,7 @@ const mainContainer = {
   alignItems: "center",
   justifyContent: "center",
   flexDirection: "column",
-  height: "100%",
+  // height: "100%",
   width: "100%",
 };
 
