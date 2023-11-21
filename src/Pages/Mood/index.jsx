@@ -93,25 +93,29 @@ import { setMood } from "../../Services/store/authSlice";
 const index = () => {
   const { role } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState("");
-  const [moods, setMoods] = useState([]);
+  const [moods, setMoods] = useState([
+    {id: 1, text: "Casual Flirting", description: "Charm them silly. Simply dummy text of the printing and typesetting industry."},
+    {id: 2, text: "Find Love", description: "I want to find love. Simply dummy text of the printing and typesetting industry."},
+    {id: 3, text: "We’ll see when we meet", description: "Discover wonders. Simply dummy text of the printing and typesetting industry."},
+  ]);
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    get("/getMood")
-      .then((res) => {
-        if (res.data.result) {
-          setMoods(res.data.data);
-        }
-      })
-      .catch((err) => {});
-  }, []);
+  // useEffect(() => {
+  //   get("/getMood")
+  //     .then((res) => {
+  //       if (res.data.result) {
+  //         setMoods(res.data.data);
+  //       }
+  //     })
+  //     .catch((err) => {});
+  // }, []);
 
   const confirmSubmit = () => {
     if (selected) {
       dispatch(setMood(selected));
-      navigate(`/${role}/region`);
+      navigate(`/${role}/gender`);
     }
   };
 
@@ -140,7 +144,7 @@ const index = () => {
                   index={i}
                   id={item.id}
                   url={item.url}
-                  text={item.mood}
+                  text={item.text}
                   description={item.description}
                   selected={selected}
                   setSelected={setSelected}

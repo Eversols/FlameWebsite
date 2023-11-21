@@ -3,7 +3,6 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    maxWidth: "1000px",
     border: "none",
     display: "flex",
     justifyContent: "center",
@@ -32,9 +31,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btn: {
-    width: "20%",
-    height: "40px",
-    marginTop: "40px",
+    width: "15%",
+    height: "42px",
     backgroundColor: " #FB1F43",
     color: "#ffffff",
     borderRadius: "30px",
@@ -82,10 +80,10 @@ const useStyles = makeStyles((theme) => ({
 
   logo: {
     top: "4%",
-    left: "5%",
+    left: "10%",
     position: "absolute",
     width: "100%",
-    maxWidth: "150px",
+    maxWidth: "194px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -94,9 +92,11 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     left: 0,
     position: "absolute",
-    width: "100%",
-    maxWidth: "310px",
+    width: "420px",
+    maxWidth: "420px",
+    height: "532px",
     [theme.breakpoints.down("sm")]: {
+      bottom: "-36%",
       left: "50%",
       maxWidth: "100%",
       transform: "translateX(-50%)",

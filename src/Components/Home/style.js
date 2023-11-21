@@ -233,8 +233,8 @@ const useStyles = makeStyles((theme) => ({
   },
   slide: {
     "&.swiper-slide.swiper-slide-active": {
-      height: "510px",
-      maxHeight: "510px",
+      height: "682px",
+      maxHeight: "682px",
       [theme.breakpoints.down("md")]: {
         height: "400px",
       },

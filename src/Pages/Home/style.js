@@ -3,7 +3,7 @@ import ProfileImage from "../../Assets/images/male.jpg";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: "100%",
+    width: "82%",
     maxWidth: "1300px",
     display: "flex",
     justifyContent: "space-between",
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   box_left: {
     width: "24%",
-    minHeight: "580px",
+    minHeight: "78%",
     display: "flex",
     border: "1px solid white",
     flexDirection: "column",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
   box_left_info: {
     width: "24%",
-    minHeight: "580px",
+    minHeight: "78%",
     display: "flex",
     border: "1px solid white",
     flexDirection: "column",
@@ -92,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
   box_mid: {
     width: "50%",
     display: "flex",
+    minHeight: "78%",
     flexDirection: "column",
     alignItems: "center",
     padding: "50px 0px 0px 0px",
@@ -163,8 +164,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   single_image_profile: {
-    width: "90px",
-    height: "90px",
+    width: "146px",
+    height: "146px",
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: "200px",
     display: "flex",
@@ -177,8 +178,14 @@ const useStyles = makeStyles((theme) => ({
   profile_answer_name: {
     color: "#000000",
     marginTop: "12px",
-    fontSize: "18px",
-    fontWeight: "bold",
+    fontSize: "24px",
+    fontWeight: "700",
+  },
+  profile_heading:{
+    color: "#000000",
+    marginTop: "12px",
+    fontSize: "16px",
+    fontWeight: "700",
   },
 
   btn_love: {
@@ -186,7 +193,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "8px",
     color: "#ffff",
     fontSize: "8px",
-    fontWeight: 400,
+    fontWeight: 600,
     textTransform: "uppercase",
 
     "&:hover": {
@@ -208,7 +215,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "8px",
     color: "#ffff",
     fontSize: "8px",
-    fontWeight: 400,
+    fontWeight: 600,
     textTransform: "uppercase",
 
     "&:hover": {
@@ -227,14 +234,16 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   profile_question_text: {
-    color: "rgba(0,0,0,0.4)",
-    fontSize: "14px",
+    color: "#868AA9",
+    fontSize: "16px",
     borderBottom: "1px solid rgba(255,255,255,0.3)",
+    fontWeight: 400
   },
-  profile_answer_text: {
-    color: "#000000",
+  profile_text: {
+    color: "#868AA9",
     fontSize: "14px",
     borderBottom: "1px solid rgba(255,255,255,0.3)",
+    fontWeight: 400
   },
   block_bg: {
     bottom: 0,
@@ -249,10 +258,10 @@ const useStyles = makeStyles((theme) => ({
 
   logo: {
     top: "4%",
-    left: "5%",
+    left: "10%",
     position: "absolute",
     width: "100%",
-    maxWidth: "150px",
+    maxWidth: "194px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -261,11 +270,12 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     left: 0,
     position: "absolute",
-    width: "100%",
-    maxWidth: "310px",
+    width: "420px",
+    maxWidth: "420px",
+    height: "532px",
     [theme.breakpoints.down("sm")]: {
+      bottom: "-36%",
       left: "50%",
-      top: "70%",
       maxWidth: "100%",
       transform: "translateX(-50%)",
     },
