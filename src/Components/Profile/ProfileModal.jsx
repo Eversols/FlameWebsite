@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
-import { setRechargeModel } from "../../Services/store/authSlice";
+import { setProfileModel } from "../../Services/store/authSlice";
 import ProfileTabs from "./ProfileTabs";
 
 // ---------Component style------------
@@ -20,18 +20,18 @@ const mainContainer = {
 };
 
 const ProfileModal = () => {
-  const { rechargeModel } = useSelector((state) => state.auth);
+  const { profileModel } = useSelector((state) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleClose = (e) => dispatch(setRechargeModel(!rechargeModel));
+  const handleClose = (e) => dispatch(setProfileModel(!profileModel));
 
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={true}
+      open={profileModel}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{

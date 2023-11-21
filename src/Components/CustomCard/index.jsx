@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Container, Paper, Typography } from "@mui/material";
 import React from "react";
-import casual from "../../Assets/images/casual.svg";
-import love from "../../Assets/images/love.svg";
-import see from "../../Assets/images/see.svg";
+import casual from "../../Assets/images/wow-image.png";
+import love from "../../Assets/images/love.png";
+import see from "../../Assets/images/meet.png";
 import useStyles from "./style";
 
 const img = [casual, love, see];
@@ -20,12 +20,12 @@ const index = ({
   const classes = useStyles();
   return (
     <Paper
-      elevation={8}
+      elevation={3}
       key={index}
       className={selected === id ? classes.selected : classes.unselected}
       onClick={() => setSelected(id)}
     >
-      <img src={img[id]} className={classes.img} />
+      <img src={img[id-1]} className={classes.img} />
       <Box className={classes.divider}></Box>
       <Box
         sx={{
@@ -33,7 +33,6 @@ const index = ({
           width: "100%",
           gap: "10px",
           flexDirection: "column",
-          maxWidth: "280px",
         }}
       >
         <Box className={classes.text}>

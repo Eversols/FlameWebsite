@@ -2,16 +2,15 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: "100%",
-    height: "100%",
+    height: "60%",
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-    minHeight: "360px",
+    justifyContent:"center"
   },
 
   fieldWrapper: {
-    width: "70%",
+    width: "78%",
     height: "100%",
     display: "flex",
     justifyContent: "space-around",
@@ -19,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   mainBox: {
-    width: "100%",
-    maxWidth: "380px",
-    // height: "100%",
-    maxHeight: "450px",
+    width: "532px",
+    maxWidth: "532px",
+    height: "572px",
+    maxHeight: "572px",
     borderRadius: "24px",
     margin: "16px",
     display: "flex",
@@ -39,17 +38,22 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     color: "black",
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "bold",
-    fontSize: "40px",
+    fontFamily: "Inter, Montserrat, sans-serif",
+    fontWeight: "700",
+    fontSize: "48px",
     textAlign: "center",
     marginBottom: "40px",
+    padding: "0px 42px",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0px 0px",
+    },
   },
   input: {
     width: "100%",
     height: "45px",
     padding: "18px 16px 18px 16px",
     borderRadius: "10px",
+    fontFamily: "Inter, Montserrat, sans-serif",
     border: "1px solid #D8DADC",
     backgroundColor:
       "linear-gradient(0deg, #D8DADC, #D8DADC), linear-gradient(0deg, #FFFFFF, #FFFFFF)",
@@ -100,11 +104,12 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     width: "100%",
-    height: "45px",
+    height: "50px",
     backgroundColor: "#FB1F43",
     color: "#ffffff",
     borderRadius: "10px",
-    marginTop: "50px",
+    fontFamily: "Inter, Montserrat, sans-serif",
+    marginTop: "72px",
     marginBottom: "30px",
     "&:hover": {
       backgroundColor: "#dc697c",
@@ -142,10 +147,10 @@ const useStyles = makeStyles((theme) => ({
 
   logo: {
     top: "4%",
-    left: "5%",
+    left: "10%",
     position: "absolute",
     width: "100%",
-    maxWidth: "150px",
+    maxWidth: "194px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -154,10 +159,11 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     left: 0,
     position: "absolute",
-    width: "100%",
-    maxWidth: "275px",
+    width: "420px",
+    maxWidth: "420px",
+    height: "532px",
     [theme.breakpoints.down("sm")]: {
-      bottom: "-25%",
+      bottom: "-36%",
       left: "50%",
       maxWidth: "100%",
       transform: "translateX(-50%)",

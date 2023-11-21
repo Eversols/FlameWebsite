@@ -2,8 +2,8 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   selected: {
-    width: "100%",
-    maxWidth: "315px",
+    width: "397px",
+    maxWidth: "397px",
     maxHeight: "436px",
     backgroundColor: "#FB1F43",
     background: "#ffff",
@@ -13,16 +13,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
-    padding: "30px 24px",
+    padding: "32px 20px",
     cursor: "pointer",
     [theme.breakpoints.down("sm")]: {
       maxHeight: "280px",
     },
   },
   unselected: {
-    width: "100%",
+    width: "397px",
     cursor: "pointer",
-    maxWidth: "315px",
+    maxWidth: "397px",
     maxHeight: "436px",
     background: "#ffff",
     borderRadius: "15px",
@@ -31,29 +31,30 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "column",
-    padding: "30px 24px",
+    padding: "32px 20px",
     [theme.breakpoints.down("sm")]: {
       maxHeight: "280px",
     },
   },
   img: {
-    maxWidth: "280px",
     width: "100%",
     // [theme.breakpoints.down("sm")]: {
     //   maxWidth: "200px",
     // },
   },
   text1: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, Montserrat, sans-serif",
     fontSize: "24px",
     fontWeight: 700,
     color: "#000000",
+    marginTop: "12px"
   },
   text2: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, Montserrat, sans-serif",
     fontSize: "16px",
     fontWeight: 400,
     color: "#000000",
+    marginTop: "12px"
   },
 
   text: {

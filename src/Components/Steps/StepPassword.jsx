@@ -83,6 +83,7 @@ const StepPassword = () => {
                 const password = `${user_data.payload.email.split("@")[0]}${
                   user_data.payload.id
                 }`;
+                console.log(res.data.content.role, mood, region)
                 await voxLogin(userName, password, user_data.payload.email);
               }
               if (res.data.content.role === "user") {
@@ -179,9 +180,8 @@ const StepPassword = () => {
                 {/* {error && <p className={classes.error}>{error}</p>} */}
                 <TextField
                   name="cPassword"
-                  // type={showPassword ? "text" : "password"}
-                  // value={password}
-                  type="text"
+                  type={showCPassword ? "text" : "password"}
+                  value={cPassword}
                   placeholder="Confirm Password"
                   className={classes.input1}
                   onChange={(e) => {

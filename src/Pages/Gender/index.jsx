@@ -7,10 +7,15 @@ import genderFemale from "../../Assets/images/female.svg";
 import flameLogo from "../../Assets/images/flame logo.svg";
 import genderMale from "../../Assets/images/male.svg";
 import useStyles from "./style";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const index = () => {
+  const { role } = useSelector((state) => state.auth);
   const classes = useStyles();
   const [selectedValue, setSelectedValue] = React.useState("a");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     console.log(event.target.name, "hhh");
@@ -18,6 +23,13 @@ const index = () => {
   };
 
   console.log("ff", selectedValue);
+
+  const confirmSubmit = () => {
+    if (selectedValue) {
+      // dispatch(setMood(selected));
+      navigate(`/${role}/home`);
+    }
+  };
 
   return (
     <>
@@ -27,12 +39,12 @@ const index = () => {
         <Container className={classes.container}>
           <Container className={classes.paragraph_container}>
             <Typography variant="h4" className={classes.heading}>
-              Welcome to Flame
+              Welcome to <span className="text">Flame</span> 
             </Typography>
             <Typography variant="h6" className={classes.heading2}>
               here are few quick questions
             </Typography>
-            <Typography variant="h4" className={classes.heading1}>
+            <Typography variant="h4" className={classes.heading}>
               What is your gender?
             </Typography>
           </Container>
@@ -69,7 +81,7 @@ const index = () => {
 
           <Button
             type="submit"
-            //   onClick={confirmSubmit}
+              onClick={confirmSubmit}
             variant="contained"
             className={classes.btn}
           >

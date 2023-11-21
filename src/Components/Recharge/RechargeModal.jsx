@@ -24,7 +24,7 @@ const RechargeModal = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("lg"));
 
   const handleClose = (e) => dispatch(setRechargeModel(!rechargeModel));
 
@@ -36,8 +36,8 @@ const RechargeModal = () => {
       onClose={handleClose}
       sx={{
         "& .MuiDialog-paper": {
-          width: { xs: "280px", sm: "400px", md: "780px" },
-          maxHeight: "600px",
+          width: { xs: "280px", sm: "400px", md: "780px", lg: "896px" },
+          maxHeight: "618px",
           minHeight: "500px",
           height: "100%",
           background: "#fff",

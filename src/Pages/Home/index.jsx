@@ -28,7 +28,7 @@ import CallNext from "../../Assets/images/call_action_next.png";
 import CallPrev from "../../Assets/images/call_action_prev.png";
 import flameLogo from "../../Assets/images/flame logo.svg";
 import logoutIcon from "../../Assets/images/logout.png";
-import ProfileImage from "../../Assets/images/male.jpg";
+import ProfileImage from "../../Assets/images/girl-profile.png";
 import profile from "../../Assets/images/profile.png";
 import ChatBox from "../../Components/Home/ChatBox";
 import ChatHistory from "../../Components/Home/ChatHistory";
@@ -37,6 +37,7 @@ import InfoModal from "../../Components/Home/InfoModal";
 import MainScreenSlider from "../../Components/Home/MainScreenSlider";
 import WorningDilog from "../../Components/Home/WorningDialog";
 import RechargeModal from "../../Components/Recharge/RechargeModal";
+import ProfileModal from "../../Components/Profile/ProfileModal"
 import { get } from "../../Services/api";
 import { getAllUsers } from "../../Services/store/authSlice";
 import CallService from "../../Services/voximplant/call";
@@ -177,17 +178,17 @@ const index = () => {
             className={classes.single_image_profile}
           ></Container>
           <Typography variant="h6" className={classes.profile_answer_name}>
-            {modelData?.metaData?.displayName || "Nimra Rehman"}
+            {modelData?.metaData?.displayName || "Jeysie"}
           </Typography>
           <Typography variant="h6" className={classes.profile_question_text}>
             city
           </Typography>
 
-          <Typography variant="h6" className={classes.profile_answer_name}>
+          <Typography variant="h6" className={classes.profile_heading}>
             About me
           </Typography>
 
-          <Typography variant="h6" className={classes.profile_question_text}>
+          <Typography variant="h6" className={classes.profile_text}>
             What do I like to do outside work. How old am I. What do I do What
             What do I dislike in a partner. do I like in a partner
           </Typography>
@@ -347,6 +348,7 @@ const index = () => {
         />
       )}
       <RechargeModal />
+      <ProfileModal/>
     </>
   );
 };

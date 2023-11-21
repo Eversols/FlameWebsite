@@ -34,10 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   heading: {
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "bold",
-    color: "#000000",
-    fontSize: "40px",
+    color: "black",
+    fontFamily: "Inter, Montserrat, sans-serif",
+    fontWeight: "700",
+    fontSize: "48px",
+    textAlign: "center",
+    "& .text":{
+      color: "#FB1F43"
+    }
   },
 
   heading1: {
@@ -49,9 +53,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "40px",
   },
 
+  heading2: {
+    color: "black",
+    fontFamily: "Inter, Montserrat, sans-serif",
+    fontWeight: "300",
+    fontSize: "24px",
+    textAlign: "center",
+    
+  },
+  
   btn: {
-    width: "20%",
-    height: "40px",
+    width: "15%",
+    height: "42px",
     marginTop: "40px",
     backgroundColor: " #FB1F43",
     color: "#ffffff",
@@ -88,10 +101,10 @@ const useStyles = makeStyles((theme) => ({
 
   logo: {
     top: "4%",
-    left: "5%",
+    left: "10%",
     position: "absolute",
     width: "100%",
-    maxWidth: "150px",
+    maxWidth: "194px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },

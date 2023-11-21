@@ -19,13 +19,13 @@ import profile from "../../Assets/images/profile.png";
 import VideoCallIcon from "../../Assets/images/video_call.png";
 import { post } from "../../Services/api";
 import { persistor } from "../../Services/store";
-import { setRechargeModel } from "../../Services/store/authSlice";
+import { setRechargeModel, setProfileModel } from "../../Services/store/authSlice";
 import { voxService } from "../../Services/voximplant";
 import Drawer from "./Drawer";
 import useStyles from "./style";
 
 const Header = () => {
-  const { role, userData, rechargeModel } = useSelector((state) => state.auth);
+  const { role, userData, rechargeModel, profileModel } = useSelector((state) => state.auth);
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,6 +42,9 @@ const Header = () => {
   };
   const recharge = () => {
     dispatch(setRechargeModel(!rechargeModel));
+  };
+  const profileHandle = () => {
+    dispatch(setProfileModel(!profileModel));
   };
   const handleDrawerClick = () => {
     setDrawerOpen(!isDrawerOpen);
@@ -170,7 +173,7 @@ const Header = () => {
         </Box>
         <Box className={classes.header_mid}>
           <Box
-            onClick={() => navigate(`/${role}/profile/${userData.id}`)}
+            onClick={profileHandle}
             mr={2}
             display="flex"
             justifyContent="center"
