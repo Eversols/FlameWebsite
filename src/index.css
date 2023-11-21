@@ -41,7 +41,7 @@ textarea {
   padding: 0;
   border: none;
   outline: none;
-  font-family: inherit;
+  font-family: Inter, sans serif;
 }
 
 /* Reset images to display as inline-block and remove spacing */

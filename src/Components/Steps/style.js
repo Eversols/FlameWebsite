@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     color: "black",
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "bold",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 700,
     fontSize: "40px",
     textAlign: "center",
     marginBottom: "40px",
@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
         "linear-gradient(0deg, #D8DADC, #D8DADC), linear-gradient(0deg, #FFFFFF, #FFFFFF)",
       color: "#00000080",
       width: "100%",
-      height: "45px",
+      height: "40px",
       "& .MuiOutlinedInput-input": {
         padding: "18px 16px 18px 16px",
         "&::placeholder": {
@@ -103,6 +103,8 @@ const useStyles = makeStyles((theme) => ({
     height: "45px",
     backgroundColor: "#FB1F43",
     color: "#ffffff",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 600,
     borderRadius: "10px",
     marginTop: "50px",
     marginBottom: "30px",
@@ -111,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   error: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "regular",
     fontSize: "12px",
     color: "red",

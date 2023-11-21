@@ -335,7 +335,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     zIndex: 2,
     borderRadius: "24px",
     [theme.breakpoints.down("sm")]: {
@@ -597,7 +597,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      fontFamily: "Montserrat, sans-serif",
+      fontFamily: "Inter, sans-serif",
     },
   },
   acceptCallBtn: {

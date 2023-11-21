@@ -3,9 +3,9 @@ import bg_image from "../../../Assets/images/page_2_bg.png";
 import Img_1 from "../../../Assets/images/page_2_textbox_1.png";
 
 const useStyles = makeStyles((theme) => ({
-    root:{
-        backgroundColor: '#ffffff'
-    },
+  root: {
+    backgroundColor: "#ffffff",
+  },
   "@global": {
     "*::-webkit-scrollbar": {
       width: "0.2em",
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "1920px",
     marginLeft: "auto",
     marginRight: "auto",
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Inter, sans-serif",
     backgroundImage: `linear-gradient(to bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.4) ,rgba(0,0,0,0.3)),url(${bg_image})`,
     height: "100vh",
     width: "100%",
@@ -125,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   body2: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     width: "100%",
   },
   text_box_container: {
@@ -134,11 +134,10 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(5),
-    color: 'black',
+    color: "black",
   },
   heading: {
-    
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     lineHeight: "130%",
     [theme.breakpoints.down("sm")]: {
@@ -146,8 +145,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   body1: {
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "400",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 400,
     marginTop: theme.spacing(3),
     fontSize: "100%",
     maxHeight: "1280px",
@@ -170,18 +169,18 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(10),
     paddingRight: theme.spacing(10),
   },
-//   login_btn: {
-//     backgroundImage: `linear-gradient(to left , #a31100,#a31100)`,
-//     width: "20%",
-//     borderRadius: "40px",
-//     marginTop: theme.spacing(5),
-//     color: "#ffffff",
-//     fontSize: "20px",
-//     padding: "5px",
-//     [theme.breakpoints.down("sm")]: {
-//       width: "80%",
-//     },
-//   },
+  //   login_btn: {
+  //     backgroundImage: `linear-gradient(to left , #a31100,#a31100)`,
+  //     width: "20%",
+  //     borderRadius: "40px",
+  //     marginTop: theme.spacing(5),
+  //     color: "#ffffff",
+  //     fontSize: "20px",
+  //     padding: "5px",
+  //     [theme.breakpoints.down("sm")]: {
+  //       width: "80%",
+  //     },
+  //   },
   ModelMangerbtn: {
     width: "250px",
     height: "40px",
@@ -202,7 +201,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   footer: {
-    color: 'black',
+    color: "black",
     width: "100%",
     padding: "10px 30px",
     display: "flex",

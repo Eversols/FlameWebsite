@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     color: "#333333",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: 400,
     fontSize: "14px",
     marginBottom: "2px",
   },
   heading_file: {
     color: "#333333",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: 400,
     fontSize: "15px",
     marginBottom: "2px",
@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   error: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "regular",
     fontSize: "12px",
     color: "red",

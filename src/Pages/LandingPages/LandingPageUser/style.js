@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   body: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     backgroundImage: `linear-gradient(to bottom,rgba(0,0,0,0.1),rgba(0,0,0,0.6) ,rgba(0,0,0,1)),url(${bg_image})`,
     height: "100vh",
     maxHeight: "1280px",
@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   },
   page_body_text: {
     wordSpacing: "1px",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     width: "80%",
     textAlign: "center",
     letterSpacing: "1px",
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heading_primary_text: {
     fontSize: "60pt",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     color: "#ffffff",
     animation: `$popup 600ms ${theme.transitions.easing.easeInOut}`,
@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
   },
   page_heading_text: {
     fontSize: "60pt",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     width: "fit-content",
     color: "#ffffff",
@@ -130,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "1920px",
     marginLeft: "auto",
     marginRight: "auto",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     backgroundColor: "rgba(0,0,0,0)",
 
     width: "100%",
@@ -184,12 +184,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   text_container_1: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     width: "85%",
     marginTop: theme.spacing(2),
   },
   text_container_2: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     width: "85%",
     marginTop: theme.spacing(2),
   },
@@ -200,7 +200,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text_heading: {
     fontWeight: "bold",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     animation: `$popup 400ms ${theme.transitions.easing.easeInOut}`,
 
     [theme.breakpoints.down("md")]: {
@@ -209,7 +209,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text_heading_sec_1: {
     fontWeight: "bold",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     paddingLeft: theme.spacing(25),
     [theme.breakpoints.down("md")]: {
       fontSize: "35px",
@@ -218,7 +218,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text_heading_sec_2: {
     fontWeight: "bold",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Intert, sans-serif",
     animation: `$popup 700ms ${theme.transitions.easing.easeInOut}`,
 
     paddingRight: theme.spacing(30),
@@ -229,7 +229,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text_heading_2: {
     fontWeight: "bold",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     animation: `$popup 600ms ${theme.transitions.easing.easeInOut}`,
 
     [theme.breakpoints.down("md")]: {
@@ -237,7 +237,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   text_body: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "100",
     color: "#cecece",
     [theme.breakpoints.down("md")]: {
@@ -245,7 +245,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   text_body_sec_1: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     animation: `$popup 700ms ${theme.transitions.easing.easeInOut}`,
 
     fontWeight: "100",
@@ -257,7 +257,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   text_body_sec_2: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     animation: `$popup 600ms ${theme.transitions.easing.easeInOut}`,
 
     fontWeight: "100",
@@ -270,7 +270,7 @@ const useStyles = makeStyles((theme) => ({
   },
   section_2_header: {
     textAlign: "center",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     width: "100%",
     height: "100%",

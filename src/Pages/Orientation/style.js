@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   heading1: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     marginTop: "20px",
     color: "#000000",
@@ -32,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
     borderRadius: "30px",
     marginBottom: "40px",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 400,
     [theme.breakpoints.down("md")]: {
       height: "50px",
       fontSize: "20px",
@@ -84,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   checkBoxLabel: {
     fontSize: "16px",
     fontWeight: 500,
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
   },
   gender_bg: {
     bottom: 0,

@@ -44,14 +44,14 @@ const useStyles = makeStyles((theme) => ({
     // },
   },
   text1: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontSize: "24px",
     fontWeight: 700,
     color: "#000000",
   },
   text2: {
-    fontFamily: "Montserrat, sans-serif",
-    fontSize: "16px",
+    fontFamily: "Inter, sans-serif",
+    fontSize: "14px",
     fontWeight: 400,
     color: "#000000",
   },

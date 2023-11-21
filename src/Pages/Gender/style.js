@@ -34,14 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   heading: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     color: "#000000",
     fontSize: "40px",
   },
 
   heading1: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     marginTop: "20px",
     marginBottom: "20px",

@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "900px",
     border: "none",
     display: "flex",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    gap: "30px",
     alignItems: "center",
     flexDirection: "column",
     zIndex: 1,
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "20px",
     alignItems: "center",
     flexDirection: "column",
+    padding: 0,
     [theme.breakpoints.down("md")]: {
       marginTop: "100px",
     },
@@ -36,13 +38,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   heading1: {
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "bold",
-    color: "#000000",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 700,
+    color: " #3E2727",
     fontSize: "40px",
   },
   heading2: {
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "regular",
     color: "#000000",
     fontSize: "30px",
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "10px",
     display: "flex",
-    margin: "20px  0px",
+
     gap: "10px",
     [theme.breakpoints.down("md")]: {
       flexWrap: "wrap",
@@ -67,6 +69,8 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
     borderRadius: "30px",
     marginBottom: "40px",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 400,
     [theme.breakpoints.down("md")]: {
       height: "50px",
       fontSize: "20px",

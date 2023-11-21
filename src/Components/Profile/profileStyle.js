@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     color: "#333333",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: 400,
     fontSize: "14px",
     marginBottom: "2px",
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 
   body_text: {
     color: "black",
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
     fontSize: "9px",
     [theme.breakpoints.down("md")]: {
@@ -197,7 +197,7 @@ const useStyles = makeStyles((theme) => ({
       letterSpacing: "inherit",
       color: "#aaaaaa",
       textAlign: "left",
-      fontFamily: "Montserrat, sans-serif",
+      fontFamily: "Inter, sans-serif",
       fontWeight: 400,
       opacity: 0.8,
       /* Additional placeholder styles if needed */

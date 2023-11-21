@@ -50,12 +50,6 @@ const index = ({
           )}
         </Box>
       </Box>
-      <Box className={classes.divider}></Box>
-      {/* {description && (
-          <Typography className={classes.text2}> */}
-      {/* {description}   */}
-      {/* </Typography>
-        )} */}
     </Container>
   );
 };

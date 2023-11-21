@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "1000px",
     border: "none",
     display: "flex",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    gap: "30px",
     alignItems: "center",
     flexDirection: "column",
     zIndex: 1,
@@ -38,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
     borderRadius: "30px",
     marginBottom: "40px",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 400,
     [theme.breakpoints.down("md")]: {
       height: "50px",
       fontSize: "20px",
@@ -133,6 +136,19 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       maxWidth: "100%",
     },
+  },
+
+  heading1: {
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 700,
+    color: "#000000",
+    fontSize: "40px",
+  },
+  heading2: {
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 300,
+    color: "#000000",
+    fontSize: "24px",
   },
 }));
 
