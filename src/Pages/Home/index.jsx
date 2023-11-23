@@ -324,6 +324,7 @@ const index = () => {
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
       <Header />
+      <PayoutModal />
       {isSmallScreen === false ? (
         <>{codeDivider()}</>
       ) : isSmallScreen === true && showChatBox !== true ? (

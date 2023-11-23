@@ -67,6 +67,29 @@ const useStyles = makeStyles((theme) => ({
     padding: "15px 0px",
     margin: "10px 0px",
   },
+  drawer_header_wrapper: {
+    display: "flex",
+    width: "100%",
+    padding: "16px 8px",
+    gap: 2,
+    justifyContent: "space-between",
+  },
+  logo: {
+    maxWidth: "194px",
+  },
+  recharge_btn: {
+    backgroundColor: "#FB1F43",
+    color: "#ffffff",
+    borderRadius: "24px",
+    padding: "6px 14px 6px 14px",
+    textTransform: "capitalize",
+    [theme.breakpoints.down("md")]: {
+      padding: "4px 12px",
+    },
+    "&:hover": {
+      backgroundColor: "#dc697c",
+    },
+  },
 }));
 
 export default useStyles;

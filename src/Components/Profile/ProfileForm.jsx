@@ -9,22 +9,24 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+
+import Img from "../../Assets/images/image.svg";
 import ProfileImage from "../../Assets/images/male.jpg";
-import ProfileModal from "../../Components/Profile/ProfileModal";
+import video2 from "../../Assets/images/video2.svg";
+
 import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
-import img1 from '../../Assets/images/img1.png'
-import img2 from '../../Assets/images/img2.png'
-import video1 from '../../Assets/images/video1.png'
 
 const gridStyle = {
   padding: "10px 20px",
   gap: "15px 25px",
-  maxWidth: "600px",
+  maxWidth: { xs: "100%", sm: "90%" },
   justifyContent: "center",
   display: "flex",
 };
@@ -32,7 +34,7 @@ const gridStyle = {
 const gridContainer = {
   padding: " 10px 20px",
   gap: "25px",
-  maxWidth: "600px",
+  maxWidth: { xs: "100%", sm: "90%" },
   justifyContent: "space-between",
   display: "flex",
 };
@@ -42,7 +44,9 @@ const ProfileForm = () => {
   const { userData, role, mood, region } = useSelector((state) => state.auth);
   const classes = useStyles();
   const navigate = useNavigate();
+  const theme = useTheme();
   const [images, setImages] = useState([]);
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const progressValue = 50;
   //   console.log('qqqqqqqqqqqqqqq',userData)
   const [profile, setProfile] = useState({
@@ -125,7 +129,15 @@ const ProfileForm = () => {
   return (
     <>
       <Grid container sx={gridContainer}>
-        <Box sx={{ display: "flex", width: "100%", alignItems: "self-start" }}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            alignItems: "self-start",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: { xs: "20px", sm: 0 },
+          }}
+        >
           <Box className={classes.single_image_circle}>
             {/* <CircularProgress variant="determinate" value={75} /> */}
 
@@ -172,51 +184,127 @@ const ProfileForm = () => {
               width: "100%",
               maxWidth: "400px",
               flexDirection: "column",
+              margin: { xs: "20px 0px", sm: 0 },
             }}
           >
-          <Box sx={{display: 'flex', flexDirection: 'column', marginBottom: '12px'}}>
-            <Typography variant="paragraph" className={classes.heading}>
-              upload
-            </Typography>
-            <Typography variant="paragraph" className={classes.subHeading}>
-              Upto 2 images &lt; 1mb each 1 video &lt; 20 mb
-            </Typography>
-            </Box>
             <Box
               sx={{
                 display: "flex",
-                width: "95%",
-                gap: "10px",
-                justifyContent: "space-between",
+                flexDirection: "column",
+                marginBottom: "12px",
               }}
             >
+              <Typography variant="paragraph" className={classes.heading}>
+                upload
+              </Typography>
+              <Typography variant="paragraph" className={classes.subHeading}>
+                Upto 2 images &lt; 1mb each 1 video &lt; 20 mb
+              </Typography>
+            </Box>
+            {!isSmallScreen && (
               <Box
                 sx={{
-                  width: "100%",
-                  maxWidth: "90px",
-                  height: "90px",
-                  // background: "red",
+                  display: "flex",
+                  width: "95%",
+                  gap: "10px",
+                  justifyContent: "space-between",
                 }}
               >
-                <img src={img1} width="100%" height="90px" />
+                <Box
+                  sx={{
+                    width: "100%",
+                    maxWidth: "90px",
+                    height: "90px",
+                    // background: "red",
+                  }}
+                >
+                  <img src={Img} width="100%" height="90px" />
+                </Box>
+                <Box
+                  sx={{
+                    width: "100%",
+                    maxWidth: "90px",
+                    height: "90px",
+                    // background: "red",
+                  }}
+                >
+                  <img src={Img} width="100%" height="90px" />
+                </Box>
+                <Box
+                  sx={{
+                    width: "100%",
+                    maxWidth: "138px",
+                    height: "90px",
+                    // background: "red",
+                  }}
+                >
+                  <img src={video2} width="100%" height="90px" />
+                </Box>
               </Box>
+            )}
+
+            {isSmallScreen && (
               <Box
                 sx={{
-                  width: "100%",
-                  maxWidth: "90px",
-                  height: "90px",
-                  // background: "red",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                  justifyContent: "space-between",
                 }}
-              ><img src={img1} width="100%" height="90px" /></Box>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: "130px",
-                  height: "90px",
-                  // background: "red",
-                }}
-              ><img src={video1} width="100%" height="90px" /></Box>
-            </Box>
+              >
+                <Box
+                  sx={{
+                    flex: "1 1 calc(50% - 5px)", // Adjust this width based on your layout needs
+                    maxWidth: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  <img
+                    src={Img}
+                    alt="img"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <img
+                    src={Img}
+                    alt="img"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    flex: "1 1 calc(50% - 5px)", // Adjust this width based on your layout needs
+                    maxWidth: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={video2}
+                    alt="img"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      maxHeight: "100%",
+                      maxWidth: "none",
+                    }}
+                  />
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
       </Grid>
