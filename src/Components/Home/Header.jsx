@@ -20,6 +20,7 @@ import VideoCallIcon from "../../Assets/images/video_call.png";
 import { post } from "../../Services/api";
 import { persistor } from "../../Services/store";
 import {
+  setPayoutModel,
   setProfileModel,
   setRechargeModel,
 } from "../../Services/store/authSlice";
@@ -28,7 +29,7 @@ import Drawer from "./Drawer";
 import useStyles from "./style";
 
 const Header = () => {
-  const { role, userData, rechargeModel, profileModel } = useSelector(
+  const { role, userData, rechargeModel, profileModel, payoutModel } = useSelector(
     (state) => state.auth
   );
   const classes = useStyles();
@@ -50,6 +51,9 @@ const Header = () => {
   };
   const profileHandle = () => {
     dispatch(setProfileModel(!profileModel));
+  };
+  const payoutHandle = () => {
+    dispatch(setPayoutModel(!payoutModel));
   };
   const handleDrawerClick = () => {
     setDrawerOpen(!isDrawerOpen);
@@ -169,7 +173,7 @@ const Header = () => {
                 className={classes.payout_btn}
                 type="button"
                 variant="outlined"
-                onClick={profileHandle}
+                onClick={payoutHandle}
               >
                 Payout
               </Button>

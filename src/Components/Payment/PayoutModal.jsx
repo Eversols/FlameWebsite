@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
 import flameLogo from "../../Assets/images/flame logo.svg";
-import { setProfileModel } from "../../Services/store/authSlice";
+import { setPayoutModel, setProfileModel } from "../../Services/store/authSlice";
 import PayoutForm from "./PayoutForm";
 import useStyles from "./style";
 
@@ -23,19 +23,19 @@ const mainContainer = {
 };
 
 const PayoutModal = () => {
-  const { profileModel } = useSelector((state) => state.auth);
+  const { payoutModel } = useSelector((state) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
   const classes = useStyles();
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleClose = (e) => dispatch(setProfileModel(!profileModel));
+  const handleClose = (e) => dispatch(setPayoutModel(!payoutModel));
 
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={true}
+      open={payoutModel}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{
