@@ -5,6 +5,9 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
     maxWidth: "1300px",
+    height:"90vh",
+    maxHeight:"700px",
+
     display: "flex",
     justifyContent: "space-between",
     alignItems: "start",
@@ -31,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
   box_left: {
     width: "24%",
-    minHeight: "78%",
+    minHeight: "100%",
+    maxHeight: "100%",
     display: "flex",
     border: "1px solid white",
     flexDirection: "column",
@@ -47,14 +51,16 @@ const useStyles = makeStyles((theme) => ({
 
   box_left_info: {
     width: "24%",
-    minHeight: "78%",
+    minHeight: "100%",
+    maxHeight: "100%",
     display: "flex",
     border: "1px solid white",
     flexDirection: "column",
     alignItems: "start",
     justifyContent: "start",
     borderRadius: "24px",
-    padding: "24px 32px",
+    overflowY:"auto",
+    padding: "12px 32px",
     boxShadow: "5px 22px 83px -12px #0000001A",
     [theme.breakpoints.down("md")]: {
       width: "80%",
@@ -92,12 +98,13 @@ const useStyles = makeStyles((theme) => ({
   box_mid: {
     width: "50%",
     display: "flex",
-    minHeight: "78%",
+    inHeight: "100%",
+    maxHeight: "100%",
     flexDirection: "column",
     alignItems: "center",
     padding: "50px 0px 0px 0px",
     justifyContent: "space-between",
-    maxHeight: "570px",
+    // maxHeight: "570px",
     [theme.breakpoints.down("md")]: {
       width: "80%",
       padding: "135px 0px 0px 0px",
@@ -161,12 +168,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "24px 32px",
   },
 
-  avatar_box_profile: {
-    marginBottom: theme.spacing(1),
-  },
+  
   single_image_profile: {
-    width: "146px",
-    height: "146px",
+    width: "120px",
+    height: "120px",
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: "200px",
     display: "flex",
@@ -178,13 +183,13 @@ const useStyles = makeStyles((theme) => ({
   },
   profile_answer_name: {
     color: "#000000",
-    marginTop: "12px",
+    marginTop: "8px",
     fontSize: "24px",
     fontWeight: "700",
   },
   profile_heading: {
     color: "#000000",
-    marginTop: "12px",
+    marginTop: "8px",
     fontSize: "16px",
     fontWeight: "700",
   },
@@ -208,7 +213,7 @@ const useStyles = makeStyles((theme) => ({
     gap: "10px",
     flexWrap: "wrap",
     marginBottom: "10px",
-    marginTop: "10px",
+    marginTop: "5px",
   },
 
   btn_hate: {

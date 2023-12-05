@@ -164,6 +164,7 @@ const useStyles = makeStyles((theme) => ({
     // border: "1px solid white",
 
     // maxHeight: "510px",
+
     position: "relative",
     // backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
@@ -180,6 +181,37 @@ const useStyles = makeStyles((theme) => ({
 
     alignItems: "center",
     justifyContent: "space-around",
+
+
+    "& .swiper-pagination-bullet": {
+      width: "12px",
+      height: "12px",
+ 
+      background: "#3A41594D",
+
+
+     
+      opacity: .5,
+      "&:not(:last-child)": {
+        marginRight: "8px", // Adjust spacing between pagination bullets if needed
+      },
+      "&:hover": {
+        background: "#3A41594D",
+         // Adjust hover color for inactive bullets if necessary
+      },
+    },
+    "& .swiper-pagination-bullet-active": {
+  
+      background: "#3A4159",
+
+      "&:hover": {
+        background: "#3A4159",
+      },
+    },
+
+
+
+    
     "& .swiper-button-prev": {
       background: "transparent",
       padding: "1rem 1.2rem",
@@ -233,13 +265,13 @@ const useStyles = makeStyles((theme) => ({
   },
   slide: {
     "&.swiper-slide.swiper-slide-active": {
-      height: "682px",
-      maxHeight: "526px",
+      height: "365px",
+    
       [theme.breakpoints.down("md")]: {
-        height: "400px",
+        height: "300px",
       },
       [theme.breakpoints.down("sm")]: {
-        height: "220px",
+        height: "250px",
       },
     },
   },

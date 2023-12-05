@@ -1,25 +1,26 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import React from "react";
+import React from 'react';
 import {
   A11y,
   EffectCreative,
   Navigation,
   Pagination,
   Scrollbar,
-} from "swiper/modules";
+} from 'swiper/modules';
+import 'swiper/css/pagination';
 // Import Swiper React components
-import { Box, IconButton } from "@mui/material";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Swiper, SwiperSlide } from "swiper/react";
-import ChatIcon from "../../Assets/images/message.svg";
-import CallIcon from "../../Assets/images/sayhi.svg";
-import VideoCallIcon from "../../Assets/images/video.svg";
-import { getCurrentConversation } from "../../Services/utils";
-import useStyles from "./style";
+import { Box, IconButton } from '@mui/material';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import ChatIcon from '../../Assets/images/message.svg';
+import CallIcon from '../../Assets/images/sayhi.svg';
+import VideoCallIcon from '../../Assets/images/video.svg';
+import { getCurrentConversation } from '../../Services/utils';
+import useStyles from './style';
 
 const MainScreenSlider = ({
   models = [],
@@ -69,6 +70,7 @@ const MainScreenSlider = ({
       className={classes.window}
       disableUnderline={false}
       onSlideChange={handleSlideChange}
+      pagination={{ clickable: true }}
     >
       {models.map((item, i) => (
         <SwiperSlide key={i} className={classes.slide}>

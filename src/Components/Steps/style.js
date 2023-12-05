@@ -18,9 +18,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   mainBox: {
-    width: "532px",
-    maxWidth: "532px",
-    height: "572px",
+    width: "100%",
+    maxWidth: "500px",
+    // height: "572px",
+    height:"100%",
     maxHeight: "572px",
     borderRadius: "24px",
     margin: "16px",
@@ -31,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 41px 56px -5px #0000001A",
     background: "#FFFFFF",
     zIndex: "1",
+    [theme.breakpoints.down("lg")]: {
+      maxWidth:"425px",
+      maxHeight:"450px",
+      },
+  
     [theme.breakpoints.down("sm")]: {
       margin: 0,
       boxShadow: "none",
@@ -164,10 +170,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "420px",
     height: "532px",
     [theme.breakpoints.down("sm")]: {
-      bottom: "-36%",
+      bottom: "-60%",
       left: "50%",
       maxWidth: "100%",
+      width:"100%",
       transform: "translateX(-50%)",
+      height: "100%",
     },
   },
   wrapper: {
