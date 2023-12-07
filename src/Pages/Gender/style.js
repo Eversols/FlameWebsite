@@ -145,15 +145,23 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "460px",
   },
   male: {
-    maxWidth: "110px",
+ 
     width: "100%",
     marginBottom: "20px",
+    maxWidth: "100px",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "90px",
+    }
   },
 
   female: {
-    maxWidth: "85px",
+   
     width: "100%",
     marginBottom: "20px",
+    maxWidth: "80px",
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "70px",
+    }
   },
 
   paragraph: {

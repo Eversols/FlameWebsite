@@ -2,8 +2,8 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   selected: {
-    width: "397px",
-    maxWidth: "397px",
+    width: "100%%",
+    maxWidth: "350px",
     maxHeight: "436px",
     backgroundColor: "#FB1F43",
     background: "#ffff",
@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
     // },
   },
   unselected: {
-    width: "397px",
+    width: "100%",
     cursor: "pointer",
-    maxWidth: "397px",
-    maxHeight: "436px",
+    maxWidth: "340px",
+    maxHeight: "450px",
     background: "#ffff",
     borderRadius: "15px",
     display: "flex",
