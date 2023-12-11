@@ -33,7 +33,7 @@ const PaymentStatusModal = () => {
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={true}
+      open={false}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{
