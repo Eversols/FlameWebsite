@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import { lazy } from 'react';
-import PaymentStatusModal from './Components/Payment/PaymentStatusModal';
 
 const Layout = lazy(() => import('./Layouts/Layout'));
 
@@ -24,7 +23,7 @@ const Completion = lazy(() => import('./Pages/Payment/Completion'));
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<PaymentStatusModal />} />
+      <Route path="/" element={<UserLandingPage />} />
       <Route path="/model" element={<ModelLandingPage />} />
       <Route path="/:role" element={<Layout />}>
         <Route path="authentication" element={<Authenticate />} />
