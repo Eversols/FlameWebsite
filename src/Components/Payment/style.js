@@ -65,6 +65,54 @@ const useStyles = makeStyles((theme) => ({
     gap: 2,
     justifyContent: "space-between",
   },
+
+  circleImage: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    maxWidth:"40px",
+  },
+  circle :{
+    width: '100%',
+    maxWidth: '110px',
+    position: 'relative',
+    borderRadius: '50%',
+    height: '110px',
+  },
+  text:{
+    fontSize:"24px",
+    fontWeight:600,
+    fontFamily: "Inter, sans-serif",
+ },
+ textContainer:{
+  margin:"20px auto 0px auto",
+  maxWidth:"420px",
+  width:"100%",
+  textAlign:"center",
+ },
+ btn: {
+  width: "85%",
+  height: "40px",
+  backgroundColor: "#FB1F43",
+  color: "#ffffff",
+  fontWeight: 600,
+  borderRadius: "10px",
+  fontFamily: "Inter, Montserrat, sans-serif",
+  "&:hover": {
+    backgroundColor: "#dc697c",
+  },
+},
+   text2:{
+  fontSize:"16px",
+  fontWeight:400,
+  fontFamily: "Inter, sans-serif",
+  color: "#3A4159",
+
+},
+
+  
+
 }));
 
 export default useStyles;

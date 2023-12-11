@@ -7,11 +7,11 @@ import {
   CardContent,
   IconButton,
   Typography,
-} from "@mui/material";
-import React from "react";
-import colorCircle from "../../Assets/images/colorcirlce.svg";
-import greyCircle from "../../Assets/images/greycircle.svg";
-import useStyles from "./style";
+} from '@mui/material';
+import React from 'react';
+import colorCircle from '../../Assets/images/colorcirlce.svg';
+import greyCircle from '../../Assets/images/greycircle.svg';
+import useStyles from './style';
 
 const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
   const classes = useStyles(isSelected);
@@ -20,13 +20,17 @@ const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
       <Box className={classes.detail_wrapper}>
         <IconButton onClick={onSelect}>
           {isSelected ? (
-            <img src={colorCircle} className={classes.circleImage} />
+            <img
+              src={colorCircle}
+              className={classes.circleImage}
+              alt="no image"
+            />
           ) : (
             <img src={greyCircle} className={classes.circleImage} />
           )}
         </IconButton>
         <Typography className={classes.cardDesc} color="text.secondary">
-          {description || "no"}
+          {description || 'no'}
         </Typography>
         <Typography className={classes.cardText}>&nbsp;&nbsp;{text}</Typography>
       </Box>
@@ -36,7 +40,7 @@ const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
         color="text.secondary"
         gutterBottom
       >
-        $ {price || "no"}
+        $ {price || 'no'}
       </Typography>
 
       <Typography

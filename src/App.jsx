@@ -1,29 +1,30 @@
-import { Routes, Route } from "react-router-dom";
-import { lazy } from "react";
+import { Routes, Route } from 'react-router-dom';
+import { lazy } from 'react';
+import PaymentStatusModal from './Components/Payment/PaymentStatusModal';
 
-const Layout = lazy(() => import("./Layouts/Layout"));
+const Layout = lazy(() => import('./Layouts/Layout'));
 
 const ModelLandingPage = lazy(() =>
-  import("./Pages/LandingPages/LandingPageModel")
+  import('./Pages/LandingPages/LandingPageModel')
 );
 const UserLandingPage = lazy(() =>
-  import("./Pages/LandingPages/LandingPageUser")
+  import('./Pages/LandingPages/LandingPageUser')
 );
-const Authenticate = lazy(() => import("./Pages/Authenticate"));
-const Mood = lazy(() => import("./Pages/Mood"));
-const Region = lazy(() => import("./Pages/Region"));
-const Orientation = lazy(() => import("./Pages/Orientation"));
-const Gender = lazy(() => import("./Pages/Gender"));
-const Home = lazy(() => import("./Pages/Home"));
-const Profile = lazy(() => import("./Pages/Profile"));
-const Recharge = lazy(() => import("./Pages/Recharge"));
-const Payment = lazy(() => import("./Pages/Payment"));
-const Completion = lazy(() => import("./Pages/Payment/Completion"));
+const Authenticate = lazy(() => import('./Pages/Authenticate'));
+const Mood = lazy(() => import('./Pages/Mood'));
+const Region = lazy(() => import('./Pages/Region'));
+const Orientation = lazy(() => import('./Pages/Orientation'));
+const Gender = lazy(() => import('./Pages/Gender'));
+const Home = lazy(() => import('./Pages/Home'));
+const Profile = lazy(() => import('./Pages/Profile'));
+const Recharge = lazy(() => import('./Pages/Recharge'));
+const Payment = lazy(() => import('./Pages/Payment'));
+const Completion = lazy(() => import('./Pages/Payment/Completion'));
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<UserLandingPage />} />
+      <Route path="/" element={<PaymentStatusModal />} />
       <Route path="/model" element={<ModelLandingPage />} />
       <Route path="/:role" element={<Layout />}>
         <Route path="authentication" element={<Authenticate />} />
