@@ -5,8 +5,14 @@ const useStyles = makeStyles((theme) => ({
     padding: "16px",
     borderRadius: "8px",
     width: "100%",
-    maxWidth: "200px",
-    minHeight: "200px",
+    maxWidth: "180px",
+    [theme.breakpoints.down("sm")]: {
+   minHeight:"120px",
+   maxWidth: "215px",
+   margin :"0px 30px"
+    },
+    minHeight: "180px",
+    margin :"0px 0px",
     minWidth: "180px",
     background: (arg) => (arg ? "#ECECFF" : "#ffff"),
     border: (arg) => (arg ? "2px solid #FB1F43" : "1px solid #87A2F7"),
@@ -24,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
 
     color: "#868AA9",
     marginBottom: "20px",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "5px",
+       },
   },
 
   cardDesc: {
@@ -49,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
     gap: "6px",
     marginBottom: "30px",
     flexWrap: "wrap",
+    [theme.breakpoints.down("sm")]:{
+      marginBottom:"5px"
+    }
   },
 
   cardBtn: {

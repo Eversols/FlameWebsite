@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
-import { Box, Grid } from "@mui/material";
-import React from "react";
+import { Box, Grid } from '@mui/material';
+import React from 'react';
 
 const CustomTabPanel = (props) => {
   const { children, value, index, ...other } = props;
   const gridStyle = {
-    display: "flex",
-    alignItems: "center",
-    gap: "17px",
-    width: "78%",
-    margin: "0 auto",
-    flexWrap: "wrap",
-    justifyContent: { xs: "center", sm: "center", md: "unset" },
+    display: 'flex',
+    alignItems: 'center',
+    gap: '17px',
+    width: '100%',
+    maxWidth: '575px',
+    margin: '0 auto',
+    flexWrap: 'wrap',
+    justifyContent: { xs: 'center', sm: 'flex-start' },
   };
 
   return (
