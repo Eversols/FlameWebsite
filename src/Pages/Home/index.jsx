@@ -36,7 +36,7 @@ import IncomingCallDialog from '../../Components/Home/IncomingCallDialog';
 import InfoModal from '../../Components/Home/InfoModal';
 import MainScreenSlider from '../../Components/Home/MainScreenSlider';
 import WorningDilog from '../../Components/Home/WorningDialog';
-import CardPaymentModal from '../../Components/Payment/CardPayment';
+import CardPaymentModal from '../../Components/Payment/CardPaymentModal';
 import PayoutModal from '../../Components/Payment/PayoutModal';
 import ProfileModal from '../../Components/Profile/ProfileModal';
 import RechargeModal from '../../Components/Recharge/RechargeModal';
@@ -319,6 +319,7 @@ const index = () => {
       {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
+      <CardPaymentModal />
       <Header />
       {isSmallScreen === false ? (
         <>{codeDivider()}</>

@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useDispatch, useSelector } from 'react-redux';
 import { setProfileModel } from '../../Services/store/authSlice';
+import CardPaymentForm from './CardPaymentForm';
 
 // ---------Component style------------
 
@@ -14,7 +15,7 @@ const mainContainer = {
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
-  // height: "100%",
+  height: '100%',
   width: '100%',
 };
 
@@ -30,20 +31,21 @@ const CardPaymentModal = () => {
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={true}
+      open={false}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{
         '& .MuiDialog-paper': {
-          width: { xs: '280px', sm: '450px', md: '550px' },
-          maxWidth: '900px',
-          maxHeight: '500px',
-          minHeight: '400px',
+          maxWidth: { xs: '100%', sm: '600px', md: '650px' },
+          width: '100%',
+          minHeight: '500px',
           height: '100%',
+          maxHeight: { xs: '100vh', sm: '600px' },
           background: '#fff',
           boxShadow: 'none',
-          borderRadius: '10px',
+          borderRadius: { xs: 0, sm: '24px' },
         },
+
         '& .MuiDialog-container': {
           background: 'rgba(255, 255, 255, 0.02)',
           backdropFilter: 'blur(10px)',
@@ -81,7 +83,9 @@ const CardPaymentModal = () => {
         </IconButton>
       </Box>
 
-      <Box sx={mainContainer}></Box>
+      <Box sx={mainContainer}>
+        <CardPaymentForm />
+      </Box>
     </Dialog>
   );
 };
