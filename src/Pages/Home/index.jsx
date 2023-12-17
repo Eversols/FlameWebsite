@@ -43,6 +43,7 @@ import RechargeModal from '../../Components/Recharge/RechargeModal';
 import { get } from '../../Services/api';
 import { getAllUsers } from '../../Services/store/authSlice';
 import CallService from '../../Services/voximplant/call';
+import CallModal from '../../Components/Home/CallModal';
 const loveLabels = ['Sport', 'food', 'fashion'];
 const hateLabels = ['Make up', 'books', 'tv'];
 const index = () => {
@@ -348,6 +349,7 @@ const index = () => {
       <RechargeModal />
       <ProfileModal />
       <PayoutModal />
+      <CallModal />
     </>
   );
 };

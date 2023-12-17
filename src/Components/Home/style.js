@@ -764,6 +764,21 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  chatbox: {
+    
+    background: "transparent",
+ 
+   
+  
+  },
+  callImage: {
+    
+   maxWidth:"90px",
+ 
+   
+  
+  },
+
   chat_wrapper: {
     width: "100%",
     maxWidth: "90%",

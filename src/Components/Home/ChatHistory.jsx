@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
-import { Box, IconButton, Typography } from "@mui/material";
-import moment from "moment";
-import React from "react";
-import { useSelector } from "react-redux";
-import ProfileImage from "../../Assets/images/male.jpg";
-import ChatIcon from "../../Assets/images/message.svg";
-import MoreIcon from "../../Assets/images/more.svg";
-import CallIcon from "../../Assets/images/sayhi.svg";
-import VideoCallIcon from "../../Assets/images/video.svg";
-import { getCurrentConversation } from "../../Services/utils";
-import Loader from "../Loader";
-import useStyles from "./style";
+import { Box, IconButton, Typography } from '@mui/material';
+import moment from 'moment';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import ProfileImage from '../../Assets/images/male.jpg';
+import ChatIcon from '../../Assets/images/message.svg';
+import MoreIcon from '../../Assets/images/more.svg';
+import CallIcon from '../../Assets/images/sayhi.svg';
+import VideoCallIcon from '../../Assets/images/video.svg';
+import { getCurrentConversation } from '../../Services/utils';
+import Loader from '../Loader';
+import useStyles from './style';
 
 const ChatHistory = ({ setShowChatBox, callUser }) => {
   const {
@@ -22,7 +22,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
 
   const checkEmail = (userName) => {
     if (userName) {
-      const tempEmail = userName.replace("-flame-", "@").slice(0, -17);
+      const tempEmail = userName.replace('-flame-', '@').slice(0, -17);
       return tempEmail;
     }
     return false;
@@ -65,7 +65,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
   };
 
   const getChatTitle = (item, loopUser = []) => {
-    let chatTitle = "";
+    let chatTitle = '';
     if (item.direct) {
       chatTitle = loopUser.first_name ? loopUser.first_name : loopUser.email;
     } else {
@@ -96,13 +96,13 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
           ? lastEvent.text
           : lastEvent.payload &&
             lastEvent.payload[0] &&
-            lastEvent.payload[0]["name"],
+            lastEvent.payload[0]['name'],
         timestamp: lastEvent.timestamp,
       };
     }
     return {
-      lastMessage: "",
-      timestamp: "",
+      lastMessage: '',
+      timestamp: '',
     };
   };
 
@@ -110,14 +110,14 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
     const now = moment();
     const date = moment(timestamp);
 
-    if (now.isSame(date, "day")) {
-      return date.format("LT"); // Same day
-    } else if (now.isSame(date.clone().subtract(1, "days"), "day")) {
-      return "Yesterday"; // Yesterday
-    } else if (now.isSame(date, "week")) {
-      return date.format("dddd"); // Same week
+    if (now.isSame(date, 'day')) {
+      return date.format('LT'); // Same day
+    } else if (now.isSame(date.clone().subtract(1, 'days'), 'day')) {
+      return 'Yesterday'; // Yesterday
+    } else if (now.isSame(date, 'week')) {
+      return date.format('dddd'); // Same week
     } else {
-      return date.format("L"); // SameElse
+      return date.format('L'); // SameElse
     }
   }
 
@@ -130,7 +130,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
   };
 
   return (
-    <Box sx={{ maxHeight: "500px", overflowY: "auto", margin: "20px 0px" }}>
+    <Box sx={{ maxHeight: '500px', overflowY: 'auto', margin: '20px 0px' }}>
       <Box className={classes.flexContainer}>
         {conversations.map((item) => {
           const users = getUserDetail(item.participants, item.direct);
@@ -144,11 +144,13 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                     <Box
                       className={classes.single_image}
                       style={{
-                        backgroundImage: `url(${
-                          item.direct && users.first_name
-                            ? `https://flame.bilalrugs.pk/livebk/public/uploads/${users.photo}`
-                            : ProfileImage
-                        })`,
+                        // backgroundImage: `url(${
+                        //   item.direct && users.first_name
+                        //     ? `https://flame.bilalrugs.pk/livebk/public/uploads/${users.photo}`
+                        //     : ProfileImage
+                        // })`,
+
+                        backgroundImage: `url(${ProfileImage})`,
                       }}
                     ></Box>
                     {chatTitle && (
@@ -163,7 +165,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                           display="flex"
                           justifyContent="start"
                           alignItems="center"
-                          sx={{ margin: "10px 0px" }}
+                          sx={{ margin: '10px 0px' }}
                         >
                           <Box className={classes.online_indicator} />
 
@@ -171,7 +173,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                             variant="body1"
                             component="span"
                             ml={1}
-                            sx={{ fontSize: "14px" }}
+                            sx={{ fontSize: '14px' }}
                           >
                             Online
                           </Typography>
@@ -225,8 +227,8 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                             sx={{
                               margin: 0,
                               padding: 0,
-                              backgroundColor: "transparent",
-                              marginLeft: "3px",
+                              backgroundColor: 'transparent',
+                              marginLeft: '3px',
                             }}
                           >
                             <img
