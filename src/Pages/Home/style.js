@@ -170,8 +170,8 @@ const useStyles = makeStyles((theme) => ({
 
   
   single_image_profile: {
-    width: "120px",
-    height: "120px",
+    width: "110px",
+    height: "110px",
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: "200px",
     display: "flex",
@@ -183,13 +183,13 @@ const useStyles = makeStyles((theme) => ({
   },
   profile_answer_name: {
     color: "#000000",
-    marginTop: "8px",
-    fontSize: "24px",
+    marginTop: "2px",
+    fontSize: "20px",
     fontWeight: "700",
   },
   profile_heading: {
     color: "#000000",
-    marginTop: "8px",
+    marginTop: "2px",
     fontSize: "16px",
     fontWeight: "700",
   },
@@ -201,7 +201,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "8px",
     fontWeight: 600,
     textTransform: "uppercase",
-
+    padding:"4px 16px",
+    minWidth:"100px",
     "&:hover": {
       background: "#93BF92",
     },
@@ -219,8 +220,10 @@ const useStyles = makeStyles((theme) => ({
   btn_hate: {
     background: " #FB6B83",
     borderRadius: "8px",
+    minWidth:"100px",
     color: "#ffff",
     fontSize: "8px",
+    padding:"4px 16px",
     fontWeight: 600,
     textTransform: "uppercase",
 
@@ -247,7 +250,7 @@ const useStyles = makeStyles((theme) => ({
   },
   profile_text: {
     color: "#868AA9",
-    fontSize: "14px",
+    fontSize: "12px",
     borderBottom: "1px solid rgba(255,255,255,0.3)",
     fontWeight: 400,
   },
