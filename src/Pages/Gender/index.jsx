@@ -17,9 +17,9 @@ const index = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    console.log(event.target.name, "hhh");
-    setSelectedValue(event.target.value);
+  const handleChange = (e) => {
+    console.log(e.target.value, "hhh");
+    setSelectedValue(e.target.value);
   };
 
   console.log("ff", selectedValue);
@@ -61,7 +61,7 @@ const index = () => {
               </Typography>
               <Radio
                 checked={selectedValue === "a"}
-                onChange={() => handleChange()}
+                onChange={handleChange}
                 value="a"
                 name="radio-buttons"
                 inputProps={{ "aria-label": "A" }}
@@ -75,7 +75,7 @@ const index = () => {
               </Typography>
               <Radio
                 checked={selectedValue === "b"}
-                onChange={() => handleChange()}
+                onChange={handleChange}
                 value="b"
                 name="radio-buttons"
                 inputProps={{ "aria-label": "B" }}

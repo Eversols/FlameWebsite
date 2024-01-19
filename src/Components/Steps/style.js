@@ -113,6 +113,43 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  input2: {
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+
+      "&:hover fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+      "&.Mui-focused fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+        outline: "none",
+      },
+      "&.Mui-disabled fieldset": {
+        borderRadius: "10px",
+        border: "1px solid #D8DADC",
+      },
+
+      border: "none",
+      borderRadius: "10px",
+      backgroundColor:
+        "linear-gradient(0deg, #D8DADC, #D8DADC), linear-gradient(0deg, #FFFFFF, #FFFFFF)",
+      color: "#00000080",
+      width: "100%",
+      height: "50px",
+      marginTop: '12px',
+      "& .MuiOutlinedInput-input": {
+        padding: "18px 16px 18px 16px",
+        "&::placeholder": {
+          color: "#00000080",
+        },
+      },
+    },
+  },
   btn: {
     width: "100%",
     height: "50px",
@@ -123,6 +160,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Inter, Montserrat, sans-serif",
     marginTop: "72px",
     marginBottom: "30px",
+    textTransform: 'capitalize',
     "&:hover": {
       backgroundColor: "#dc697c",
     },
@@ -132,6 +170,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "regular",
     fontSize: "12px",
     color: "red",
+    position: "absolute",
   },
   "@keyframes popup": {
     "0%": {
@@ -198,7 +237,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     flexDirection: "column",
-    height: "115px",
+    // height: "115px",
   },
 
   mainWrapperBox: {

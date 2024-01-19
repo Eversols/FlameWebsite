@@ -37,7 +37,7 @@ const StepPassword = () => {
   const navigate = useNavigate();
   const classes = useStyles();
   const confirmSubmit = async (e) => {
-    if (password !== cPassword) {
+    if (password !== cPassword && !user.emailExist) {
       dispatch(setError("Confirm password not match!"));
       return;
     }
@@ -178,12 +178,12 @@ const StepPassword = () => {
                   }}
                 />
                 {/* {error && <p className={classes.error}>{error}</p>} */}
-                <TextField
+                {!user.emailExist && <TextField
                   name="cPassword"
                   type={showCPassword ? "text" : "password"}
                   value={cPassword}
                   placeholder="Confirm Password"
-                  className={classes.input1}
+                  className={classes.input2}
                   onChange={(e) => {
                     setCPassword(e.target.value);
                     dispatch(setError(""));
@@ -216,7 +216,7 @@ const StepPassword = () => {
                       </InputAdornment>
                     ),
                   }}
-                />
+                />}
               </Box>
               {error && <p className={classes.error}>{error}</p>}
               <Button

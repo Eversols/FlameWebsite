@@ -28,7 +28,7 @@ const StepName = ({ onNext }) => {
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
             <Typography variant="h5" className={classes.heading}>
-              Ready to find your next?
+            Set a screen name
             </Typography>
             <Box className={classes.fieldWrapper}>
               <TextField

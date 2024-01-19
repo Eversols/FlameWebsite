@@ -78,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
     borderRadius: "30px",
     marginBottom: "40px",
+    textTransform: 'capitalize',
     [theme.breakpoints.down("md")]: {
       height: "50px",
       fontSize: "20px",

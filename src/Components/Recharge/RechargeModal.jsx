@@ -34,7 +34,7 @@ const RechargeModal = () => {
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={false}
+      open={rechargeModel}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{

@@ -8,14 +8,28 @@ import flameLogo from "../../Assets/images/flame logo.svg";
 import { post } from "../../Services/api";
 import { setError, setUser } from "../../Services/store/authSlice";
 import useStyles from "./style";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 const StepEmail = ({ onNext, setStep }) => {
   const [email, setEmail] = useState("");
   const { error } = useSelector((state) => state.auth);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues:{
+      email: ""
+    }
+  });
+  useEffect(() => {
+    dispatch(setError(''));
+  }, [])
+  
 
-  const confirmSubmit = async (e) => {
+
+  const confirmSubmit = async (data) => {
+    console.log('GGGGGGGGGGGGGGGGGGGGGG', data)
+    const {email} = data
     if (email) {
       try {
         const res = await post("/check-email", { email });
@@ -69,28 +83,30 @@ const StepEmail = ({ onNext, setStep }) => {
               Please enter your email
             </Typography>
             <Box className={classes.fieldWrapper}>
+            <form onSubmit={handleSubmit(confirmSubmit)}>
               <TextField
-                name="email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  dispatch(setError(""));
-                }}
-                value={email}
-                type="email"
+                type="text"
                 placeholder="Enter your email address"
                 className={classes.input1}
                 fullWidth
+                {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Invalid email ID"
+            }
+          })}
               />
-
+              {errors.email && <p className={classes.error}>{errors.email.message}</p>}
               {error && <p className={classes.error}>{error}</p>}
               <Button
-                type="button"
-                onClick={confirmSubmit}
+                type="submit"
                 variant="contained"
                 className={classes.btn}
               >
                 Next
               </Button>
+              </form>
             </Box>
           </Container>
         </Box>
