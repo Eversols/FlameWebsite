@@ -28,7 +28,6 @@ const StepEmail = ({ onNext, setStep }) => {
 
 
   const confirmSubmit = async (data) => {
-    console.log('GGGGGGGGGGGGGGGGGGGGGG', data)
     const {email} = data
     if (email) {
       try {

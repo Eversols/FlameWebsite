@@ -59,6 +59,23 @@ const useStyles = makeStyles((theme) => ({
       padding: "0px 0px",
     },
   },
+  headingOne: {
+    color: "black",
+    fontFamily: "Inter, sans-serif",
+    fontWeight: 700,
+    fontSize: "42px",
+    textAlign: "center",
+    marginBottom: "40px",
+    padding: "1px 34px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "38px",
+      padding: "0px 8px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "35px",
+      padding: "0px 0px",
+    },
+  },
   input: {
     width: "100%",
     height: "45px",

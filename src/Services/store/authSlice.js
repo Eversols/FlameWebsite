@@ -46,7 +46,7 @@ export const authSlice = createSlice({
     },
     setUser: (state, { payload }) => {
       if (payload?.email) {
-        state.user.email = payload.email;
+        state.user = {...state.user, email: payload.email};
       }
       if (payload?.displayName) {
         state.user.displayName = payload.displayName;

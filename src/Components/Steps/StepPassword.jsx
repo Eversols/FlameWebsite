@@ -46,6 +46,10 @@ const StepPassword = () => {
         let res;
         if (user.emailExist) {
           res = await post("/login", { email: user.email, password });
+          if(res.data.status === "success"){
+            navigate(`/${role}/home`);
+            return 
+          }
         } else {
           res = await post("/register", {
             email: user.email,
@@ -134,8 +138,8 @@ const StepPassword = () => {
       <Box className={classes.mainWrapperBox}>
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
-            <Typography variant="h5" className={classes.heading}>
-              Set your password
+            <Typography variant="h5" className={classes.headingOne}>
+             {!user.emailExist ?  'Set your password': "Enter your password"}
             </Typography>
             <Box className={classes.fieldWrapper}>
               <Box className={classes.passwordWrapper}>

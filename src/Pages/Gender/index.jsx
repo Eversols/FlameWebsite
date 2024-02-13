@@ -9,25 +9,39 @@ import genderFemale from "../../Assets/images/female.svg";
 import flameLogo from "../../Assets/images/flame logo.svg";
 import genderMale from "../../Assets/images/male.svg";
 import useStyles from "./style";
+import { post } from "../../Services/api";
+import { getProfile } from "../../Services/store/authSlice";
 
 const index = () => {
-  const { role } = useSelector((state) => state.auth);
+  const { role, userData } = useSelector((state) => state.auth);
   const classes = useStyles();
-  const [selectedValue, setSelectedValue] = React.useState("a");
+  const [selectedValue, setSelectedValue] = React.useState("Male");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    console.log(e.target.value, "hhh");
     setSelectedValue(e.target.value);
   };
 
   console.log("ff", selectedValue);
 
-  const confirmSubmit = () => {
+  
+
+  const confirmSubmit = async () => {
     if (selectedValue) {
-      // dispatch(setMood(selected));
-      navigate(`/${role}/home`);
+      
+      try {
+        const res = await post("/updateUserMeta", {
+          userID: userData.id,
+          gender: selectedValue,
+        });
+        if (res) {
+          dispatch(getProfile({ id: userData.id }));
+          navigate(`/${role}/home`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -60,9 +74,9 @@ const index = () => {
                 Male
               </Typography>
               <Radio
-                checked={selectedValue === "a"}
+                checked={selectedValue === "Male"}
                 onChange={handleChange}
-                value="a"
+                value="Male"
                 name="radio-buttons"
                 inputProps={{ "aria-label": "A" }}
               />
@@ -74,9 +88,9 @@ const index = () => {
                 Female
               </Typography>
               <Radio
-                checked={selectedValue === "b"}
+                checked={selectedValue === "Female"}
                 onChange={handleChange}
-                value="b"
+                value="Female"
                 name="radio-buttons"
                 inputProps={{ "aria-label": "B" }}
               />

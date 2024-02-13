@@ -25,10 +25,11 @@ import {
   Instagram,
   YouTube,
 } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setRole } from "../../../Services/store/authSlice";
 import { Link } from "react-router-dom";
 import { css } from '@emotion/react';
+import { useNavigate } from "react-router-dom";
 
 
 const AnimatedText = ({ words,className }) => {
@@ -72,10 +73,14 @@ const AnimatedText = ({ words,className }) => {
 
 
 const index = () => {
+  const { token, role } = useSelector(
+    (state) => state.auth
+  );
   const classes = useStyles();
   const [words] = useState(["Love", "Muse", "Fling", "Crush"]);
   const [currentWord, setcurrentWord] = useState(0);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const [carouselImage, setcarouselImage] = useState([
     carousel_1,
@@ -84,6 +89,9 @@ const index = () => {
   ]);
 
   useEffect(() => {
+    if(token){
+      navigate(`/${role}/home`);
+    }
     const timeout = setInterval(() => {
       if (currentWord > words.length - 2) setcurrentWord(0);
       else setcurrentWord(currentWord + 1);

@@ -2,7 +2,7 @@ import { ClassNames } from "@emotion/react";
 import { Avatar, Box, Button, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import drawerCross from "../../Assets/images/drawerCross.svg";
+import drawerCross from "../../Assets/images/drawercross.svg";
 import logoutLogo from "../../Assets/images/drawer_logout.svg";
 import drawerLogo from "../../Assets/images/drawerlogo.svg";
 import useStyles from "./style";
