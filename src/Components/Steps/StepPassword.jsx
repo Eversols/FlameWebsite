@@ -46,9 +46,9 @@ const StepPassword = () => {
         let res;
         if (user.emailExist) {
           res = await post("/login", { email: user.email, password });
-          if(res.data.status === "success"){
+          if (res.data.status === "success") {
             navigate(`/${role}/home`);
-            return 
+            return;
           }
         } else {
           res = await post("/register", {
@@ -87,12 +87,12 @@ const StepPassword = () => {
                 const password = `${user_data.payload.email.split("@")[0]}${
                   user_data.payload.id
                 }`;
-                console.log(res.data.content.role, mood, region)
+                console.log(res.data.content.role, mood, region);
                 await voxLogin(userName, password, user_data.payload.email);
               }
               if (res.data.content.role === "user") {
                 if (!mood) navigate(`/${role}/mood`);
-                else if (!region) navigate(`/${role}/region`);
+                //else if (!region) navigate(`/${role}/region`);
                 else navigate(`/${role}/home`);
               }
               console.log(res.data.content.role);
@@ -139,7 +139,7 @@ const StepPassword = () => {
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
             <Typography variant="h5" className={classes.headingOne}>
-             {!user.emailExist ?  'Set your password': "Enter your password"}
+              {!user.emailExist ? "Set your password" : "Enter your password"}
             </Typography>
             <Box className={classes.fieldWrapper}>
               <Box className={classes.passwordWrapper}>
@@ -182,45 +182,47 @@ const StepPassword = () => {
                   }}
                 />
                 {/* {error && <p className={classes.error}>{error}</p>} */}
-                {!user.emailExist && <TextField
-                  name="cPassword"
-                  type={showCPassword ? "text" : "password"}
-                  value={cPassword}
-                  placeholder="Confirm Password"
-                  className={classes.input2}
-                  onChange={(e) => {
-                    setCPassword(e.target.value);
-                    dispatch(setError(""));
-                  }}
-                  fullWidth
-                  // onChange={(e) => handlevalueChange(e, "password")}
-                  inputProps={{
-                    "data-cy": "password-Employeecredential", // Cypress ID assigned to the search input element
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          data-cy="password-credential"
-                          aria-label="toggle password visibility"
-                          onClick={() => setShowCPassword((prev) => !prev)}
-                          // onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showCPassword ? (
-                            <RemoveRedEyeOutlinedIcon
-                              sx={{ fill: "#00000099", fontSize: "18px" }}
-                            />
-                          ) : (
-                            <VisibilityOffOutlinedIcon
-                              sx={{ fill: "#00000099", fontSize: "18px" }}
-                            />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />}
+                {!user.emailExist && (
+                  <TextField
+                    name="cPassword"
+                    type={showCPassword ? "text" : "password"}
+                    value={cPassword}
+                    placeholder="Confirm Password"
+                    className={classes.input2}
+                    onChange={(e) => {
+                      setCPassword(e.target.value);
+                      dispatch(setError(""));
+                    }}
+                    fullWidth
+                    // onChange={(e) => handlevalueChange(e, "password")}
+                    inputProps={{
+                      "data-cy": "password-Employeecredential", // Cypress ID assigned to the search input element
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            data-cy="password-credential"
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowCPassword((prev) => !prev)}
+                            // onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showCPassword ? (
+                              <RemoveRedEyeOutlinedIcon
+                                sx={{ fill: "#00000099", fontSize: "18px" }}
+                              />
+                            ) : (
+                              <VisibilityOffOutlinedIcon
+                                sx={{ fill: "#00000099", fontSize: "18px" }}
+                              />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
               </Box>
               {error && <p className={classes.error}>{error}</p>}
               <Button

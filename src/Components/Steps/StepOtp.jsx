@@ -15,7 +15,8 @@ const StepOtp = ({ onNext }) => {
   const classes = useStyles();
 
   const confirmSubmit = async (e) => {
-    if (OTP) {
+    console.log("TTTTTTTTTTTTTTTTTTTTTT", user.otp)
+    if (parseInt(user.otp) == parseInt(OTP)) {
       try {
         const res = await post("/check-otp", { email: user.email, otp: OTP });
         if (res.data.email_exist && res.data.otp_verified) {
@@ -24,6 +25,8 @@ const StepOtp = ({ onNext }) => {
       } catch (error) {
         dispatch(setError(error.response.data.message));
       }
+    } else {
+      dispatch(setError("OTP not correct"));
     }
   };
   return (

@@ -23,6 +23,7 @@ export const authSlice = createSlice({
       email: "",
       emailExist: false,
       displayName: "",
+      otp: ''
     },
     allUsers: [],
     token: "",
@@ -33,6 +34,10 @@ export const authSlice = createSlice({
     rechargeModel: false,
     profileModel: false,
     payoutModel: false,
+    paymentModel: false,
+    paymentSuccess: false,
+    paymentError: false,
+    plan: '',
   },
   reducers: {
     setError: (state, { payload }) => {
@@ -46,13 +51,16 @@ export const authSlice = createSlice({
     },
     setUser: (state, { payload }) => {
       if (payload?.email) {
-        state.user = {...state.user, email: payload.email};
+        state.user = {...state.user, emailExist:payload?.emailExist, email: payload.email};
       }
       if (payload?.displayName) {
         state.user.displayName = payload.displayName;
       }
       if (payload?.emailExist) {
         state.user.emailExist = payload.emailExist;
+      }
+      if (payload?.otp) {
+        state.user.otp = payload.otp;
       }
     },
     setMood: (state, { payload }) => {
@@ -73,6 +81,17 @@ export const authSlice = createSlice({
     },
     setPayoutModel: (state, {payload})=>{
       state.payoutModel = payload
+    },
+    setPaymentModel: (state, {payload})=>{
+      state.paymentModel = payload?.paymentModel
+      state.plan = payload?.package
+      state.rechargeModel = false
+    },
+    setPaymentStatus: (state, {payload})=>{
+      console.log('RRRRRRRRRRRRRRRRRRR', payload)
+      state.paymentModel = false
+      state.paymentSuccess = payload.paymentSuccess
+      state.paymentError = payload.paymentError
     },
     setMessages: (state, { payload }) => {
       state.userData.messages = payload;
@@ -133,7 +152,9 @@ export const {
   setMessages,
   setRechargeModel,
   setProfileModel,
-  setPayoutModel
+  setPayoutModel,
+  setPaymentModel,
+  setPaymentStatus
 } = authSlice.actions;
 
 export default authSlice.reducer;

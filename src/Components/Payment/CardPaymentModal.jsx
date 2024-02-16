@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProfileModel } from '../../Services/store/authSlice';
+import { setPaymentModel, setProfileModel } from '../../Services/store/authSlice';
 import CardPaymentForm from './CardPaymentForm';
 
 // ---------Component style------------
@@ -20,23 +20,23 @@ const mainContainer = {
 };
 
 const CardPaymentModal = () => {
-  const { profileModel } = useSelector((state) => state.auth);
+  const { paymentModel } = useSelector((state) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const handleClose = (e) => dispatch(setProfileModel(!profileModel));
+  const handleClose = (e) => dispatch(setPaymentModel(!paymentModel));
 
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={false}
+      open={paymentModel}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{
         '& .MuiDialog-paper': {
-          maxWidth: { xs: '100%', sm: '600px', md: '650px' },
+          maxWidth: { xs: '100%', sm: '600px', md: '780px' },
           width: '100%',
           minHeight: '500px',
           height: '100%',
@@ -65,13 +65,14 @@ const CardPaymentModal = () => {
           p: '10px',
         }}
         data-cy={`activity-close`}
-        onClick={handleClose}
+        // onClick={handleClose}
       >
         <Typography
           variant="body1"
           component="span"
           color="#000"
           fontFamily="Inter, sans-serif"
+          fontSize={"22px"}
           fontWeight={700}
           ml={2}
         >

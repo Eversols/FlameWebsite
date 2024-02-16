@@ -13,7 +13,7 @@ import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 
 const index = () => {
-  const { role, userData } = useSelector((state) => state.auth);
+  const { role, userData, mood } = useSelector((state) => state.auth);
   const classes = useStyles();
   const [selectedValue, setSelectedValue] = React.useState("Male");
   const dispatch = useDispatch();
@@ -31,8 +31,9 @@ const index = () => {
     if (selectedValue) {
       
       try {
-        const res = await post("/updateUserMeta", {
+        const res = await post("/updateprofile", {
           userID: userData.id,
+          moodID: mood,
           gender: selectedValue,
         });
         if (res) {

@@ -33,12 +33,12 @@ const ProfileModal = () => {
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={false}
+      open={profileModel}
       aria-labelledby="responsive-dialog-title"
       onClose={handleClose}
       sx={{
         '& .MuiDialog-paper': {
-          maxWidth: { xs: '100%', sm: '600px', md: '650px' },
+          maxWidth: { xs: '100%', sm: '600px', md: '680px' },
           width: '100%',
           minHeight: '500px',
           height: '100%',

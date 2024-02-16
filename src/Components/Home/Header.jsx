@@ -43,6 +43,8 @@ const Header = () => {
       persistor.purge();
       navigate(`/${role}/authentication`);
     } catch (error) {
+      persistor.purge();
+      navigate(`/${role}/authentication`);
       console.log(error);
     }
   };

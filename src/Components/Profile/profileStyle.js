@@ -82,6 +82,19 @@ const useStyles = makeStyles((theme) => ({
     left: "8px",
     justifyContent: "center",
   },
+  images: {
+    width: "100%",
+    height: "90px",
+    backgroundColor: "rgba(255,255,255,0.4)",
+    borderRadius: "2%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    position: "absolute",
+    top: "0px",
+    left: "0px",
+    justifyContent: "center",
+  },
 
   single_image_circle: {
     width: "300px",
@@ -97,10 +110,7 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
     fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
-    fontSize: "9px",
-    [theme.breakpoints.down("md")]: {
-      fontSize: "7px",
-    },
+    fontSize: "10px",
   },
   btn: {
     width: "40%",
@@ -215,6 +225,18 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 400,
       opacity: 0.8,
       /* Additional placeholder styles if needed */
+    },
+  },
+  btn1: {
+    width: "30%",
+    height: "40px",
+    backgroundColor: "#FB1F43",
+    color: "#ffffff",
+    fontWeight: 600,
+    borderRadius: "10px",
+    fontFamily: "Inter, Montserrat, sans-serif",
+    "&:hover": {
+      backgroundColor: "#dc697c",
     },
   },
 }));

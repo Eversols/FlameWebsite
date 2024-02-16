@@ -44,6 +44,7 @@ import { get } from '../../Services/api';
 import { getAllUsers } from '../../Services/store/authSlice';
 import CallService from '../../Services/voximplant/call';
 import CallModal from '../../Components/Home/CallModal';
+import PaymentStatus from '../../Components/Payment/PaymentStatus';
 const loveLabels = ['Sport', 'food', 'fashion'];
 const hateLabels = ['Make up', 'books', 'tv'];
 const index = () => {
@@ -320,7 +321,6 @@ const index = () => {
       {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
-      <CardPaymentModal />
       <Header />
       {isSmallScreen === false ? (
         <>{codeDivider()}</>
@@ -350,6 +350,8 @@ const index = () => {
       <ProfileModal />
       <PayoutModal />
       <CallModal />
+      <CardPaymentModal />
+      <PaymentStatus/>
     </>
   );
 };

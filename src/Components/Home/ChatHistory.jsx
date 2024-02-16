@@ -146,7 +146,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                       style={{
                         // backgroundImage: `url(${
                         //   item.direct && users.first_name
-                        //     ? `https://flame.bilalrugs.pk/livebk/public/uploads/${users.photo}`
+                        //     ? `https://theflame.life/livebk/public/uploads/${users.photo}`
                         //     : ProfileImage
                         // })`,
 

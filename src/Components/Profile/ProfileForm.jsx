@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
+  Autocomplete,
   Box,
   Button,
+  Chip,
   CircularProgress,
   Container,
   Grid,
@@ -43,21 +45,23 @@ const ProfileForm = () => {
   const { id } = useParams();
   const { userData, role, mood, region } = useSelector((state) => state.auth);
   const classes = useStyles();
+  const [status, setStatus] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
   const [images, setImages] = useState([]);
+  const [fileError, setFileError] = useState('');
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const progressValue = 50;
-  //   console.log('qqqqqqqqqqqqqqq',userData)
+
+  console.log("qqqqqqqqqqqqqqq", userData);
   const [profile, setProfile] = useState({
     profileImage: userData?.profileImage ?? "",
+    profileImage1: userData?.profileImage1 ?? "",
+    profileImage2: userData?.profileImage2 ?? "",
     displayName: userData?.displayName ?? "",
-    language: userData?.language ?? "",
-    age: userData?.age ?? "",
-    profession: userData?.profession ?? "",
     like: userData?.like ?? "",
-    dislike: userData?.dislike ?? "",
-    outsideWork: userData?.outsideWork ?? "",
+    unlike: userData?.unlike ?? "",
+    region: userData?.region ?? "",
+    about: userData?.about ?? "",
   });
   console.log("qqqqqqqqqqqqqqq", profile);
   const dispatch = useDispatch();
@@ -73,14 +77,21 @@ const ProfileForm = () => {
       [name]: value,
     }));
   };
-  const handleImageChange = async (event) => {
+  const handleImageChange = async (event, url) => {
     const file = event.target.files[0];
-    console.log(file);
-    if (file) {
+    try {
+      if (file && file.size <= 1 * 1024 * 1024) {
+      }
+      if (
+        file &&
+        file.type.split("/")[0] == "video" &&
+        file.size <= 20 * 1024 * 1024
+      ) {
+      }
       const formData = new FormData();
-      formData.append("image", file);
+      formData.append(event.target.name, file);
       formData.append("userID", userData.id);
-      const res = await post("/upload", formData, {
+      const res = await post(`/${url}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -88,6 +99,8 @@ const ProfileForm = () => {
       if (res.data) {
         dispatch(getProfile({ id: userData.id }));
       }
+    } catch (error) {
+      console.log(error);
     }
     // const selectedImages = Array.from(event.target.files);
     // console.log(selectedImages);
@@ -98,7 +111,9 @@ const ProfileForm = () => {
   };
 
   const confirmSubmit = async () => {
-    delete profile.images;
+    delete profile.profileImage;
+    delete profile.profileImage1;
+    delete profile.profileImage2;
     console.log("confirm", profile);
     try {
       const res = await post("/updateUserMeta", {
@@ -107,11 +122,6 @@ const ProfileForm = () => {
       });
       if (res) {
         dispatch(getProfile({ id: userData.id }));
-      }
-      if (!id) {
-        if (!mood) navigate(`/${role}/mood`);
-        else if (!region) navigate(`/${role}/region`);
-        else navigate(`/${role}/home`);
       }
     } catch (error) {
       console.log(error);
@@ -126,6 +136,7 @@ const ProfileForm = () => {
     const percentage = (filledFields / totalFields) * 100;
     return Math.round(percentage);
   };
+  const progressValue = calculatePercentage();
   return (
     <>
       <Grid container sx={gridContainer}>
@@ -145,18 +156,24 @@ const ProfileForm = () => {
               <Typography variant="paragraph" className={classes.percentage}>
                 {calculatePercentage()}%
               </Typography>
-              <img
-                // src={`https://flame.bilalrugs.pk/livebk/public/uploads/${profile.profileImage}`}
-                src={ProfileImage}
-                alt={`Image`}
-                className={classes.single_image}
-              />
+              {status && (
+                <img
+                  src={
+                    profile.profileImage
+                      ? `https://theflame.life/livebk/public/uploads/${profile.profileImage}`
+                      : ProfileImage
+                  }
+                  // src={ProfileImage}
+                  alt={`Image`}
+                  className={classes.single_image}
+                />
+              )}
               {/* CircularProgress for the remaining area */}
               <CircularProgress
                 variant="determinate"
                 value={100} // Value set to 100 for the full circle
                 size={110}
-                thickness={1.5}
+                thickness={1}
                 sx={{
                   color: "#DADEE6", // Color for the circular track
                   position: "absolute",
@@ -169,13 +186,44 @@ const ProfileForm = () => {
                 variant="determinate"
                 value={progressValue}
                 size={110}
-                thickness={1.7}
+                thickness={1}
                 sx={{
                   color: (theme) =>
-                    progressValue <= 50 ? " #FB1F43" : " #DADEE6", // Color for the progress area
+                    progressValue <= 50 ? "#FB1F43" : "#FB1F43", // Color for the progress area
                   position: "absolute",
                 }}
               />
+              {!status && (
+                <Grid
+                  container
+                  className={classes.gridStyle}
+                  // spacing={{ xs: 2, md: 3 }}
+                  // columns={{ xs: 4, sm: 8, md: 12 }}
+                >
+                  <>
+                    <Grid item xs={6} md={4}>
+                      <input
+                        type="file"
+                        id="additionalImages"
+                        name="image"
+                        accept="image/*"
+                        onChange={(e) => handleImageChange(e, "upload")}
+                        style={{ display: "none" }}
+                      />
+                    </Grid>
+                    <label
+                      htmlFor="additionalImages"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <Box className={classes.single_image}>
+                        <Typography variant="h6" className={classes.body_text}>
+                          Upload a picture
+                        </Typography>
+                      </Box>
+                    </label>
+                  </>
+                </Grid>
+              )}
             </div>
           </Box>
           <Box
@@ -215,31 +263,103 @@ const ProfileForm = () => {
                     width: "100%",
                     maxWidth: "90px",
                     height: "90px",
+                    position: "relative",
                     // background: "red",
                   }}
                 >
-                  <img src={Img} width="100%" height="90px" />
+                  <img
+                    src={
+                      profile.profileImage1
+                        ? `https://theflame.life/livebk/public/uploads/${profile.profileImage1}`
+                        : Img
+                    }
+                    width="100%"
+                    height="90px"
+                  />
+                  {!status && (
+                    <label htmlFor="image1" style={{ cursor: "pointer" }}>
+                      <Box className={classes.images}>
+                        <Typography variant="h6" className={classes.body_text}>
+                          Upload a picture
+                        </Typography>
+                      </Box>
+                    </label>
+                  )}
                 </Box>
+                <input
+                  type="file"
+                  id="image1"
+                  name="image"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, "upload1")}
+                  style={{ display: "none" }}
+                />
+
                 <Box
                   sx={{
                     width: "100%",
                     maxWidth: "90px",
                     height: "90px",
+                    position: "relative",
                     // background: "red",
                   }}
                 >
-                  <img src={Img} width="100%" height="90px" />
+                  <img
+                    src={
+                      profile.profileImage2
+                        ? `https://theflame.life/livebk/public/uploads/${profile.profileImage2}`
+                        : Img
+                    }
+                    width="100%"
+                    height="90px"
+                  />
+                  {!status && (
+                    <label htmlFor="image2" style={{ cursor: "pointer" }}>
+                      <Box className={classes.images}>
+                        <Typography variant="h6" className={classes.body_text}>
+                          Upload a picture
+                        </Typography>
+                      </Box>
+                    </label>
+                  )}
                 </Box>
+                <input
+                  type="file"
+                  id="image2"
+                  name="image"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, "upload2")}
+                  style={{ display: "none" }}
+                />
                 <Box
                   sx={{
                     width: "100%",
                     maxWidth: "138px",
+                    // minWidth: "138px",
                     height: "90px",
+                    position: "relative",
                     // background: "red",
                   }}
                 >
                   <img src={video2} width="100%" height="90px" />
+                  {!status && (
+                    <label htmlFor="video" style={{ cursor: "pointer" }}>
+                      <Box className={classes.images}>
+                        <Typography variant="h6" className={classes.body_text}>
+                          Upload a picture
+                        </Typography>
+                      </Box>
+                    </label>
+                  )}
                 </Box>
+                <input
+                  type="file"
+                  id="video"
+                  name="video"
+                  accept="video/*"
+                  onChange={(e) => handleImageChange(e, "uploadvideo")}
+                  style={{ display: "none" }}
+                />
               </Box>
             )}
 
@@ -327,6 +447,7 @@ const ProfileForm = () => {
             placeholder="your text"
             className={classes.input1}
             fullWidth
+            disabled={status}
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
@@ -335,12 +456,13 @@ const ProfileForm = () => {
           </Typography>
           <TextField
             type="text"
-            name="language"
+            name="region"
             onChange={handleInputChange}
-            value={profile.language}
+            value={profile.region}
             placeholder="your text"
             className={classes.input1}
             fullWidth
+            disabled={status}
           />
         </Grid>
         <Grid item xs={12} md={11.5}>
@@ -351,6 +473,9 @@ const ProfileForm = () => {
             placeholder="Label Placeholder"
             name="currentaddress"
             className={classes.placeholderStyle}
+            disabled={status}
+            name="about"
+            value={profile?.about}
             // value={values.currentaddress || ""}
             // onChange={handleChange}
             style={{
@@ -377,14 +502,37 @@ const ProfileForm = () => {
           <Typography variant="h5" className={classes.label}>
             Three things you love
           </Typography>
+          <Autocomplete
+            multiple
+            onChange={handleInputChange}
+            id="tags-filled"
+            // options={top100Films.map((option) => option.title)}
+            // defaultValue={[top100Films[13].title]}
+            freeSolo
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                name="like"
+                variant="filled"
+                label="freeSolo"
+                placeholder="Favorites"
+              />
+            )}
+          />
           <TextField
             type="text"
-            name="profession"
+            name="like"
             onChange={handleInputChange}
-            value={profile.profession}
+            value={profile.like}
             // placeholder="What do you do?"
             className={classes.input1}
             fullWidth
+            disabled={status}
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
@@ -393,13 +541,34 @@ const ProfileForm = () => {
           </Typography>
           <TextField
             type="text"
-            name="like"
+            name="unlike"
             onChange={handleInputChange}
-            value={profile.like}
+            value={profile.unlike}
             // placeholder="What do you like in a partner?"
             className={classes.input1}
             fullWidth
+            disabled={status}
           />
+        </Grid>
+        <Grid item sx={{ width: "100%" }}>
+          <Box
+            sx={{ width: "100%", justifyContent: "center", display: "flex" }}
+          >
+            <Button
+              onClick={() => {
+                setStatus(!status)
+                if(!status){
+                confirmSubmit()
+
+                }
+                }}
+              variant="contained"
+              type="submit"
+              className={classes.btn1}
+            >
+              {status ? "Edit Profile" : "Save Profile"}
+            </Button>
+          </Box>
         </Grid>
         {/* <Container className={classes.container}>
           <Container className={classes.box_inner}>
@@ -408,7 +577,7 @@ const ProfileForm = () => {
                 {profile?.profileImage ? (
                   <Box className={classes.single_image}>
                     <img
-                      src={`https://flame.bilalrugs.pk/livebk/public/uploads/${profile.profileImage}`}
+                      src={`https://theflame.life/livebk/public/uploads/${profile.profileImage}`}
                       alt={`Image`}
                       className={classes.single_image}
                     />

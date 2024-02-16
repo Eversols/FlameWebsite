@@ -113,7 +113,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   checkBoxLabel: {
-    fontSize: '12px',
+    color: 'black',
+    fontSize: '14px',
     fontWeight: 400,
     fontFamily: 'Inter, sans-serif',
   },
@@ -156,6 +157,20 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  error: {
+    fontFamily: "Inter, sans-serif",
+    fontWeight: "regular",
+    fontSize: "12px",
+    color: "red",
+    // position: "absolute",
+  },
+  checkBox:{
+      color: '#FB1F43', // Custom color
+      '&.Mui-checked': {
+        color: '#FB1F43', // Custom color when checked
+    },
+
+  }
 }));
 
 export default useStyles;

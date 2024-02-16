@@ -12,13 +12,14 @@ import React from 'react';
 import colorCircle from '../../Assets/images/colorcirlce.svg';
 import greyCircle from '../../Assets/images/greycircle.svg';
 import useStyles from './style';
+import moment from 'moment'
 
-const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
+const CustomCard = ({ price, description, expires, text, onSelect, isSelected }) => {
   const classes = useStyles(isSelected);
   return (
-    <Card className={classes.cardContainer}>
+    <Card className={classes.cardContainer} onClick={onSelect}>
       <Box className={classes.detail_wrapper}>
-        <IconButton onClick={onSelect}>
+        <IconButton >
           {isSelected ? (
             <img
               src={colorCircle}
@@ -42,14 +43,13 @@ const CustomCard = ({ price, description, text, onSelect, isSelected }) => {
       >
         $ {price || 'no'}
       </Typography>
-
-      <Typography
+     {expires && <Typography
         className={classes.cardTitle2}
         color="text.secondary"
         gutterBottom
       >
-        expires in text
-      </Typography>
+        expires in {moment(expires).diff(moment().format('YYYY-MM-DD'),'days')}
+      </Typography>}
     </Card>
   );
 };

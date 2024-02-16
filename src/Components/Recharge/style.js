@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     gap: "6px",
     marginBottom: "30px",
-    flexWrap: "wrap",
+    // flexWrap: "wrap",
     [theme.breakpoints.down("sm")]:{
       marginBottom:"5px"
     }
