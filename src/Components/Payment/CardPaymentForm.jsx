@@ -55,7 +55,8 @@ const CardPaymentForm = () => {
         cc_number,
         ccv,
         expiry: `${cardExpireMonth}/${cardExpireYear}`,
-        termsAndConditions: false
+        termsAndConditions: false,
+        card_holder: cardHolderName
       });
       dispatch(setPaymentStatus({ paymentSuccess: true, paymentError: false }));
       // navigate(`/${role}/completion`);

@@ -14,7 +14,7 @@ import useStyles from './style';
 
 const ChatHistory = ({ setShowChatBox, callUser }) => {
   const {
-    vox_users: { conversations, users, currentUser },
+    vox_users: { conversations=[], users, currentUser },
     conversationHistory,
   } = useSelector((state) => state.conversation);
   const { allUsers = [] } = useSelector((state) => state.auth);
@@ -134,6 +134,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
       <Box className={classes.flexContainer}>
         {conversations.map((item) => {
           const users = getUserDetail(item.participants, item.direct);
+          console.log('EEEEEEEEEEEEEEE',users)
           const chatTitle = getChatTitle(item, users);
           const { lastMessage, timestamp } = getLastMessageAndTime(item);
           return (
@@ -144,13 +145,13 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                     <Box
                       className={classes.single_image}
                       style={{
-                        // backgroundImage: `url(${
-                        //   item.direct && users.first_name
-                        //     ? `https://theflame.life/livebk/public/uploads/${users.photo}`
-                        //     : ProfileImage
-                        // })`,
+                        backgroundImage: `url(${
+                          item.direct && users.first_name
+                            ? `https://theflame.life/livebk/public/uploads/${users.photo}`
+                            : ProfileImage
+                        })`,
 
-                        backgroundImage: `url(${ProfileImage})`,
+                        // backgroundImage: `url(${ProfileImage})`,
                       }}
                     ></Box>
                     {chatTitle && (

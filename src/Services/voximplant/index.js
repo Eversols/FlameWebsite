@@ -41,6 +41,7 @@ class VoxService {
    * @param {string} accessToken - Previously saved token
    */
   onLogin(loginForm, accessToken) {
+    console.log('WWWWWWWWWWWWWWWWWWWWW', loginForm, accessToken)
     if (!accessToken) {
       return VoxService.inst.login(loginForm.user, loginForm.password);
     } else {

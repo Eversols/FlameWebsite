@@ -164,7 +164,6 @@ const useStyles = makeStyles((theme) => ({
     // border: "1px solid white",
 
     // maxHeight: "510px",
-
     position: "relative",
     // backgroundColor: "rgba(255,255,255,0.3)",
     borderRadius: "15px",
@@ -182,36 +181,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-around",
 
-
-    "& .swiper-pagination-bullet": {
-      width: "12px",
-      height: "12px",
- 
-      background: "#3A41594D",
-
-
-     
-      opacity: .5,
-      "&:not(:last-child)": {
-        marginRight: "8px", // Adjust spacing between pagination bullets if needed
-      },
-      "&:hover": {
-        background: "#3A41594D",
-         // Adjust hover color for inactive bullets if necessary
-      },
-    },
-    "& .swiper-pagination-bullet-active": {
-  
-      background: "#3A4159",
-
-      "&:hover": {
-        background: "#3A4159",
-      },
-    },
-
-
-
-    
     "& .swiper-button-prev": {
       background: "transparent",
       padding: "1rem 1.2rem",
@@ -263,10 +232,55 @@ const useStyles = makeStyles((theme) => ({
       color: "#3A4159",
     },
   },
+  windowImage: {
+    // width: "100%",
+    // maxWidth: "509px",
+    // border: "1px solid white",
+    // maxHeight: "510px",
+
+    // position: "absolute",
+    // backgroundColor: "rgba(255,255,255,0.3)",
+    // borderRadius: "15px",
+    // display: "flex",
+    // flexDirection: "column",
+    [theme.breakpoints.down("md")]: {
+      // maxHeight: "410px",
+      maxWidth: "100%",
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      maxHeight: "285px",
+    },
+
+    // alignItems: "center",
+    // justifyContent: "space-around",
+
+    "& .swiper-pagination-bullet": {
+      width: "12px",
+      height: "12px",
+      background: "#3A41594D",
+      // background: "red",
+
+      opacity: 0.5,
+      "&:not(:last-child)": {
+        marginRight: "8px", // Adjust spacing between pagination bullets if needed
+      },
+      "&:hover": {
+        background: "#3A41594D",
+        // Adjust hover color for inactive bullets if necessary
+      },
+    },
+    "& .swiper-pagination-bullet-active": {
+      background: "#3A4159",
+
+      "&:hover": {
+        background: "#3A4159",
+      },
+    },
+  },
   slide: {
     "&.swiper-slide.swiper-slide-active": {
-      height: "365px",
-    
+      height: "inherit",
       [theme.breakpoints.down("md")]: {
         height: "300px",
       },
@@ -277,7 +291,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     width: "100%",
-    height: "inherit",
+    height: "512px",
     borderRadius: "15px",
   },
   buttons: {
@@ -765,18 +779,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   chatbox: {
-    
     background: "transparent",
- 
-   
-  
   },
   callImage: {
-    
-   maxWidth:"90px",
- 
-   
-  
+    maxWidth: "90px",
   },
 
   chat_wrapper: {

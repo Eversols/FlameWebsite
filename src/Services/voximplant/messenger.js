@@ -1,6 +1,11 @@
-
 import * as VoxImplant from "voximplant-websdk";
-import { onConversationCreated, onMessageMarkAsRead, onMessageSent, onlineReceived, reloginVox } from "../utils";
+import {
+  onConversationCreated,
+  onMessageMarkAsRead,
+  onMessageSent,
+  onlineReceived,
+  reloginVox,
+} from "../utils";
 
 const TIME_NOTIFICATION = 3000;
 export const MY_APP = "flame.flameadmin";
@@ -55,7 +60,7 @@ export default class MessengerService {
       })
       .then((evts) => {
         console.log("Conversation participants user info received", evts);
-        initialData.users = evts.map((e) => e.user);
+        initialData.users = evts.map((e) => ({ ...e.user, online: false }));
       })
       .catch(console.error);
 
@@ -76,13 +81,17 @@ export default class MessengerService {
     MessengerService.messenger.on(
       VoxImplant.Messaging.MessengerEvents.SetStatus,
       (e) => {
+        console.log("FFFFFFFFFFFFFFFFFF", e);
         onlineReceived(e.initiator, e.online);
       }
     );
 
     MessengerService.messenger.on(
       VoxImplant.Messaging.MessengerEvents.CreateConversation,
-      (e) =>{console.log(e); onConversationCreated(e)}
+      (e) => {
+        console.log(e);
+        onConversationCreated(e);
+      }
     );
     MessengerService.messenger.on(
       VoxImplant.Messaging.MessengerEvents.SendMessage,
@@ -95,7 +104,7 @@ export default class MessengerService {
   }
 
   getCurrentConversations(conversationsList) {
-    console.log(conversationsList)
+    console.log(conversationsList);
     return MessengerService.messenger
       .getConversations(conversationsList)
       .catch((e) => {
@@ -131,7 +140,7 @@ export default class MessengerService {
   }
 
   createDirect(userId) {
-    console.log(userId)
+    console.log(userId);
     return this.createNewConversation([{ userId }], "", true, false, false, {
       type: "direct",
     });

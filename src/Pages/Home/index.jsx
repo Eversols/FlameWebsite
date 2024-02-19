@@ -6,47 +6,48 @@ import {
   IconButton,
   Paper,
   Typography,
-} from '@mui/material';
-import React from 'react';
-import Header from '../../Components/Home/Header';
-import useStyles from './style';
+} from "@mui/material";
+import React from "react";
+import Header from "../../Components/Home/Header";
+import useStyles from "./style";
 
-import CallEndIcon from '@mui/icons-material/CallEnd';
-import { useMediaQuery } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Gift1 from '../../Assets/images/Gifts/gift_1.png';
-import Gift2 from '../../Assets/images/Gifts/gift_2.png';
-import Gift3 from '../../Assets/images/Gifts/gift_3.png';
-import Gift4 from '../../Assets/images/Gifts/gift_4.png';
-import Gift5 from '../../Assets/images/Gifts/gift_5.png';
-import BackgroundGradient from '../../Assets/images/background_gradient.png';
-import bgBlock from '../../Assets/images/bg_block.svg';
-import bgHeart from '../../Assets/images/bg_heart.svg';
-import CallEnd from '../../Assets/images/call_action_end.png';
-import CallNext from '../../Assets/images/call_action_next.png';
-import CallPrev from '../../Assets/images/call_action_prev.png';
-import flameLogo from '../../Assets/images/flame logo.svg';
-import ProfileImage from '../../Assets/images/girl-profile.png';
-import logoutIcon from '../../Assets/images/logout.png';
-import profile from '../../Assets/images/profile.png';
-import ChatBox from '../../Components/Home/ChatBox';
-import ChatHistory from '../../Components/Home/ChatHistory';
-import IncomingCallDialog from '../../Components/Home/IncomingCallDialog';
-import InfoModal from '../../Components/Home/InfoModal';
-import MainScreenSlider from '../../Components/Home/MainScreenSlider';
-import WorningDilog from '../../Components/Home/WorningDialog';
-import CardPaymentModal from '../../Components/Payment/CardPaymentModal';
-import PayoutModal from '../../Components/Payment/PayoutModal';
-import ProfileModal from '../../Components/Profile/ProfileModal';
-import RechargeModal from '../../Components/Recharge/RechargeModal';
-import { get } from '../../Services/api';
-import { getAllUsers } from '../../Services/store/authSlice';
-import CallService from '../../Services/voximplant/call';
-import CallModal from '../../Components/Home/CallModal';
-import PaymentStatus from '../../Components/Payment/PaymentStatus';
-const loveLabels = ['Sport', 'food', 'fashion'];
-const hateLabels = ['Make up', 'books', 'tv'];
+import CallEndIcon from "@mui/icons-material/CallEnd";
+import { useMediaQuery } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Gift1 from "../../Assets/images/Gifts/gift_1.png";
+import Gift2 from "../../Assets/images/Gifts/gift_2.png";
+import Gift3 from "../../Assets/images/Gifts/gift_3.png";
+import Gift4 from "../../Assets/images/Gifts/gift_4.png";
+import Gift5 from "../../Assets/images/Gifts/gift_5.png";
+import BackgroundGradient from "../../Assets/images/background_gradient.png";
+import bgBlock from "../../Assets/images/bg_block.svg";
+import bgHeart from "../../Assets/images/bg_heart.svg";
+import CallEnd from "../../Assets/images/call_action_end.png";
+import CallNext from "../../Assets/images/call_action_next.png";
+import CallPrev from "../../Assets/images/call_action_prev.png";
+import flameLogo from "../../Assets/images/flame logo.svg";
+import ProfileImage from "../../Assets/images/girl-profile.png";
+import logoutIcon from "../../Assets/images/logout.png";
+import profile from "../../Assets/images/profile.png";
+import ChatBox from "../../Components/Home/ChatBox";
+import ChatHistory from "../../Components/Home/ChatHistory";
+import IncomingCallDialog from "../../Components/Home/IncomingCallDialog";
+import InfoModal from "../../Components/Home/InfoModal";
+import MainScreenSlider from "../../Components/Home/MainScreenSlider";
+import WorningDilog from "../../Components/Home/WorningDialog";
+import CardPaymentModal from "../../Components/Payment/CardPaymentModal";
+import PayoutModal from "../../Components/Payment/PayoutModal";
+import ProfileModal from "../../Components/Profile/ProfileModal";
+import RechargeModal from "../../Components/Recharge/RechargeModal";
+import { get } from "../../Services/api";
+import { getAllUsers, getProfile, setAllModels } from "../../Services/store/authSlice";
+import CallService from "../../Services/voximplant/call";
+import CallModal from "../../Components/Home/CallModal";
+import PaymentStatus from "../../Components/Payment/PaymentStatus";
+import LogoutModal from "../../Components/Logout";
+const loveLabels = ["Sport", "food", "fashion"];
+const hateLabels = ["Make up", "books", "tv"];
 const index = () => {
   const {
     role,
@@ -55,7 +56,7 @@ const index = () => {
     rechargeModel,
   } = useSelector((state) => state.auth);
   const [modelData, setModelData] = useState(null);
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [models, setModels] = useState([]);
   const [dialog, setDialog] = useState(false);
   const [currentCall, setCurrentCall] = useState(null);
@@ -67,8 +68,21 @@ const index = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(
+      setAllModels({
+        rechargeModel: false,
+        profileModel: false,
+        payoutModel: false,
+        paymentModel: false,
+        paymentSuccess: false,
+        paymentError: false,
+      })
+    );
+    if(userData?.id){
+      dispatch(getProfile({ id: userData.id }));
+    }
     dispatch(getAllUsers());
-    const url = role === 'model' ? '/getUsers' : '/getModels';
+    const url = role === "model" ? "/getUsers" : "/getModels";
     get(url)
       .then((res) => {
         setModels(res.data.data);
@@ -101,9 +115,9 @@ const index = () => {
   const checkEmail = (userName) => {
     if (userName) {
       const tempEmail = userName
-        .replace('-flame-', '@')
+        .replace("-flame-", "@")
         .slice(0, -32)
-        .split(':')[1];
+        .split(":")[1];
       return tempEmail;
     }
     return false;
@@ -166,22 +180,24 @@ const index = () => {
     const callService = CallService.getInstance();
     callService.toggleMic();
   };
-
+  console.log("SSSSSSSSSSSSSSSSSSSSSSS", modelData);
   const userInfo = () => {
     return (
       <Paper className={classes.box_left_info}>
         <Box className={classes.avatar_box_profile}>
           <Container
             sx={{
-              backgroundImage: `url(${ProfileImage})`,
+              backgroundImage: modelData?.userData?.profileImage
+                ? `url(https://theflame.life/livebk/public/uploads/${modelData?.userData?.profileImage})`
+                : `url(${ProfileImage})`,
             }}
             className={classes.single_image_profile}
           ></Container>
           <Typography variant="h6" className={classes.profile_answer_name}>
-            {modelData?.metaData?.displayName || 'Jeysie'}
+            {modelData?.metaData?.displayName || "Jeysie"}
           </Typography>
           <Typography variant="h6" className={classes.profile_question_text}>
-            city
+            {modelData?.metaData?.region}
           </Typography>
 
           <Typography variant="h6" className={classes.profile_heading}>
@@ -189,36 +205,38 @@ const index = () => {
           </Typography>
 
           <Typography variant="h6" className={classes.profile_text}>
-            What do I like to do outside work. How old am I. What do I do What
-            What do I dislike in a partner. do I like in a partner
+            {modelData?.metaData?.about}
           </Typography>
           <Typography variant="h6" className={classes.profile_answer}>
             Things I Love
           </Typography>
+          {console.log('DDDDDDDDDDDDDDDDDDDDDDDDD',modelData)}
           <Box className={classes.btnContainer}>
-            {loveLabels.map((label, index) => (
-              <Button
-                key={index}
-                variant="contained"
-                className={classes.btn_love}
-              >
-                {label}
-              </Button>
-            ))}
+            {modelData?.metaData?.like &&
+              modelData?.metaData?.like.replace("#", "").split(", ").map((label, index) => (
+                <Button
+                  key={index}
+                  variant="contained"
+                  className={classes.btn_love}
+                >
+                  {label}
+                </Button>
+              ))}
           </Box>
           <Typography variant="h6" className={classes.profile_answer}>
             Things I Hate
           </Typography>
           <Box className={classes.btnContainer}>
-            {hateLabels.map((label, index) => (
-              <Button
-                key={index}
-                variant="contained"
-                className={classes.btn_hate}
-              >
-                {label}
-              </Button>
-            ))}
+            {modelData?.metaData?.unlike &&
+              modelData?.metaData?.unlike.replace("#", "").split(", ").map((label, index) => (
+                <Button
+                  key={index}
+                  variant="contained"
+                  className={classes.btn_hate}
+                >
+                  {label}
+                </Button>
+              ))}
           </Box>
         </Box>
       </Paper>
@@ -255,9 +273,9 @@ const index = () => {
                 </Box>
                 <Box
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   <IconButton
@@ -329,11 +347,12 @@ const index = () => {
       ) : isSmallScreen === true && showChatBox === true ? (
         <></>
       ) : null}
-
+{console.log('YYYYYYYYYYYYYYYYYYYYY',modelData)}
       <ChatBox
         setDialog={setDialog}
         showChatBox={showChatBox}
         setShowChatBox={setShowChatBox}
+        modelData={modelData}
         // conversation={conversationHistory[convUuid]}
         // voxUser={currentVoxUser}
         // uuid={convUuid}
@@ -351,7 +370,8 @@ const index = () => {
       <PayoutModal />
       <CallModal />
       <CardPaymentModal />
-      <PaymentStatus/>
+      <PaymentStatus />
+      <LogoutModal/>
     </>
   );
 };

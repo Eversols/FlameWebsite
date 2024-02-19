@@ -44,26 +44,26 @@ const gridContainer = {
 const ProfileForm = () => {
   const { id } = useParams();
   const { userData, role, mood, region } = useSelector((state) => state.auth);
+
   const classes = useStyles();
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(true);
   const navigate = useNavigate();
   const theme = useTheme();
   const [images, setImages] = useState([]);
-  const [fileError, setFileError] = useState('');
+  const [fileError, setFileError] = useState("");
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
-  console.log("qqqqqqqqqqqqqqq", userData);
   const [profile, setProfile] = useState({
     profileImage: userData?.profileImage ?? "",
     profileImage1: userData?.profileImage1 ?? "",
     profileImage2: userData?.profileImage2 ?? "",
+    video: userData?.video ?? "",
     displayName: userData?.displayName ?? "",
-    like: userData?.like ?? "",
-    unlike: userData?.unlike ?? "",
+    like: userData?.like? userData.like.split(", ") : [],
+    unlike: userData?.unlike? userData.unlike.split(", ") : [],
     region: userData?.region ?? "",
     about: userData?.about ?? "",
   });
-  console.log("qqqqqqqqqqqqqqq", profile);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -72,10 +72,24 @@ const ProfileForm = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    console.log("WWWWWWWWWWWWWWWWWWWWWWW", name, value);
     setProfile((prevProfile) => ({
       ...prevProfile,
       [name]: value,
     }));
+  };
+
+  const handleAutoComplete = (event) => {
+    const { name, value } = event.target;
+    if(name){
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        [name]:
+          profile[name].length > 0
+            ? [...profile[name], `#${value}`]
+            : [`#${value}`],
+      }));
+    }
   };
   const handleImageChange = async (event, url) => {
     const file = event.target.files[0];
@@ -118,7 +132,11 @@ const ProfileForm = () => {
     try {
       const res = await post("/updateUserMeta", {
         userID: userData.id,
-        ...profile,
+        ...profile, 
+        like: profile.like.join(', '),
+        unlike: profile.unlike.join(', '),
+        // like: "",
+        // unlike: "",
       });
       if (res) {
         dispatch(getProfile({ id: userData.id }));
@@ -137,6 +155,7 @@ const ProfileForm = () => {
     return Math.round(percentage);
   };
   const progressValue = calculatePercentage();
+  console.log('TTTTTTTTTTTTTTT',status, profile)
   return (
     <>
       <Grid container sx={gridContainer}>
@@ -346,7 +365,7 @@ const ProfileForm = () => {
                     <label htmlFor="video" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          Upload a picture
+                          Upload a video
                         </Typography>
                       </Box>
                     </label>
@@ -470,14 +489,13 @@ const ProfileForm = () => {
             About you
           </Typography>
           <textarea
-            placeholder="Label Placeholder"
-            name="currentaddress"
+            placeholder="About you"
             className={classes.placeholderStyle}
             disabled={status}
             name="about"
             value={profile?.about}
             // value={values.currentaddress || ""}
-            // onChange={handleChange}
+            onChange={handleInputChange}
             style={{
               width: "100%",
               height: "90px",
@@ -502,53 +520,97 @@ const ProfileForm = () => {
           <Typography variant="h5" className={classes.label}>
             Three things you love
           </Typography>
-          <Autocomplete
+          {!status ?<Autocomplete
             multiple
-            onChange={handleInputChange}
+            onChange={handleAutoComplete}
             id="tags-filled"
-            // options={top100Films.map((option) => option.title)}
+            value={profile.like}
+            options={[].map((option) => option.title)}
             // defaultValue={[top100Films[13].title]}
             freeSolo
+            // value={JSON.parse(profile.like)}
             renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip variant="outlined" label={option} {...getTagProps({ index })} />
-              ))
+              value.map((option, index) => {
+                return(
+                <Chip
+                  variant="outlined"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              )})
             }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                name="like"
-                variant="filled"
-                label="freeSolo"
-                placeholder="Favorites"
-              />
-            )}
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  name="like"
+                  value={profile.like}
+                  variant="filled"
+                  label="like"
+                  // placeholder="Favorites"
+                />
+              );
+            }}
           />
+          :
           <TextField
             type="text"
             name="like"
             onChange={handleInputChange}
-            value={profile.like}
+            value={profile.like.join('  ')}
             // placeholder="What do you do?"
             className={classes.input1}
             fullWidth
             disabled={status}
-          />
+          />}
         </Grid>
         <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.label}>
             Three things that you hate
           </Typography>
+          {!status? <Autocomplete
+            multiple
+            onChange={handleAutoComplete}
+            id="tags-filled"
+            value={profile.unlike}
+            options={[].map((option) => option.title)}
+            // defaultValue={[top100Films[13].title]}
+            freeSolo
+            // value={JSON.parse(profile.like)}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => {
+                return(
+                <Chip
+                  variant="outlined"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              )})
+            }
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  name="unlike"
+                  value={profile.unlike}
+                  variant="filled"
+                  label="unlike"
+                  // placeholder="Favorites"
+                />
+              );
+            }}
+          />
+          :
           <TextField
             type="text"
             name="unlike"
             onChange={handleInputChange}
-            value={profile.unlike}
+            value={profile.unlike.join('  ')}
             // placeholder="What do you like in a partner?"
             className={classes.input1}
             fullWidth
             disabled={status}
-          />
+          />}
         </Grid>
         <Grid item sx={{ width: "100%" }}>
           <Box
@@ -556,12 +618,11 @@ const ProfileForm = () => {
           >
             <Button
               onClick={() => {
-                setStatus(!status)
-                if(!status){
-                confirmSubmit()
-
+                setStatus(!status);
+                if (!status) {
+                  confirmSubmit();
                 }
-                }}
+              }}
               variant="contained"
               type="submit"
               className={classes.btn1}

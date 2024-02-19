@@ -98,8 +98,9 @@ const useStyles = makeStyles((theme) => ({
   box_mid: {
     width: "50%",
     display: "flex",
-    inHeight: "100%",
-    maxHeight: "100%",
+    lineHeight: "100%",
+    maxHeight: "105%",
+    height: "105%",
     flexDirection: "column",
     alignItems: "center",
     padding: "50px 0px 0px 0px",

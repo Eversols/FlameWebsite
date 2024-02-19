@@ -41,6 +41,7 @@ const index = () => {
           navigate(`/${role}/home`);
         }
       } catch (error) {
+        // navigate(`/${role}/home`);
         console.log(error);
       }
     }

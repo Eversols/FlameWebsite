@@ -46,10 +46,10 @@ const StepPassword = () => {
         let res;
         if (user.emailExist) {
           res = await post("/login", { email: user.email, password });
-          if (res.data.status === "success") {
-            navigate(`/${role}/home`);
-            return;
-          }
+          // if (res.data.status === "success") {
+          //   navigate(`/${role}/home`);
+          //   return;
+          // }
         } else {
           res = await post("/register", {
             email: user.email,
@@ -89,6 +89,7 @@ const StepPassword = () => {
                 }`;
                 console.log(res.data.content.role, mood, region);
                 await voxLogin(userName, password, user_data.payload.email);
+                console.log('TTTTTTTTTTTTTTTTTTTTTT', res)
               }
               if (res.data.content.role === "user") {
                 if (!mood) navigate(`/${role}/mood`);
@@ -103,9 +104,9 @@ const StepPassword = () => {
                 console.log(data);
                 if (data) {
                   console.log(userData?.outsideWork);
-                  if (!userData?.outsideWork) navigate(`/${role}/profile`);
-                  else if (!mood) navigate(`/${role}/mood`);
-                  else if (!region) navigate(`/${role}/region`);
+                  // if (!userData?.outsideWork) navigate(`/${role}/profile`);
+                   if (!mood) navigate(`/${role}/mood`);
+                  // else if (!region) navigate(`/${role}/region`);
                   else navigate(`/${role}/home`);
                 }
               }

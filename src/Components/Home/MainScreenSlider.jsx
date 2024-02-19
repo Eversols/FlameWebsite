@@ -1,26 +1,27 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React from "react";
 import {
   A11y,
   EffectCreative,
   Navigation,
   Pagination,
   Scrollbar,
-} from 'swiper/modules';
-import 'swiper/css/pagination';
+} from "swiper/modules";
+import "swiper/css/pagination";
 // Import Swiper React components
-import { Box, IconButton } from '@mui/material';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import ChatIcon from '../../Assets/images/message.svg';
-import CallIcon from '../../Assets/images/sayhi.svg';
-import VideoCallIcon from '../../Assets/images/video.svg';
-import { getCurrentConversation } from '../../Services/utils';
-import useStyles from './style';
+import { Box, IconButton } from "@mui/material";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import ChatIcon from "../../Assets/images/message.svg";
+import CallIcon from "../../Assets/images/sayhi.svg";
+import VideoCallIcon from "../../Assets/images/video.svg";
+import { getCurrentConversation } from "../../Services/utils";
+import useStyles from "./style";
+import SwiperImages from "./SwiperImages";
 
 const MainScreenSlider = ({
   models = [],
@@ -59,9 +60,10 @@ const MainScreenSlider = ({
       setShowChatBox(true);
     }
   };
+  console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD", models);
   return (
     <Swiper
-      modules={[Navigation, Pagination, EffectCreative, Scrollbar, A11y]}
+      modules={[Navigation, EffectCreative, Scrollbar, A11y]}
       navigation
       centeredSlides={true}
       loop={true}
@@ -70,16 +72,22 @@ const MainScreenSlider = ({
       className={classes.window}
       disableUnderline={false}
       onSlideChange={handleSlideChange}
-      pagination={{ clickable: true }}
     >
       {models.map((item, i) => (
         <SwiperSlide key={i} className={classes.slide}>
-          {item?.userData?.profileImage && (
+          {/* {item?.userData?.profileImage && (
             <img
               src={`https://theflame.life/livebk/public/uploads/${item.userData.profileImage}`}
               className={classes.img}
             />
-          )}
+          )} */}
+          <SwiperImages
+            images={[
+              item?.userData?.profileImage,
+              item?.userData?.profileImage1,
+              item?.userData?.profileImage2,
+            ]}
+          />
           <Box className={classes.buttons}>
             <IconButton
               className={classes.messageBtn}

@@ -24,18 +24,21 @@ import { setMessages } from "../../Services/store/authSlice";
 import MessengerService from "../../Services/voximplant/messenger";
 import useStyles from "./style";
 
-const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
+const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
   const {
     currentConversationId,
     conversationHistory,
-    vox_users: { conversations, currentUser },
+    vox_users: { conversations, currentUser, users },
+    vox_users
   } = useSelector((state) => state.conversation);
   const { userData } = useSelector((state) => state.auth);
   const [inputMessage, setInputMessage] = useState("");
+  const [user, setUser] = useState(null);
   const classes = useStyles();
   const messagesEndRef = useRef(null);
   const conversation = conversationHistory[currentConversationId] || [];
   const dispatch = useDispatch();
+  console.log('RRRRRRRRRRRRRRRRR',user)
 
   const scrollToBottom = () => {
     messagesEndRef &&
@@ -45,6 +48,11 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
   useEffect(() => {
     scrollToBottom();
   }, [conversationHistory]);
+  useEffect(() => {
+    if(modelData){
+      setUser(users.find((item)=> item.customData.userId == modelData?.id))
+    }
+  }, [modelData]);
 
   const handleToggleChatBox = () => {
     setShowChatBox((prev) => !prev);
@@ -154,10 +162,12 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
                 }}
               >
                 <Typography variant="h5" className={classes.history_name}>
-                  name
+                  {modelData?.metaData?.displayName}
                 </Typography>
                 <Box display="flex" justifyContent="start" alignItems="center">
-                  <Box className={classes.online_indicator} />
+                  {user?.online ?<Box className={classes.online_indicator} />
+                  :
+                  <Box className={classes.offline_indicator} />}
 
                   <Typography
                     variant="body1"
@@ -165,9 +175,8 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
                     ml={1}
                     sx={{ fontSize: "14px" }}
                   >
-                    Online
+                    {user?.online? "Online": "Offline"}
                   </Typography>
-                  {/* <Box className={classes.offline_indicator} /> */}
                 </Box>
               </Box>
               <Box className={classes.chat_actions}>
@@ -197,7 +206,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog }) => {
                 <IconButton
                   sx={{ margin: 0, padding: 0 }}
                   size="small"
-                  // onClick={() => call(users.userId, true)}
+                  onClick={handleToggleChatBox}
                   className={classes.history_actions_btn}
                 >
                   <CloseIcon sx={{ fill: "#AAAAAA", width: "16px" }} />

@@ -29,9 +29,8 @@ import Drawer from "./Drawer";
 import useStyles from "./style";
 
 const Header = () => {
-  const { role, userData, rechargeModel, profileModel, payoutModel } = useSelector(
-    (state) => state.auth
-  );
+  const { role, userData, rechargeModel, profileModel, payoutModel } =
+    useSelector((state) => state.auth);
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,6 +43,7 @@ const Header = () => {
       navigate(`/${role}/authentication`);
     } catch (error) {
       persistor.purge();
+      localStorage.setItem("persist:root", "");
       navigate(`/${role}/authentication`);
       console.log(error);
     }
@@ -61,7 +61,7 @@ const Header = () => {
     setDrawerOpen(!isDrawerOpen);
   };
 
-  console.log(isDrawerOpen, "drawer");
+  console.log(userData, "drawer");
 
   return (
     <Paper elevation={1} className={classes.headermain}>
@@ -117,7 +117,7 @@ const Header = () => {
                 fontWeight="bold"
                 className={classes.fontadjust}
               >
-                {userData.minutes}
+                {userData?.minutes || 0}
               </Typography>
               <Typography
                 variant="body1"
@@ -135,7 +135,7 @@ const Header = () => {
                 fontWeight="bold"
                 className={classes.fontadjust}
               >
-                {userData.messages}
+                {userData?.messages || 0}
               </Typography>
               <Typography
                 variant="body1"
@@ -189,8 +189,16 @@ const Header = () => {
             display="flex"
             justifyContent="center"
             alignItems="center"
+            sx={{ cursor: "pointer" }}
           >
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            <Avatar
+              alt={userData?.displayName}
+              src={
+                userData?.profileImage
+                  ? `https://theflame.life/livebk/public/uploads/${userData.profileImage}`
+                  : "/static/images/avatar/1.jpg"
+              }
+            />
             <Typography
               variant="body1"
               component="span"

@@ -451,14 +451,14 @@ export const voxRegister = async (data, name) => {
   return voxRegister;
 };
 export const voxLogin = async (user, password, email) => {
-  console.log(user, password, email);
   const login = await voxService.onLogin(
     {
       user: `${user}@${APP_NAME}.${ACC_NAME}.voximplant.com`,
       password: password,
     },
     null
-  );
+    );
+    console.log(login, user, password, email);
   if (login.result) {
     store.dispatch(
       setTokens({

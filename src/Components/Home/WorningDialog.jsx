@@ -8,8 +8,9 @@ import {
   Slide,
 } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setRechargeModel } from "../../Services/store/authSlice";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -18,6 +19,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const WorningDilog = ({ dialog, setDialog }) => {
   const { role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <Dialog
       open={dialog}
@@ -41,8 +43,10 @@ const WorningDilog = ({ dialog, setDialog }) => {
         <Button
           color="success"
           onClick={() => {
-            navigate(`/${role}/recharge`);
+            // navigate(`/${role}/recharge`);
+            dispatch(setRechargeModel(true))
             setDialog(false);
+
           }}
         >
           Yes
