@@ -254,11 +254,16 @@ const useStyles = makeStyles((theme) => ({
 
     // alignItems: "center",
     // justifyContent: "space-around",
+    "& .swiper-pagination": {
+      background: 'white',
+      padding: "8px 0px",
+      bottom: '0px !important',
+    },
 
     "& .swiper-pagination-bullet": {
       width: "12px",
       height: "12px",
-      background: "#3A41594D",
+      background: "rgba(58, 65, 89, 0.3)",
       // background: "red",
 
       opacity: 0.5,
@@ -266,15 +271,15 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "8px", // Adjust spacing between pagination bullets if needed
       },
       "&:hover": {
-        background: "#3A41594D",
+        background: "rgba(58, 65, 89, 0.3)",
         // Adjust hover color for inactive bullets if necessary
       },
     },
     "& .swiper-pagination-bullet-active": {
-      background: "#3A4159",
+      background: "rgba(58, 65, 89, 1)",
 
       "&:hover": {
-        background: "#3A4159",
+        background: "rgba(58, 65, 89, 1)",
       },
     },
   },
@@ -291,8 +296,11 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     width: "100%",
-    height: "512px",
+    height: "548px",
     borderRadius: "15px",
+    [theme.breakpoints.down("lg")]: {
+      height: "468px",
+    },
   },
   buttons: {
     width: "100%",
@@ -458,7 +466,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   single_image: {
-    width: "60px",
+    width: "40px",
     height: "40px",
     backgroundColor: "rgba(255,255,255,0.4)",
     borderRadius: "200px",
@@ -487,7 +495,7 @@ const useStyles = makeStyles((theme) => ({
     width: "70%",
     height: "100%",
     marginLeft: "auto",
-    marginRight: "10px",
+    // marginRight: "10px",
     borderRadius: "10px",
     backgroundColor: "rgba(255,255,255,0.3)",
     textAlign: "left",

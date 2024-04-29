@@ -32,7 +32,7 @@ const RechargeTabs = () => {
           setPlans(res.data.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
 
   const handleChange = (event, newValue) => {
@@ -41,7 +41,7 @@ const RechargeTabs = () => {
 
   const handleCardSelect = (card, index) => {
     setSelectedCard(card);
-    
+
   };
 
   console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', plans)
@@ -93,13 +93,13 @@ const RechargeTabs = () => {
         >
           <Tab
             value={0}
-            label="Message Packs"
+            label="Message top-ups"
             {...a11yProps(0)}
             className={classes.customTab}
           />
           <Tab
             value={1}
-            label="Video Call Packs"
+            label="Video call offers are below"
             {...a11yProps(1)}
             className={classes.customTab}
           />
@@ -152,9 +152,10 @@ const RechargeTabs = () => {
         </CustomTabPanel>
         <Box sx={{ width: "100%", justifyContent: "center", display: "flex" }}>
           <Button
-            onClick={()=> selectedCard && dispatch(setPaymentModel({paymentModel: true, package: selectedCard}))}
+            onClick={() => selectedCard && dispatch(setPaymentModel({ paymentModel: true, package: selectedCard }))}
             variant="contained"
             className={classes.btn}
+            disabled={selectedCard === null}
           >
             Confirm
           </Button>

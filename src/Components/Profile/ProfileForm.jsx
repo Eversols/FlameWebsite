@@ -8,6 +8,8 @@ import {
   CircularProgress,
   Container,
   Grid,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -21,9 +23,10 @@ import Img from "../../Assets/images/image.svg";
 import ProfileImage from "../../Assets/images/male.jpg";
 import video2 from "../../Assets/images/video2.svg";
 
-import { post } from "../../Services/api";
+import { get, post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
+import { countries, } from "../../Services/utils/country";
 
 const gridStyle = {
   padding: "10px 20px",
@@ -51,6 +54,9 @@ const ProfileForm = () => {
   const theme = useTheme();
   const [images, setImages] = useState([]);
   const [fileError, setFileError] = useState("");
+  const [loveList, setLoveList] = useState([]);
+  const [hateList, setHateList] = useState([]);
+  const [imageIsLoading, setImageIsLoading] = useState(false);
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [profile, setProfile] = useState({
@@ -59,15 +65,28 @@ const ProfileForm = () => {
     profileImage2: userData?.profileImage2 ?? "",
     video: userData?.video ?? "",
     displayName: userData?.displayName ?? "",
-    like: userData?.like? userData.like.split(", ") : [],
-    unlike: userData?.unlike? userData.unlike.split(", ") : [],
+    like: userData?.like ? userData.like.split(", ") : [],
+    unlike: userData?.unlike ? userData.unlike.split(", ") : [],
     region: userData?.region ?? "",
     about: userData?.about ?? "",
   });
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setFileError("");
     dispatch(getProfile({ id: userData.id }));
+    get('/hatelovethingsList').then((result) => {
+      if (result?.data) {
+        if (result.data.hateattributedata) {
+          setHateList(result.data.hateattributedata.map((item) => ({ title: item.attribute_name, value: item.attribute_name })))
+        }
+        if (result.data.loveattributedata) {
+          setLoveList(result.data.loveattributedata.map((item) => ({ title: item.attribute_name, value: item.attribute_name })))
+        }
+      }
+    }).catch((error) => {
+
+    })
   }, []);
 
   const handleInputChange = (event) => {
@@ -79,9 +98,11 @@ const ProfileForm = () => {
     }));
   };
 
-  const handleAutoComplete = (event) => {
-    const { name, value } = event.target;
-    if(name){
+  const handleAutoComplete = (name, value) => {
+    // const { name, value } = event.target;
+    // console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', name, value,)
+    if (name && value) {
+      if(profile[name].includes(`#${value}`)) return
       setProfile((prevProfile) => ({
         ...prevProfile,
         [name]:
@@ -92,15 +113,24 @@ const ProfileForm = () => {
     }
   };
   const handleImageChange = async (event, url) => {
+    setImageIsLoading(true)
+    setFileError("");
     const file = event.target.files[0];
+    console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN', file)
     try {
-      if (file && file.size <= 1 * 1024 * 1024) {
+      if (file && file.size >= (2.5 * 1024 * 1024)) {
+        setFileError("File size should be less than 2.5 MB");
+        setImageIsLoading(false)
+        return;
       }
       if (
         file &&
         file.type.split("/")[0] == "video" &&
-        file.size <= 20 * 1024 * 1024
+        file.size <= 10 * 1024 * 1024
       ) {
+        setFileError("File size should be less than 10 MB");
+        setImageIsLoading(false)
+        return;
       }
       const formData = new FormData();
       formData.append(event.target.name, file);
@@ -111,7 +141,18 @@ const ProfileForm = () => {
         },
       });
       if (res.data) {
-        dispatch(getProfile({ id: userData.id }));
+        const profileData = await dispatch(getProfile({ id: userData.id }));
+        console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH', profileData.payload)
+        if (profileData.payload) {
+          setProfile({
+            ...profile,
+            profileImage: profileData.payload.data?.profileImage ?? "",
+            profileImage1: profileData.payload.data?.profileImage1 ?? "",
+            profileImage2: profileData.payload.data?.profileImage2 ?? "",
+            video: profileData.payload.data?.video ?? "",
+          });
+          setImageIsLoading(false)
+        }
       }
     } catch (error) {
       console.log(error);
@@ -132,14 +173,29 @@ const ProfileForm = () => {
     try {
       const res = await post("/updateUserMeta", {
         userID: userData.id,
-        ...profile, 
+        ...profile,
         like: profile.like.join(', '),
         unlike: profile.unlike.join(', '),
         // like: "",
         // unlike: "",
       });
       if (res) {
-        dispatch(getProfile({ id: userData.id }));
+        const profileData = await dispatch(getProfile({ id: userData.id }));
+        if (profileData.payload) {
+          const { data, metadata } = profileData.payload
+
+          setProfile({
+            profileImage: data?.profileImage ?? "",
+            profileImage1: data?.profileImage1 ?? "",
+            profileImage2: data?.profileImage2 ?? "",
+            video: data?.video ?? "",
+            displayName: metadata?.displayName ?? "",
+            like: metadata?.like ? metadata.like.split(", ") : [],
+            unlike: metadata?.unlike ? metadata.unlike.split(", ") : [],
+            region: metadata?.region ?? "",
+            about: metadata?.about ?? "",
+          });
+        }
       }
     } catch (error) {
       console.log(error);
@@ -155,7 +211,7 @@ const ProfileForm = () => {
     return Math.round(percentage);
   };
   const progressValue = calculatePercentage();
-  console.log('TTTTTTTTTTTTTTT',status, profile)
+  console.log('TTTTTTTTTTTTTTT', status, profile)
   return (
     <>
       <Grid container sx={gridContainer}>
@@ -216,8 +272,8 @@ const ProfileForm = () => {
                 <Grid
                   container
                   className={classes.gridStyle}
-                  // spacing={{ xs: 2, md: 3 }}
-                  // columns={{ xs: 4, sm: 8, md: 12 }}
+                // spacing={{ xs: 2, md: 3 }}
+                // columns={{ xs: 4, sm: 8, md: 12 }}
                 >
                   <>
                     <Grid item xs={6} md={4}>
@@ -236,7 +292,7 @@ const ProfileForm = () => {
                     >
                       <Box className={classes.single_image}>
                         <Typography variant="h6" className={classes.body_text}>
-                          Upload a picture
+                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -265,7 +321,8 @@ const ProfileForm = () => {
                 upload
               </Typography>
               <Typography variant="paragraph" className={classes.subHeading}>
-                Upto 2 images &lt; 1mb each 1 video &lt; 20 mb
+                Upto 2 images &lt; 5mb each 1 video &lt; 10 mb
+                <Box color={"red"}>{fileError}</Box>
               </Typography>
             </Box>
             {!isSmallScreen && (
@@ -299,7 +356,7 @@ const ProfileForm = () => {
                     <label htmlFor="image1" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          Upload a picture
+                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -336,7 +393,7 @@ const ProfileForm = () => {
                     <label htmlFor="image2" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          Upload a picture
+                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -365,7 +422,7 @@ const ProfileForm = () => {
                     <label htmlFor="video" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          Upload a video
+                          {imageIsLoading ? "Uploading..." : "Upload a video"}
                         </Typography>
                       </Box>
                     </label>
@@ -473,7 +530,42 @@ const ProfileForm = () => {
           <Typography variant="h5" className={classes.label}>
             Region
           </Typography>
-          <TextField
+          <Autocomplete
+            id="country-select-demo"
+            sx={{ width: 300 }}
+            options={countries}
+            autoHighlight
+            disabled={status}
+            getOptionLabel={(option) => option.label}
+            onChange={(event, value) => handleInputChange({ target: { name: "region", value: value.label } })}
+            renderOption={(props, option) => (
+              <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                <img
+                  loading="lazy"
+                  width="20"
+                  srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                  src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                  alt=""
+                />
+                {option.label} ({option.code}) +{option.phone}
+              </Box>
+            )}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                // label="Choose a country"
+                inputProps={{
+                  ...params.inputProps,
+                  autoComplete: 'new-password', // disable autocomplete and autofill
+                }}
+                value={profile.region}
+                className={classes.input1}
+                fullWidth
+                disabled={status}
+              />
+            )}
+          />
+          {/* <TextField
             type="text"
             name="region"
             onChange={handleInputChange}
@@ -482,14 +574,19 @@ const ProfileForm = () => {
             className={classes.input1}
             fullWidth
             disabled={status}
-          />
+          /> */}
         </Grid>
         <Grid item xs={12} md={11.5}>
           <Typography variant="h5" className={classes.label}>
             About you
           </Typography>
-          <textarea
+          <TextField
+            multiline
+            rows={2}
+            helperText={`${profile?.about.length}/200`}
+            error={profile?.about.length >= 200}
             placeholder="About you"
+            length={200}
             className={classes.placeholderStyle}
             disabled={status}
             name="about"
@@ -500,7 +597,7 @@ const ProfileForm = () => {
               width: "100%",
               height: "90px",
               resize: "none",
-              padding: "11.5px 0px 11.5px 12px",
+              padding: "0px 0px 0px 0px",
               border: "none",
               borderRadius: "6px",
 
@@ -520,72 +617,80 @@ const ProfileForm = () => {
           <Typography variant="h5" className={classes.label}>
             Three things you love
           </Typography>
-          {!status ?<Autocomplete
-            multiple
-            onChange={handleAutoComplete}
-            id="tags-filled"
-            value={profile.like}
-            options={[].map((option) => option.title)}
-            // defaultValue={[top100Films[13].title]}
-            freeSolo
-            // value={JSON.parse(profile.like)}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
-                return(
-                <Chip
-                  variant="outlined"
-                  label={option}
-                  {...getTagProps({ index })}
-                />
-              )})
-            }
-            renderInput={(params) => {
-              return (
-                <TextField
-                  {...params}
-                  name="like"
-                  value={profile.like}
-                  variant="filled"
-                  label="like"
+
+          {!status ?
+            <Autocomplete
+              multiple
+              onChange={(e, v) => handleAutoComplete('like', v[v.length - 1]?.value)}
+              id="tags-filled"
+              value={profile.like}
+              options={loveList.sort((a, b) => b.title - a.title)}
+              // options={loveList.map((option) => option.title)}
+              getOptionLabel={(option) => option.title}
+              // defaultValue={[top100Films[13].title]}
+              freeSolo
+              // value={JSON.parse(profile.like)}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => {
+                  return (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  )
+                })
+              }
+              renderInput={(params) => {
+                return (
+                  <TextField
+                    {...params}
+                    name="like"
+                    value={profile.like}
+                    variant="filled"
+                    label="like"
                   // placeholder="Favorites"
-                />
-              );
-            }}
-          />
-          :
-          <TextField
-            type="text"
-            name="like"
-            onChange={handleInputChange}
-            value={profile.like.join('  ')}
-            // placeholder="What do you do?"
-            className={classes.input1}
-            fullWidth
-            disabled={status}
-          />}
+                  />
+                );
+              }}
+            />
+            :
+            <TextField
+              type="text"
+              name="like"
+              onChange={handleInputChange}
+              value={profile.like.join('  ')}
+              // placeholder="What do you do?"
+              className={classes.input1}
+              fullWidth
+              disabled={status}
+            />}
         </Grid>
         <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.label}>
             Three things that you hate
           </Typography>
-          {!status? <Autocomplete
+          {!status ? <Autocomplete
             multiple
-            onChange={handleAutoComplete}
+            onChange={(e, v) => handleAutoComplete('unlike', v[v.length - 1]?.value)}
             id="tags-filled"
             value={profile.unlike}
-            options={[].map((option) => option.title)}
+            options={hateList.sort((a, b) => b.title - a.title)}
+            // options={loveList.map((option) => option.title)}
+            getOptionLabel={(option) => option.title}
             // defaultValue={[top100Films[13].title]}
             freeSolo
             // value={JSON.parse(profile.like)}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => {
-                return(
-                <Chip
-                  variant="outlined"
-                  label={option}
-                  {...getTagProps({ index })}
-                />
-              )})
+                return (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                )
+              })
             }
             renderInput={(params) => {
               return (
@@ -595,22 +700,22 @@ const ProfileForm = () => {
                   value={profile.unlike}
                   variant="filled"
                   label="unlike"
-                  // placeholder="Favorites"
+                // placeholder="Favorites"
                 />
               );
             }}
           />
-          :
-          <TextField
-            type="text"
-            name="unlike"
-            onChange={handleInputChange}
-            value={profile.unlike.join('  ')}
-            // placeholder="What do you like in a partner?"
-            className={classes.input1}
-            fullWidth
-            disabled={status}
-          />}
+            :
+            <TextField
+              type="text"
+              name="unlike"
+              onChange={handleInputChange}
+              value={profile.unlike.join('  ')}
+              // placeholder="What do you like in a partner?"
+              className={classes.input1}
+              fullWidth
+              disabled={status}
+            />}
         </Grid>
         <Grid item sx={{ width: "100%" }}>
           <Box

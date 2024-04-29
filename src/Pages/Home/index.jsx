@@ -67,7 +67,7 @@ const index = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(async () => {
     dispatch(
       setAllModels({
         rechargeModel: false,
@@ -78,16 +78,19 @@ const index = () => {
         paymentError: false,
       })
     );
-    if(userData?.id){
-      dispatch(getProfile({ id: userData.id }));
+    if (userData?.id) {
+      const result = await dispatch(getProfile({ id: userData.id }));
+      console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNN', result)
+      if (result) {
+        // const url = role === "model" ? "/getUsers" : `/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}`;
+        get(`/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}`)
+          .then((res) => {
+            setModels(res.data.data);
+          })
+          .catch((err) => { });
+      }
     }
     dispatch(getAllUsers());
-    const url = role === "model" ? "/getUsers" : "/getModels";
-    get(url)
-      .then((res) => {
-        setModels(res.data.data);
-      })
-      .catch((err) => {});
   }, []);
 
   // Initialize the CallService when the component mounts
@@ -189,7 +192,8 @@ const index = () => {
             sx={{
               backgroundImage: modelData?.userData?.profileImage
                 ? `url(https://theflame.life/livebk/public/uploads/${modelData?.userData?.profileImage})`
-                : `url(${ProfileImage})`,
+                : userData?.gender === "Male" ? 'url(https://theflame.life/livebk/public/frontend_images/avatar-man.jpg)' :
+                  "url(https://theflame.life/livebk/public/frontend_images/avatar-woman.jpg)",
             }}
             className={classes.single_image_profile}
           ></Container>
@@ -210,7 +214,7 @@ const index = () => {
           <Typography variant="h6" className={classes.profile_answer}>
             Things I Love
           </Typography>
-          {console.log('DDDDDDDDDDDDDDDDDDDDDDDDD',modelData)}
+          {console.log('DDDDDDDDDDDDDDDDDDDDDDDDD', modelData)}
           <Box className={classes.btnContainer}>
             {modelData?.metaData?.like &&
               modelData?.metaData?.like.replace("#", "").split(", ").map((label, index) => (
@@ -347,15 +351,16 @@ const index = () => {
       ) : isSmallScreen === true && showChatBox === true ? (
         <></>
       ) : null}
-{console.log('YYYYYYYYYYYYYYYYYYYYY',modelData)}
+      {console.log('YYYYYYYYYYYYYYYYYYYYY', modelData)}
       <ChatBox
         setDialog={setDialog}
         showChatBox={showChatBox}
         setShowChatBox={setShowChatBox}
         modelData={modelData}
-        // conversation={conversationHistory[convUuid]}
-        // voxUser={currentVoxUser}
-        // uuid={convUuid}
+        callUser={handleMakeAudioCall}
+      // conversation={conversationHistory[convUuid]}
+      // voxUser={currentVoxUser}
+      // uuid={convUuid}
       />
       <WorningDilog dialog={dialog} setDialog={setDialog} />
       {showIncomingCallDialog && (
@@ -371,7 +376,7 @@ const index = () => {
       <CallModal />
       <CardPaymentModal />
       <PaymentStatus />
-      <LogoutModal/>
+      <LogoutModal />
     </>
   );
 };

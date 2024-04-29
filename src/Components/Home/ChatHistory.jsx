@@ -14,7 +14,7 @@ import useStyles from './style';
 
 const ChatHistory = ({ setShowChatBox, callUser }) => {
   const {
-    vox_users: { conversations=[], users, currentUser },
+    vox_users: { conversations = [], users, currentUser },
     conversationHistory,
   } = useSelector((state) => state.conversation);
   const { allUsers = [] } = useSelector((state) => state.auth);
@@ -46,6 +46,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
             last_name: (info && info.last_name) || null,
             photo: (info?.userData && info.userData.profileImage) || null,
             email: (info?.userData && info.userData.email) || userEmail,
+            online: findUser.online
           };
         }
         return item;
@@ -89,14 +90,14 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
       conversationHistory[item._uuid];
     const lastEvent =
       !(Object.keys(conversationHistory).length === 0) &&
-      currentConversation[currentConversation.length - 1];
+      currentConversation && currentConversation[currentConversation?.length - 1];
     if (lastEvent) {
       return {
         lastMessage: lastEvent.text
           ? lastEvent.text
           : lastEvent.payload &&
-            lastEvent.payload[0] &&
-            lastEvent.payload[0]['name'],
+          lastEvent.payload[0] &&
+          lastEvent.payload[0]['name'],
         timestamp: lastEvent.timestamp,
       };
     }
@@ -134,7 +135,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
       <Box className={classes.flexContainer}>
         {conversations.map((item) => {
           const users = getUserDetail(item.participants, item.direct);
-          console.log('EEEEEEEEEEEEEEE',users)
+          console.log('EEEEEEEEEEEEEEE', users)
           const chatTitle = getChatTitle(item, users);
           const { lastMessage, timestamp } = getLastMessageAndTime(item);
           return (
@@ -145,11 +146,10 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                     <Box
                       className={classes.single_image}
                       style={{
-                        backgroundImage: `url(${
-                          item.direct && users.first_name
-                            ? `https://theflame.life/livebk/public/uploads/${users.photo}`
-                            : ProfileImage
-                        })`,
+                        backgroundImage: `url(${item.direct && users.first_name
+                          ? `https://theflame.life/livebk/public/uploads/${users.photo}`
+                          : ProfileImage
+                          })`,
 
                         // backgroundImage: `url(${ProfileImage})`,
                       }}
@@ -168,17 +168,20 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                           alignItems="center"
                           sx={{ margin: '10px 0px' }}
                         >
-                          <Box className={classes.online_indicator} />
-
+                          {users.online ?
+                            <Box className={classes.online_indicator} />
+                            :
+                            <Box className={classes.offline_indicator} />
+                          }
                           <Typography
                             variant="body1"
                             component="span"
                             ml={1}
                             sx={{ fontSize: '14px' }}
                           >
-                            Online
+                            {users.online ? "Online" : "Offline"}
                           </Typography>
-                          {/* <Box className={classes.offline_indicator} /> */}
+
                         </Box>
                         <Box className={classes.history_actions}>
                           <IconButton

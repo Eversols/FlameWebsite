@@ -7,4 +7,4 @@ export const VOX_ACCOUNT_ID = "7193880";
 export const TOKEN_KEY = "vox_token_a";
 export const REFRESH_TOKEN_KEY = "vox_token_r";
 export const LOGIN = "vox_login";
-export const TIME_NOTIFICATION = 3000;
+export const TIME_NOTIFICATION = 1;

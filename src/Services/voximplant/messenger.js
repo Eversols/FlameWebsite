@@ -89,7 +89,7 @@ export default class MessengerService {
     MessengerService.messenger.on(
       VoxImplant.Messaging.MessengerEvents.CreateConversation,
       (e) => {
-        console.log(e);
+        console.log('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ',e);
         onConversationCreated(e);
       }
     );

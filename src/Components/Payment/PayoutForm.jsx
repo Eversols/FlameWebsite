@@ -1,6 +1,10 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, Dialog, Grid, Typography, useMediaQuery } from "@mui/material";
+import React, { useState } from "react";
 import useStyles from "./style";
+import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "@emotion/react";
+import { post } from "../../Services/api";
+import { getProfile } from "../../Services/store/authSlice";
 
 const gridStyle = {
   padding: "10px 20px",
@@ -11,97 +15,187 @@ const gridStyle = {
 };
 
 const PayoutForm = () => {
+  const { userData } = useSelector((state) => state.auth);
   const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [confirmModal, setConfirmModal] = useState(false);
+  const dispatch = useDispatch()
+
+  const submitHandler = () => {
+    post('/pointsPayout', { user_id: userData.id, points_payout: userData.available_points }).then((result) => { setConfirmModal(false); dispatch(getProfile({ id: userData.id })); }).catch((error) => { })
+  }
   return (
-    <Grid container sx={gridStyle}>
-      <Grid
-        item
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: "15px",
-        }}
-      >
-        <Typography variant="h5" className={classes.label}>
-          enter points
-        </Typography>
-        <Box sx={{ width: "100%", display: "flex", gap: "10px" }}>
-          <Button
-            className={classes.points_btn}
-            type="button"
-            variant="contained"
+    <>
+      <Grid container sx={gridStyle}>
+        <Grid
+          item
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
+        >
+          <Typography variant="h5" className={classes.label}>
+            enter points
+          </Typography>
+          <Box sx={{ width: "100%", display: "flex", gap: "10px" }}>
+            <Button
+              className={classes.points_btn}
+              type="button"
+              variant="contained"
+            >
+              {userData.available_points}
+            </Button>
+            <Button
+              className={classes.confirm_btn}
+              type="button"
+              variant="contained"
+              onClick={() => setConfirmModal(true)}
+            >
+              Confirm
+            </Button>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
+        >
+          <Typography variant="h5" className={classes.label}>
+            leave request
+          </Typography>
+          <Box sx={{ width: "100%", maxWidth: "60%" }}>
+            <Box className={classes.text_container}>{userData.available_points} Points</Box>
+          </Box>
+        </Grid>
+        <Grid item sx={{ width: "100%", marginTop: "40px" }}>
+          <Typography variant="h5" className={classes.label}>
+            leave request
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            width: "100%",
+            display: "flex",
+            gap: "40px",
+            alignItems: "center",
+            //   flexDirection: { xs: "column", sm: "row" },
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              gap: { xs: "10px", sm: "20px" },
+              alignItems: "center",
+              flexDirection: { xs: "column", sm: "row" },
+            }}
           >
-            2140
-          </Button>
-          <Button
-            className={classes.confirm_btn}
-            type="button"
-            variant="contained"
+            <Typography variant="h5" className={classes.label}>
+              approved
+            </Typography>
+            <Box className={classes.text_container}>{userData?.approved_points || 0}</Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: { xs: "10px", sm: "20px" },
+              alignItems: "center",
+              flexDirection: { xs: "column", sm: "row" },
+            }}
           >
-            Confirm
-          </Button>
-        </Box>
+            <Typography variant="h5" className={classes.label}>
+              rejected
+            </Typography>
+            <Box className={classes.text_container}>{userData?.rejected_points || 0}</Box>
+          </Box>
+        </Grid>
       </Grid>
-      <Grid
-        item
+      <Dialog
+        fullScreen={fullScreen}
+        open={confirmModal}
+        aria-labelledby="responsive-dialog-title"
+        // onClose={handleClose}
         sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: "15px",
-        }}
-      >
-        <Typography variant="h5" className={classes.label}>
-          leave request
-        </Typography>
-        <Box sx={{ width: "100%", maxWidth: "60%" }}>
-          <Box className={classes.text_container}>hghfd</Box>
-        </Box>
-      </Grid>
-      <Grid item sx={{ width: "100%", marginTop: "40px" }}>
-        <Typography variant="h5" className={classes.label}>
-          leave request
-        </Typography>
-      </Grid>
-      <Grid
-        item
-        sx={{
-          width: "100%",
-          display: "flex",
-          gap: "40px",
-          alignItems: "center",
-          //   flexDirection: { xs: "column", sm: "row" },
+          "& .MuiDialog-paper": {
+            maxWidth: "342px",
+            width: "100%",
+            maxHeight: "180px",
+            minHeight: "160px",
+            height: "100%",
+            background: "#fff",
+            boxShadow: "none",
+            borderRadius: "8px",
+          },
+          "& .MuiDialog-container": {
+            background: "rgba(255, 255, 255, 0.02)",
+            backdropFilter: "blur(10px)",
+          },
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            gap: { xs: "10px", sm: "20px" },
+            width: "100%",
             alignItems: "center",
-            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "center",
+            height: "45px",
+            display: "flex",
+            textTransform: "lowercase",
+            background: "#FB1F43",
+            color: "#FFFFFF",
+            fontWeight: 600,
+            fontSize: "16px",
           }}
+          data-cy={`activity-close`}
+        // onClick={handleClose}
         >
-          <Typography variant="h5" className={classes.label}>
-            approved
-          </Typography>
-          <Box className={classes.text_container}>hghfd</Box>
+          Confirm Redeem
         </Box>
+
         <Box
           sx={{
+            height: "100%",
+            width: "100%",
             display: "flex",
-            gap: { xs: "10px", sm: "20px" },
+            flexDirection: "column",
+            maxWidth: "280px",
+            gap: "15px",
+            justifyContent: "center",
             alignItems: "center",
-            flexDirection: { xs: "column", sm: "row" },
+            margin: "0 auto",
           }}
         >
-          <Typography variant="h5" className={classes.label}>
-            rejected
-          </Typography>
-          <Box className={classes.text_container}>hghfd</Box>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "15px",
+            }}
+          >
+            <Typography variant="h5" className={classes.label}>
+              Are you sure you want to redeem the points
+            </Typography>
+          </Box>
+          <Box sx={{ width: "100%", display: "flex", gap: "10px", justifyContent: "center" }}>
+
+            <Button variant="contained" className={classes.btn} onClick={submitHandler}>
+              Yes
+            </Button>
+            <Button variant="contained" className={classes.btnCancel} onClick={() => setConfirmModal(false)}>
+              No
+            </Button>
+          </Box>
         </Box>
-      </Grid>
-    </Grid>
+      </Dialog>
+    </>
+
   );
 };
 

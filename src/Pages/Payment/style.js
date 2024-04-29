@@ -72,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
           color: "#828282",
         },
       },
+      "&.MuiAutocomplete-inputRoot": {
+        padding: "0px 0px 0px 0px",
+      },
     },
   },
   inputOne: {

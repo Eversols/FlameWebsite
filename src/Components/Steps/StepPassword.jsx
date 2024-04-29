@@ -89,10 +89,10 @@ const StepPassword = () => {
                 }`;
                 console.log(res.data.content.role, mood, region);
                 await voxLogin(userName, password, user_data.payload.email);
-                console.log('TTTTTTTTTTTTTTTTTTTTTT', res)
               }
               if (res.data.content.role === "user") {
-                if (!mood) navigate(`/${role}/mood`);
+                console.log('TTTTTTTTTTTTTTTTTTTTTT', user_data)
+                if (!user_data.payload.moodID) navigate(`/${role}/mood`);
                 //else if (!region) navigate(`/${role}/region`);
                 else navigate(`/${role}/home`);
               }

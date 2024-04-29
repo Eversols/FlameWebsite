@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import {
+  Autocomplete,
   Box,
   Button,
   Container,
@@ -7,11 +8,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import downloadFile from "../../Assets/images/downloadfile.svg";
-import { post } from "../../Services/api";
+import { get, post } from "../../Services/api";
 import useStyles from "./style";
 
 const gridStyle = {
@@ -32,16 +33,17 @@ const index = () => {
   const [cvvNo, setCvvNo] = useState("");
   const [cardName, setCardName] = useState("");
   const [cardAddress, setCardAddress] = useState("");
+  const [bankList, setBankList] = useState([]);
+  const [currencyList, setCurrencyList] = useState([]);
   const classes = useStyles();
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     getUser();
-  //     // Create PaymentIntent as soon as the page loads
-  //     fetch("/create-payment-intent")
-  //       .then((res) => res.json())
-  //       .then(({ clientSecret }) => setClientSecret(clientSecret));
-  //   }, []);
+  useEffect(() => {
+    get("/bankAndCurrencyList").then((result) => {
+      setBankList(result.data.bankdata.map((item) => ({ label: item.bank_name, value: item.id })))
+      setCurrencyList(result.data.currencydata.map((item) => ({ label: item.currency_name, value: item.id })))
+    }).catch((error) => { })
+  }, []);
 
   const appearance = {
     theme: "stripe",
@@ -80,34 +82,51 @@ const index = () => {
         <Typography variant="h5" className={classes.heading}>
           Country of receiving bank
         </Typography>
-        <TextField
-          type="text"
-          name="displayName"
-          value={cardNo}
-          onChange={(e) => {
-            setError("");
-            setCardNo(e.target.value);
-          }}
-          placeholder="your text"
-          className={classes.input1}
-          fullWidth
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={bankList}
+          // sx={{ width: 300 }}
+          renderInput={(params) => <TextField
+            {...params}
+            type="text"
+            name="displayName"
+            value={cardNo}
+            onChange={(e) => {
+              setError("");
+              setCardNo(e.target.value);
+            }}
+            placeholder="your text"
+            className={classes.input1}
+            fullWidth
+          />}
         />
+
       </Grid>
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>
           Currency of receiving bank
         </Typography>
-        <TextField
-          type="text"
-          value={cardExpire}
-          onChange={(e) => {
-            setError("");
-            setCardExpire(e.target.value);
-          }}
-          placeholder="your text"
-          className={classes.input1}
-          fullWidth
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={currencyList}
+          // sx={{ width: 300 }}
+          renderInput={(params) => <TextField
+            {...params}
+            type="text"
+            name="displayName"
+            value={cardNo}
+            onChange={(e) => {
+              setError("");
+              setCardNo(e.target.value);
+            }}
+            placeholder="your text"
+            className={classes.input1}
+            fullWidth
+          />}
         />
+
       </Grid>
       <Grid item xs={12} md={5.5}>
         <Typography variant="h5" className={classes.heading}>

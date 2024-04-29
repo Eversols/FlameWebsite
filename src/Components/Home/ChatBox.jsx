@@ -23,8 +23,9 @@ import { post } from "../../Services/api";
 import { setMessages } from "../../Services/store/authSlice";
 import MessengerService from "../../Services/voximplant/messenger";
 import useStyles from "./style";
+import { getCurrentConversation } from "../../Services/utils";
 
-const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
+const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }) => {
   const {
     currentConversationId,
     conversationHistory,
@@ -38,7 +39,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
   const messagesEndRef = useRef(null);
   const conversation = conversationHistory[currentConversationId] || [];
   const dispatch = useDispatch();
-  console.log('RRRRRRRRRRRRRRRRR',user)
+  console.log('RRRRRRRRRRRRRRRRR', modelData)
 
   const scrollToBottom = () => {
     messagesEndRef &&
@@ -49,8 +50,8 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
     scrollToBottom();
   }, [conversationHistory]);
   useEffect(() => {
-    if(modelData){
-      setUser(users.find((item)=> item.customData.userId == modelData?.id))
+    if (modelData) {
+      setUser(users.find((item) => item.customData.userId == modelData?.id))
     }
   }, [modelData]);
 
@@ -82,6 +83,35 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
           dispatch(setMessages(+userData.messages - 1));
         })
         .catch((error) => console.log(error));
+    }
+  };
+
+
+  const call = (userData, video) => {
+    const voxUser = users.find(
+      (item) => item.customData.userId === userData.id
+    );
+    if (voxUser) {
+      callUser(voxUser.userName, video);
+      getCurrentConversation(voxUser.userId);
+    }
+  };
+
+  const userConversation = async (userData, type) => {
+    const voxUser = users.find(
+      (item) => item.customData.userId === userData.id
+    );
+    if (voxUser) {
+      getCurrentConversation(voxUser.userId);
+      // setShowChatBox(true);
+      if (type === "poke") {
+        const currentConversation =
+          conversations &&
+          conversations.find((item) => item._uuid === currentConversationId);
+        const messenger = MessengerService.get();
+        messenger.sendMessage(currentConversation, 'Hi!');
+
+      }
     }
   };
   return (
@@ -147,7 +177,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
             <Box
               className={classes.single_chat_image}
               style={{
-                backgroundImage: `url(${ProfileImage})`,
+                backgroundImage: modelData?.userData?.profileImage ? `url(https://theflame.life/livebk/public/uploads/${modelData.userData.profileImage})` : `url(${ProfileImage})`,
               }}
             ></Box>
 
@@ -165,9 +195,9 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
                   {modelData?.metaData?.displayName}
                 </Typography>
                 <Box display="flex" justifyContent="start" alignItems="center">
-                  {user?.online ?<Box className={classes.online_indicator} />
-                  :
-                  <Box className={classes.offline_indicator} />}
+                  {user?.online ? <Box className={classes.online_indicator} />
+                    :
+                    <Box className={classes.offline_indicator} />}
 
                   <Typography
                     variant="body1"
@@ -175,7 +205,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
                     ml={1}
                     sx={{ fontSize: "14px" }}
                   >
-                    {user?.online? "Online": "Offline"}
+                    {user?.online ? "Online" : "Offline"}
                   </Typography>
                 </Box>
               </Box>
@@ -183,7 +213,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
                 <IconButton
                   sx={{ margin: 0, padding: 0 }}
                   size="small"
-                  // onClick={() => call(users.userId, true)}
+                  onClick={() => call(modelData.userData, true)}
                   className={classes.history_actions_btn}
                 >
                   <img
@@ -195,7 +225,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
                 <IconButton
                   sx={{ margin: 0, padding: 0 }}
                   size="small"
-                  // onClick={() => call(users.userId, false)}
+                  onClick={() => userConversation(modelData.userData, 'poke')}
                   className={classes.history_actions_btn}
                 >
                   <img
@@ -228,7 +258,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog,modelData }) => {
                   >
                     <Box
                       className={classes.single_image}
-                      style={{ backgroundImage: `url(${ProfileImage})` }}
+                      style={{ backgroundImage: item._sender === currentUser.userId ? `url(https://theflame.life/livebk/public/uploads/${userData.profileImage})` : `url(https://theflame.life/livebk/public/uploads/${modelData.userData.profileImage})` }}
                     ></Box>
                     <Container
                       className={

@@ -89,7 +89,7 @@ const Drawer = ({
             fontWeight="bold"
             color="#ffff"
           >
-            206
+            {userData.available_points || 0}
           </Typography>
           <Typography
             variant="body1"
@@ -117,7 +117,7 @@ const Drawer = ({
         >
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           <Typography variant="body1" color="#ffff" component="span" ml={1}>
-            My Account
+            {userData.displayName}
           </Typography>
         </Box>
         <IconButton sx={{ justifyContent: "flex-start" }} onClick={logout}>

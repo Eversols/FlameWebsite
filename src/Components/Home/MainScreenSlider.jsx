@@ -22,6 +22,7 @@ import VideoCallIcon from "../../Assets/images/video.svg";
 import { getCurrentConversation } from "../../Services/utils";
 import useStyles from "./style";
 import SwiperImages from "./SwiperImages";
+import MessengerService from "../../Services/voximplant/messenger";
 
 const MainScreenSlider = ({
   models = [],
@@ -30,7 +31,9 @@ const MainScreenSlider = ({
   callUser,
 }) => {
   const {
-    vox_users: { users },
+    currentConversationId,
+    conversationHistory,
+    vox_users: { conversations, currentUser, users },
   } = useSelector((state) => state.conversation);
   const classes = useStyles();
   useEffect(() => {
@@ -51,13 +54,21 @@ const MainScreenSlider = ({
       getCurrentConversation(voxUser.userId);
     }
   };
-  const conversation = async (userData) => {
+  const conversation = async (userData, type) => {
     const voxUser = users.find(
       (item) => item.customData.userId === userData.id
     );
     if (voxUser) {
       getCurrentConversation(voxUser.userId);
       setShowChatBox(true);
+      if (type === "poke") {
+        const currentConversation =
+          conversations &&
+          conversations.find((item) => item._uuid === currentConversationId);
+        const messenger = MessengerService.get();
+        messenger.sendMessage(currentConversation, 'Hi!');
+
+      }
     }
   };
   console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD", models);
@@ -106,7 +117,7 @@ const MainScreenSlider = ({
               sx={{ marginRight: 3 }}
               variant="contained"
               label="Accept"
-              onClick={() => call(item.userData, false)}
+              onClick={() => conversation(item.userData, 'poke')}
             >
               <img src={CallIcon} className={classes.history_actions_icon} />
             </IconButton>

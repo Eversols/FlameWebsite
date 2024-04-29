@@ -137,9 +137,12 @@ export const authSlice = createSlice({
       //     }
       //   : { ...action.payload.data, ...action.payload.metadata };
       state.userData =  {  ...action.payload.metadata, ...action.payload.data };
+      state.isLoading = false;
+      
     },
     [getAllUsers.fulfilled]: (state, action) => {
       state.allUsers = action.payload.data;
+      state.isLoading = false;
     },
     [getUser.rejected]: (state) => {
       state.isLoading = false;

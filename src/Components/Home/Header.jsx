@@ -40,10 +40,12 @@ const Header = () => {
       const res = await post("/logout", userData);
       voxService.get().disconnect();
       persistor.purge();
+      localStorage.removeItem("persist:root");
       navigate(`/${role}/authentication`);
     } catch (error) {
+      voxService.get().disconnect();
       persistor.purge();
-      localStorage.setItem("persist:root", "");
+      localStorage.removeItem("persist:root");
       navigate(`/${role}/authentication`);
       console.log(error);
     }
@@ -75,13 +77,12 @@ const Header = () => {
 
         {isDrawerOpen && (
           <div
-            className={`${classes.animatedDrawer} ${
-              isDrawerOpen === null
+            className={`${classes.animatedDrawer} ${isDrawerOpen === null
                 ? ""
                 : isDrawerOpen
-                ? classes.slideOut
-                : classes.slideIn
-            }`}
+                  ? classes.slideOut
+                  : classes.slideIn
+              }`}
           >
             {/* Content of the animated drawer */}
             <Drawer
@@ -160,7 +161,7 @@ const Header = () => {
                 fontWeight="bold"
                 color="#FB1F43"
               >
-                206
+              {userData.available_points || 0}
               </Typography>
               <Typography
                 variant="body1"
@@ -196,7 +197,8 @@ const Header = () => {
               src={
                 userData?.profileImage
                   ? `https://theflame.life/livebk/public/uploads/${userData.profileImage}`
-                  : "/static/images/avatar/1.jpg"
+                  : userData?.gender === "Male" ? 'https://theflame.life/livebk/public/frontend_images/avatar-man.jpg' :
+                    "https://theflame.life/livebk/public/frontend_images/avatar-woman.jpg"
               }
             />
             <Typography
@@ -205,7 +207,7 @@ const Header = () => {
               ml={1}
               className={classes.remove}
             >
-              My Account
+              {userData?.displayName}
             </Typography>
           </Box>
           <IconButton onClick={logout}>

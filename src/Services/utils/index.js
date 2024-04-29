@@ -18,9 +18,13 @@ import {
   VOX_API_KEY,
   VOX_APP_ID,
 } from "./constants";
+import { persistStore } from "redux-persist";
 
 export const reloginVox = () => {
   if (!store.getState().auth.token) {
+    persistStore.purge();
+    localStorage.removeItem("persist:root");
+    window.location.href = '/'
     return false;
   }
   return new Promise(async (resolve, reject) => {
@@ -114,6 +118,7 @@ export const onlineReceived = (userId, online) => {
         }
         return item;
       });
+      console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB', updateData)
       store.dispatch(
         setVoxUsers({
           ...vox_users,
