@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import bgBlock from "../../Assets/images/bg_block.svg";
 import bgHeart from "../../Assets/images/bg_heart.svg";
 import flameLogo from "../../Assets/images/flame logo.svg";
@@ -26,6 +26,7 @@ import { voxLogin, voxRegister } from "../../Services/utils";
 import useStyles from "./style";
 
 const StepPassword = () => {
+  const { pathname } = useLocation()
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -42,6 +43,15 @@ const StepPassword = () => {
       return;
     }
     if (password) {
+      if (pathname.includes('forgetpassword')) {
+        // https://theflame.life/livebk/public/api/changePassword?email=male001@gmail.com&password=1234
+        const { data } = await post("/changePassword", { email: user.email, password: password });
+        if (data) {
+          window.location.href = `/${role}/authentication`
+          
+          return
+        }
+      }
       try {
         let res;
         if (user.emailExist) {
@@ -84,9 +94,8 @@ const StepPassword = () => {
                   "@",
                   "-flame-"
                 );
-                const password = `${user_data.payload.email.split("@")[0]}${
-                  user_data.payload.id
-                }`;
+                const password = `${user_data.payload.email.split("@")[0]}${user_data.payload.id
+                  }`;
                 console.log(res.data.content.role, mood, region);
                 await voxLogin(userName, password, user_data.payload.email);
               }
@@ -105,7 +114,7 @@ const StepPassword = () => {
                 if (data) {
                   console.log(userData?.outsideWork);
                   // if (!userData?.outsideWork) navigate(`/${role}/profile`);
-                   if (!mood) navigate(`/${role}/mood`);
+                  if (!mood) navigate(`/${role}/mood`);
                   // else if (!region) navigate(`/${role}/region`);
                   else navigate(`/${role}/home`);
                 }
@@ -183,7 +192,7 @@ const StepPassword = () => {
                   }}
                 />
                 {/* {error && <p className={classes.error}>{error}</p>} */}
-                {!user.emailExist && (
+                {(!user.emailExist || pathname.includes('forgetpassword')) && (
                   <TextField
                     name="cPassword"
                     type={showCPassword ? "text" : "password"}

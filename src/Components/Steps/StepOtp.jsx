@@ -8,15 +8,21 @@ import flameLogo from "../../Assets/images/flame logo.svg";
 import { post } from "../../Services/api";
 import { setError } from "../../Services/store/authSlice";
 import useStyles from "./style";
-const StepOtp = ({ onNext }) => {
+import { useLocation } from "react-router-dom";
+const StepOtp = ({ onNext, setStep }) => {
+  const { pathname } = useLocation()
   const [OTP, setOTP] = useState("");
   const { error, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const confirmSubmit = async (e) => {
-    console.log("TTTTTTTTTTTTTTTTTTTTTT", user.otp)
+    console.log(user.email)
     if (parseInt(user.otp) == parseInt(OTP)) {
+      if (pathname.includes('forgetpassword')) {
+        setStep(4);
+        return
+      }
       try {
         const res = await post("/check-otp", { email: user.email, otp: OTP });
         if (res.data.email_exist && res.data.otp_verified) {

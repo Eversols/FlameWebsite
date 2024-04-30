@@ -27,6 +27,7 @@ function App() {
       <Route path="/model" element={<ModelLandingPage />} />
       <Route path="/:role" element={<Layout />}>
         <Route path="authentication" element={<Authenticate />} />
+        <Route path="forgetpassword" element={<Authenticate />} />
         <Route path="mood" element={<Mood />} />
         <Route path="region" element={<Region />} />
         <Route path="orientation" element={<Orientation />} />

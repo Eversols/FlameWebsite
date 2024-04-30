@@ -128,6 +128,18 @@ const useStyles = makeStyles((theme) => ({
   download: {
     maxWidth: "150px",
   },
+  btn1: {
+    width: "30%",
+    height: "40px",
+    backgroundColor: "#FB1F43",
+    color: "#ffffff",
+    fontWeight: 600,
+    borderRadius: "10px",
+    fontFamily: "Inter, Montserrat, sans-serif",
+    "&:hover": {
+      backgroundColor: "#dc697c",
+    },
+  }
 }));
 
 export default useStyles;

@@ -18,13 +18,12 @@ import {
   VOX_API_KEY,
   VOX_APP_ID,
 } from "./constants";
-import { persistStore } from "redux-persist";
 
 export const reloginVox = () => {
   if (!store.getState().auth.token) {
-    persistStore.purge();
-    localStorage.removeItem("persist:root");
-    window.location.href = '/'
+    // persistor.purge();
+    // localStorage.removeItem("persist:root");
+    // window.location.href = '/'
     return false;
   }
   return new Promise(async (resolve, reject) => {
@@ -336,7 +335,7 @@ const currentDirectUsersId = (vox_users) => {
 };
 
 export const getDirectConversation = (userId) => {
-  const { conversation: {vox_users }} = store.getState();
+  const { conversation: { vox_users } } = store.getState();
   const currDireactUsersId = currentDirectUsersId(vox_users);
   if (currDireactUsersId && currDireactUsersId.includes(userId)) {
     const index = currentDirectUsersId(vox_users).indexOf(userId);
@@ -349,7 +348,7 @@ export const getDirectConversation = (userId) => {
 };
 
 export const getCurrentConversation = (chatUuid) => {
-  const {conversation:{ conversationHistory }} = store.getState();
+  const { conversation: { conversationHistory } } = store.getState();
   if (typeof chatUuid === "string") {
     store.dispatch(setCurrentConversationId(chatUuid));
     console.log(conversationHistory[chatUuid])
@@ -364,7 +363,7 @@ export const getCurrentConversation = (chatUuid) => {
 
 export const currentConversation = (uuid) => {
   const {
-    conversation: { vox_users,currentConversationId },
+    conversation: { vox_users, currentConversationId },
   } = store.getState();
   const con_uuid = uuid || currentConversationId;
   return (
@@ -377,7 +376,7 @@ export const currentConversation = (uuid) => {
 export const getConversationHistory = async (uuid) => {
   const curConversation = currentConversation(uuid);
   const {
-    conversation: { vox_users,conversationHistory },
+    conversation: { vox_users, conversationHistory },
   } = store.getState();
 
   const lastEvent =
@@ -441,9 +440,8 @@ export const voxRegister = async (data, name) => {
     displayName: name,
   };
   const userName = data.data.content.user_email.replace("@", "-flame-");
-  const password = `${data.data.content.user_email.split("@")[0]}${
-    data.data.content.user_id
-  }`;
+  const password = `${data.data.content.user_email.split("@")[0]}${data.data.content.user_id
+    }`;
 
   const voxRegister = await axios.get(
     `https://api.voximplant.com/platform_api/AddUser/?api_key=${VOX_API_KEY}&application_id=${VOX_APP_ID}&user_name=${userName}&user_display_name=${userName}&user_password=${password}&account_id=${VOX_ACCOUNT_ID}&user_custom_data=${encodeURIComponent(
@@ -462,8 +460,8 @@ export const voxLogin = async (user, password, email) => {
       password: password,
     },
     null
-    );
-    console.log(login, user, password, email);
+  );
+  console.log(login, user, password, email);
   if (login.result) {
     store.dispatch(
       setTokens({

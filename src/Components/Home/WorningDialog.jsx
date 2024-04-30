@@ -32,8 +32,8 @@ const WorningDilog = ({ dialog, setDialog }) => {
           sx={{ fontSize: 18, fontWeight: "bold" }}
           id="alert-dialog-slide-description"
         >
-          You do not have enough messages. Would you like to purchase more
-          messages?
+          You do not have enough messages and minutes. Would you like to purchase more
+          messages and minutes?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

@@ -10,10 +10,14 @@ import { setError, setUser } from "../../Services/store/authSlice";
 import useStyles from "./style";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { Link, matchRoutes, useLocation } from "react-router-dom";
+
+const routes = [{ path: "/members/:id" }]
 
 const StepEmail = ({ onNext, setStep }) => {
+  const { pathname } = useLocation()
   const [email, setEmail] = useState("");
-  const { error } = useSelector((state) => state.auth);
+  const { error, role } = useSelector((state) => state.auth);
   const classes = useStyles();
   const dispatch = useDispatch();
   const {
@@ -32,6 +36,18 @@ const StepEmail = ({ onNext, setStep }) => {
   const confirmSubmit = async (data) => {
     const { email } = data;
     if (email) {
+      if (pathname.includes('forgetpassword')) {
+        const { data } = await post("/forgotPasswordOTP", { email });
+        if (data) {
+          console.log('data', data)
+          dispatch( setUser({
+            email,
+            otp: data.otp,
+          }))
+          onNext();
+          return
+        }
+      }
       try {
         const res = await post("/check-email", { email });
         if (res.data.email_exist) {
@@ -104,6 +120,10 @@ const StepEmail = ({ onNext, setStep }) => {
                     },
                   })}
                 />
+                {!pathname.includes('forgetpassword') && <Link to={`/${role}/forgetpassword`} style={{ textDecoration: "none", fontSize: "12px", color: "blue" }}>
+                  Forget Password
+                </Link>}
+
                 {errors.email && (
                   <p className={classes.error}>{errors.email.message}</p>
                 )}

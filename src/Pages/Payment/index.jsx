@@ -9,11 +9,12 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import downloadFile from "../../Assets/images/downloadfile.svg";
 import { get, post } from "../../Services/api";
 import useStyles from "./style";
+import { getProfile, setProfileModel } from "../../Services/store/authSlice";
 
 const gridStyle = {
   padding: " 10px 20px",
@@ -25,24 +26,41 @@ const gridStyle = {
 
 const index = () => {
   const { planId } = useParams();
-  const { userData, role } = useSelector((state) => state.auth);
+  const { userData, role, profileModel } = useSelector((state) => state.auth);
   const [clientSecret, setClientSecret] = useState("");
   const [error, setError] = useState("");
-  const [cardNo, setCardNo] = useState("");
-  const [cardExpire, setCardExpire] = useState("");
-  const [cvvNo, setCvvNo] = useState("");
-  const [cardName, setCardName] = useState("");
-  const [cardAddress, setCardAddress] = useState("");
+  const [formData, setFarmData] = useState({
+    payout_country: '',
+    payout_currency: '',
+    payout_bankName: '',
+    payout_firstName: '',
+    payout_lastName: '',
+    payout_phoneNumber: '',
+    payout_cardNumber: '',
+  });
   const [bankList, setBankList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     get("/bankAndCurrencyList").then((result) => {
       setBankList(result.data.bankdata.map((item) => ({ label: item.bank_name, value: item.id })))
       setCurrencyList(result.data.currencydata.map((item) => ({ label: item.currency_name, value: item.id })))
     }).catch((error) => { })
+    if (userData) {
+
+      setFarmData({
+        payout_country: userData.payout_country,
+        payout_currency: userData.payout_currency,
+        payout_bankName: userData.payout_bankName,
+        payout_firstName: userData.payout_firstName,
+        payout_lastName: userData.payout_lastName,
+        payout_phoneNumber: userData.payout_phoneNumber,
+        payout_cardNumber: userData.payout_cardNumber,
+      })
+    }
   }, []);
 
   const appearance = {
@@ -53,22 +71,59 @@ const index = () => {
     appearance,
   };
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    console.log("WWWWWWWWWWWWWWWWWWWWWWW", name, value);
+    setFarmData((formData) => ({
+      ...formData,
+      [name]: value,
+    }));
+  };
+
   const confirmSubmit = async () => {
-    console.log(cardNo.length >= 16);
-    if (!(cardNo.length >= 16 && cardExpire.length >= 4 && cvvNo.length >= 3)) {
-      setError("Card Not Valid");
-      return;
-    }
-    setError("");
     try {
-      const { data } = await post("/proccesPlan", {
+      const { data } = await post("/updateUserMeta", {
         userID: userData.id,
-        planID: planId,
+        ...formData
       });
-      navigate(`/${role}/completion`);
+
+      if (data) {
+        dispatch(getProfile({ id: userData.id }));
+        dispatch(setProfileModel(!profileModel));
+      }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleImageChange = async (event, url) => {
+
+    const file = event.target.files[0];
+
+    try {
+
+      const formData = new FormData();
+      formData.append(event.target.name, file);
+      formData.append("userID", userData.id);
+      const res = await post('/updateUserMeta', formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res.data) {
+        const profileData = await dispatch(getProfile({ id: userData.id }));
+
+        if (profileData.payload) {
+          setFarmData({
+            ...formData,
+            passport_image: profileData.payload.data?.passport_image ?? "",
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
   };
 
   return (
@@ -86,16 +141,13 @@ const index = () => {
           disablePortal
           id="combo-box-demo"
           options={bankList}
+          onChange={(e, v) => handleInputChange({ target: { name: "payout_country", value: v?.label } })}
           // sx={{ width: 300 }}
           renderInput={(params) => <TextField
             {...params}
             type="text"
-            name="displayName"
-            value={cardNo}
-            onChange={(e) => {
-              setError("");
-              setCardNo(e.target.value);
-            }}
+            name="payout_country"
+            value={formData.payout_country}
             placeholder="your text"
             className={classes.input1}
             fullWidth
@@ -111,16 +163,13 @@ const index = () => {
           disablePortal
           id="combo-box-demo"
           options={currencyList}
+          onChange={(e, v) => handleInputChange({ target: { name: "payout_currency", value: v?.label } })}
           // sx={{ width: 300 }}
           renderInput={(params) => <TextField
             {...params}
             type="text"
-            name="displayName"
-            value={cardNo}
-            onChange={(e) => {
-              setError("");
-              setCardNo(e.target.value);
-            }}
+            name="payout_currency"
+            value={formData.payout_currency}
             placeholder="your text"
             className={classes.input1}
             fullWidth
@@ -134,12 +183,10 @@ const index = () => {
         </Typography>
         <TextField
           type="text"
-          value={cvvNo}
+          name="payout_bankName"
+          value={formData.payout_bankName}
           placeholder="your text"
-          onChange={(e) => {
-            setError("");
-            setCvvNo(e.target.value);
-          }}
+          onChange={handleInputChange}
           className={classes.input1}
           fullWidth
         />
@@ -151,8 +198,9 @@ const index = () => {
         </Typography>
         <TextField
           type="text"
-          value={cardAddress}
-          onChange={(e) => setCardAddress(e.target.value)}
+          name="payout_firstName"
+          value={formData.payout_firstName}
+          onChange={handleInputChange}
           placeholder="your text"
           className={classes.input1}
           fullWidth
@@ -164,8 +212,9 @@ const index = () => {
         </Typography>
         <TextField
           type="text"
-          value={cardAddress}
-          onChange={(e) => setCardAddress(e.target.value)}
+          name="payout_lastName"
+          value={formData.payout_lastName}
+          onChange={handleInputChange}
           placeholder="your text"
           className={classes.input1}
           fullWidth
@@ -177,8 +226,9 @@ const index = () => {
         </Typography>
         <TextField
           type="text"
-          value={cardAddress}
-          onChange={(e) => setCardAddress(e.target.value)}
+          name="payout_phoneNumber"
+          value={formData.payout_phoneNumber}
+          onChange={handleInputChange}
           placeholder="your text"
           className={classes.input1}
           fullWidth
@@ -190,32 +240,54 @@ const index = () => {
         </Typography>
         <TextField
           type="text"
-          value={cvvNo}
+          name="payout_cardNumber"
+          value={formData.payout_cardNumber}
           placeholder="your text"
-          onChange={(e) => {
-            setError("");
-            setCvvNo(e.target.value);
-          }}
+          onChange={handleInputChange}
           className={classes.input1}
           fullWidth
         />
       </Grid>
       <Grid itemxs={12} md={5.5}>
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            gap: "10px",
-            maxWidth: "200px",
-          }}
-        >
-          <Typography variant="h5" className={classes.heading_file}>
-            Upload a Passport for proof an identity
-          </Typography>
-          <img src={downloadFile} className={classes.dowload} />
-        </Box>
+        <label htmlFor="passport_image" style={{ cursor: "pointer" }}>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              gap: "10px",
+              maxWidth: "200px",
+            }}
+          >
+            <Typography variant="h5" className={classes.heading_file}>
+              Upload a Passport for proof an identity
+            </Typography>
+            <img src={userData?.passport_image ? `https://theflame.life${userData.passport_image}` : downloadFile} className={classes.dowload} width={90}  />
+          </Box>
+        </label>
+        <input
+          type="file"
+          id="passport_image"
+          name="passport_image"
+          accept="image/*"
+          onChange={(e) => handleImageChange(e, "passport_image")}
+          style={{ display: "none" }}
+        />
       </Grid>
       <Grid item xs={12} md={5.5}></Grid>
+      <Grid item sx={{ width: "100%" }}>
+        <Box
+          sx={{ width: "100%", justifyContent: "center", display: "flex" }}
+        >
+          <Button
+            onClick={confirmSubmit}
+            variant="contained"
+            type="submit"
+            className={classes.btn1}
+          >
+            Update
+          </Button>
+        </Box>
+      </Grid>
     </Grid>
 
     // <Container className={classes.container}>

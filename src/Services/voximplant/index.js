@@ -1,5 +1,6 @@
 import * as VoxImplant from 'voximplant-websdk';
 import { reloginVox } from '../utils';
+import { persistor } from  "../store";
 
 class VoxService {
   constructor() {
@@ -63,8 +64,11 @@ class VoxService {
         // store.dispatch('auth/relogin');
         reloginVox();
       })
-      .catch(() => {
-        console.error('Connection failed');
+      .catch((error) => {
+        persistor.purge();
+        localStorage.removeItem("persist:root");
+        window.location.href = '/'
+        console.error('Connection failed', error);
       });
   }
 }

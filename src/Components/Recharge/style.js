@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardDesc: {
-    fontSize: "28px",
+    fontSize: "20px",
     fontWeight: 700,
   },
 
