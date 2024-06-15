@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPaymentModel, setProfileModel } from '../../Services/store/authSlice';
 import CardPaymentForm from './CardPaymentForm';
+import { useTranslation } from 'react-i18next';
 
 // ---------Component style------------
 
@@ -25,7 +26,7 @@ const CardPaymentModal = () => {
   const dispatch = useDispatch();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
+  const {t} = useTranslation();                             
   const handleClose = (e) => dispatch(setPaymentModel(!paymentModel));
 
   return (
@@ -76,7 +77,7 @@ const CardPaymentModal = () => {
           fontWeight={700}
           ml={2}
         >
-          Card Payment
+          {t("Card Payment")}
         </Typography>
 
         <IconButton sx={{ width: '35px', height: '35px' }}>

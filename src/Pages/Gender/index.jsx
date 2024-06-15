@@ -11,6 +11,7 @@ import genderMale from "../../Assets/images/male.svg";
 import useStyles from "./style";
 import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
+import { useTranslation } from "react-i18next";
 
 const index = () => {
   const { role, userData, mood } = useSelector((state) => state.auth);
@@ -18,6 +19,8 @@ const index = () => {
   const [selectedValue, setSelectedValue] = React.useState("Male");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation()
+
 
   const handleChange = (e) => {
     setSelectedValue(e.target.value);
@@ -25,11 +28,11 @@ const index = () => {
 
   console.log("ff", selectedValue);
 
-  
+
 
   const confirmSubmit = async () => {
     if (selectedValue) {
-      
+
       try {
         const res = await post("/updateprofile", {
           userID: userData.id,
@@ -55,17 +58,17 @@ const index = () => {
         <Container className={classes.container}>
           <Container className={classes.paragraph_container}>
             <Typography variant="h4" className={classes.heading}>
-              Welcome to <span className="text">Flame</span>
+              {t("Welcome to")} <span className="text">{t("Flame")}</span>
             </Typography>
             <Typography
               variant="h6"
               className={classes.heading2}
               sx={{ marginBottom: "30px" }}
             >
-              here are few quick questions
+              {t("here are few quick questions")}
             </Typography>
             <Typography variant="h4" className={classes.heading}>
-              What is your gender?
+              {t("What is your gender")}?
             </Typography>
           </Container>
 
@@ -73,7 +76,7 @@ const index = () => {
             <Box className={classes.genderWrapper}>
               <img src={genderMale} className={classes.male} />
               <Typography variant="h6" className={classes.heading2}>
-                Male
+                {t("Male")}
               </Typography>
               <Radio
                 checked={selectedValue === "Male"}
@@ -87,7 +90,7 @@ const index = () => {
             <Box className={classes.genderWrapper}>
               <img src={genderFemale} className={classes.female} />
               <Typography variant="h6" className={classes.heading2}>
-                Female
+                {t("Female")}
               </Typography>
               <Radio
                 checked={selectedValue === "Female"}
@@ -105,7 +108,7 @@ const index = () => {
             variant="contained"
             className={classes.btn}
           >
-            next
+            {t("Next")}
           </Button>
         </Container>
       </Box>

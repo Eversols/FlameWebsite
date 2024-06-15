@@ -11,6 +11,7 @@ import useStyles from "./style";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { Link, matchRoutes, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const routes = [{ path: "/members/:id" }]
 
@@ -20,6 +21,7 @@ const StepEmail = ({ onNext, setStep }) => {
   const { error, role } = useSelector((state) => state.auth);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { t } = useTranslation()
   const {
     register,
     handleSubmit,
@@ -40,7 +42,7 @@ const StepEmail = ({ onNext, setStep }) => {
         const { data } = await post("/forgotPasswordOTP", { email });
         if (data) {
           console.log('data', data)
-          dispatch( setUser({
+          dispatch(setUser({
             email,
             otp: data.otp,
           }))
@@ -103,7 +105,7 @@ const StepEmail = ({ onNext, setStep }) => {
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
             <Typography variant="h5" className={classes.heading}>
-              Please enter your email
+              {t("Please enter your email")}
             </Typography>
             <Box className={classes.fieldWrapper}>
               <form onSubmit={handleSubmit(confirmSubmit)}>
@@ -113,16 +115,14 @@ const StepEmail = ({ onNext, setStep }) => {
                   className={classes.input1}
                   fullWidth
                   {...register("email", {
-                    required: "Email is required",
+                    required: t("Email is required"),
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email ID",
+                      message: t("Invalid email ID"),
                     },
                   })}
                 />
-                {!pathname.includes('forgetpassword') && <Link to={`/${role}/forgetpassword`} style={{ textDecoration: "none", fontSize: "12px", color: "blue" }}>
-                  Forget Password
-                </Link>}
+
 
                 {errors.email && (
                   <p className={classes.error}>{errors.email.message}</p>
@@ -133,7 +133,7 @@ const StepEmail = ({ onNext, setStep }) => {
                   variant="contained"
                   className={classes.btn}
                 >
-                  Next
+                  {t("Next")}
                 </Button>
               </form>
             </Box>

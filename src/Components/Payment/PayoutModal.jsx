@@ -8,6 +8,7 @@ import flameLogo from "../../Assets/images/flame logo.svg";
 import { setPayoutModel, setProfileModel } from "../../Services/store/authSlice";
 import PayoutForm from "./PayoutForm";
 import useStyles from "./style";
+import { useTranslation } from "react-i18next";
 
 // ---------Component style------------
 
@@ -29,6 +30,7 @@ const PayoutModal = () => {
   const classes = useStyles();
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const {t} = useTranslation()
 
   const handleClose = (e) => dispatch(setPayoutModel(!payoutModel));
 
@@ -79,7 +81,7 @@ const PayoutModal = () => {
             fontWeight={400}
             ml={2}
           >
-            Payout
+            {t("Payout")}
           </Typography>
 
           <IconButton sx={{ width: "35px", height: "35px" }}>
@@ -113,7 +115,7 @@ const PayoutModal = () => {
               fontWeight={400}
               ml={2}
             >
-              Payout
+              {t("Payout")}
             </Typography>
           </Box>
         </Box>

@@ -8,6 +8,7 @@ import { get } from "../../Services/api";
 import CustomCard from "./CustomCard";
 import CustomTabPanel from "./CustomTabPanel";
 import { setPaymentModel } from "../../Services/store/authSlice";
+import { useTranslation } from "react-i18next";
 
 function a11yProps(index) {
   return {
@@ -23,7 +24,8 @@ const RechargeTabs = () => {
   const { role } = useSelector((state) => state.auth);
   const classes = useStyles();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const {t} = useTranslation()
 
   useEffect(() => {
     get("/getPlan")
@@ -157,7 +159,7 @@ const RechargeTabs = () => {
             className={classes.btn}
             disabled={selectedCard === null}
           >
-            Confirm
+            {t("Confirm")}
           </Button>
         </Box>
       </Box>

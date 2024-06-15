@@ -17,6 +17,7 @@ import { post } from "../../Services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { setPaymentStatus } from "../../Services/store/authSlice";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 const gridStyle = {
   padding: "0px 28px",
   gap: "15px 25px",
@@ -30,6 +31,7 @@ const CardPaymentForm = () => {
   const { userData, plan } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  const {t} = useTranslation()
 
   const {
     register,
@@ -102,7 +104,7 @@ const CardPaymentForm = () => {
                 }}
               >
                 <Typography variant="h5" className={classes.label}>
-                  Card Number
+                  {t("Card Number")}
                 </Typography>
                 <TextField
                   type="text"
@@ -133,7 +135,7 @@ const CardPaymentForm = () => {
                 }}
               >
                 <Typography variant="h5" className={classes.label}>
-                  Expiry Date
+                  {t("Expiry Date")}
                 </Typography>
                 <Box
                   sx={{
@@ -208,7 +210,7 @@ const CardPaymentForm = () => {
             <Box sx={{ width: "100%", display: "flex", gap: "10px" }}>
               <Box sx={{ width: "50%" }}>
                 <Typography variant="h5" className={classes.label}>
-                  Card Holder Name
+                  {t("Card Holder Name")}
                 </Typography>
                 <TextField
                   type="text"
@@ -296,7 +298,7 @@ const CardPaymentForm = () => {
               type="submit"
               className={classes.btn1}
             >
-              Confirm
+              {t("Confirm")}
             </Button>
           </Box>
         </Grid>

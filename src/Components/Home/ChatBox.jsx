@@ -24,8 +24,12 @@ import { setMessages } from "../../Services/store/authSlice";
 import MessengerService from "../../Services/voximplant/messenger";
 import useStyles from "./style";
 import { getCurrentConversation } from "../../Services/utils";
+import { useIntercom } from "react-use-intercom";
+import { useTranslation } from "react-i18next";
 
 const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }) => {
+  const { boot, shutdown, hide, show, update } = useIntercom();
+
   const {
     currentConversationId,
     conversationHistory,
@@ -39,6 +43,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }
   const messagesEndRef = useRef(null);
   const conversation = conversationHistory[currentConversationId] || [];
   const dispatch = useDispatch();
+  const {t} = useTranslation()
   console.log('RRRRRRRRRRRRRRRRR', modelData)
 
   const scrollToBottom = () => {
@@ -50,6 +55,16 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }
     scrollToBottom();
   }, [conversationHistory]);
   useEffect(() => {
+    
+update({
+  messenger: { // Corrected spelling here
+    appearance: {
+      primary_color: '#FB1F43',
+      icon_url: ChatIcon
+    }
+  }
+})
+
     if (modelData) {
       setUser(users.find((item) => item.customData.userId == modelData?.id))
     }
@@ -118,7 +133,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }
     <>
       <IconButton
         color="primary"
-        onClick={handleToggleChatBox}
+        onClick={()=>boot()}
         className={classes.chatbox_container}
       >
         <img src={ChatIcon} />
@@ -291,7 +306,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }
                   }}
                 >
                   <Typography component="span" sx={{ margin: "auto" }}>
-                    No Chat
+                    {t("No Chat")}
                   </Typography>
                 </Box>
               )}

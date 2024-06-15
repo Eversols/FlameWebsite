@@ -102,7 +102,7 @@ const ProfileForm = () => {
     // const { name, value } = event.target;
     // console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', name, value,)
     if (name && value) {
-      if(profile[name].includes(`#${value}`)) return
+      if (profile[name].includes(`#${value}`)) return
       setProfile((prevProfile) => ({
         ...prevProfile,
         [name]:
@@ -202,6 +202,17 @@ const ProfileForm = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const res = await post(`/deleteProfile`, { userID: userData.id });
+      if(res){
+        navigate('/user/authentication')
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const calculatePercentage = () => {
     const totalFields = Object.keys(profile).length;
     const filledFields = Object.values(profile).filter(
@@ -211,7 +222,6 @@ const ProfileForm = () => {
     return Math.round(percentage);
   };
   const progressValue = calculatePercentage();
-  console.log('TTTTTTTTTTTTTTT', status, profile)
   return (
     <>
       <Grid container sx={gridContainer}>
@@ -719,7 +729,7 @@ const ProfileForm = () => {
         </Grid>
         <Grid item sx={{ width: "100%" }}>
           <Box
-            sx={{ width: "100%", justifyContent: "center", display: "flex" }}
+            sx={{ width: "100%", justifyContent: "center", display: "flex", gap: "20px" }}
           >
             <Button
               onClick={() => {
@@ -733,6 +743,14 @@ const ProfileForm = () => {
               className={classes.btn1}
             >
               {status ? "Edit Profile" : "Save Profile"}
+            </Button>
+            <Button
+              onClick={handleDelete}
+              variant="contained"
+              type="submit"
+              className={classes.btn1}
+            >
+              Delete Profile
             </Button>
           </Box>
         </Grid>

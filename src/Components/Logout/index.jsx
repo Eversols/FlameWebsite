@@ -4,6 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useStyles from "./style";
+import { useTranslation } from "react-i18next";
 
 // ---------Component style------------
 
@@ -11,8 +12,9 @@ const LogoutModal = () => {
   const theme = useTheme();
   const classes = useStyles();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const { t } = useTranslation()
 
-  const handleClose = (e) => {};
+  const handleClose = (e) => { };
 
   return (
     <Dialog
@@ -51,9 +53,9 @@ const LogoutModal = () => {
           fontSize: "16px",
         }}
         data-cy={`activity-close`}
-        // onClick={handleClose}
+      // onClick={handleClose}
       >
-        Confirm Logout
+        {t("Confirm Logout")}
       </Box>
 
       <Box
@@ -69,10 +71,10 @@ const LogoutModal = () => {
         }}
       >
         <Button variant="contained" className={classes.btn}>
-          Logout
+          {t("Logout")}
         </Button>
         <Button variant="contained" className={classes.btnCancel}>
-          Cancel
+          {t("Cancel")}
         </Button>
       </Box>
     </Dialog>

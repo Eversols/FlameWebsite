@@ -19,6 +19,16 @@ import {
   VOX_APP_ID,
 } from "./constants";
 
+// import { TranslationServiceClient } from '@google-cloud/translate';
+// const translationClient = new TranslationServiceClient({
+//   projectId: 'flame-423220',
+//   credentials: {
+//     client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+//     client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
+//   },
+// });
+
+
 export const reloginVox = () => {
   if (!store.getState().auth.token) {
     // persistor.purge();
@@ -491,4 +501,41 @@ export const voxLogin = async (user, password, email) => {
   } else {
     console.log("voximplant user login failure", login);
   }
+};
+
+// export const detectLanguage = async (text) => {
+//   const [detection] = await translationClient.detectLanguage({
+//     content: text,
+//   });
+//   return detection.language;
+// }
+
+// export const translateText = async (text, sourceLanguage, targetLanguage) => {
+//   const [translation] = await translationClient.translateText({
+//     parent: `projects/${import.meta.env.GOOGLE_PROJECT_ID}/locations/global`,
+//     contents: [text],
+//     mimeType: 'text/plain',
+//     sourceLanguageCode: sourceLanguage,
+//     targetLanguageCode: targetLanguage,
+//   });
+//   return translation.translations[0].translatedText;
+// }
+
+const API_KEY = "AIzaSyBRi4MI2BPWyu6d77frVzj51kQ2pXVrE8c";
+const API_URL = 'https://translation.googleapis.com/language/translate/v2';
+export const translateText = async (text, targetLanguage) => {
+  const response = await axios.post(
+    `${API_URL}?key=${API_KEY}`,
+    {
+      
+      q: text,
+      target: targetLanguage,
+    },
+    {
+      headers:{
+        "x-goog-api-key": API_KEY,
+      }
+    }
+  );
+  return response.data.data.translations[0].translatedText;
 };

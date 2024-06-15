@@ -29,6 +29,8 @@ const MainScreenSlider = ({
   setModelData,
   setShowChatBox,
   callUser,
+  pagination,
+  setPagination,
 }) => {
   const {
     currentConversationId,
@@ -41,6 +43,11 @@ const MainScreenSlider = ({
   }, []);
   const handleSlideChange = (e) => {
     // Custom logic to run when slide changes
+    if(!(pagination.page == pagination.totalPages) && e.realIndex + 3 >= pagination.totalPages) {
+      setPagination((prev)=> ({...prev, page: prev.page + 1}))
+      // setPagination((prev) => ({ ...prev, page: +prev.page + 1 }));
+      console.log('WWWWWWWWWWWWWWWWWWWWWWWW',e.realIndex + 3 >= pagination.totalPages, e.realIndex + 3, pagination.totalPages, pagination)
+    }
     setModelData(models[e.realIndex]);
     // Add your custom logic here
   };

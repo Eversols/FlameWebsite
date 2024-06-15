@@ -13,9 +13,11 @@ import colorCircle from '../../Assets/images/colorcirlce.svg';
 import greyCircle from '../../Assets/images/greycircle.svg';
 import useStyles from './style';
 import moment from 'moment'
+import { useTranslation } from 'react-i18next';
 
 const CustomCard = ({ price, description, expires, text, onSelect, isSelected }) => {
   const classes = useStyles(isSelected);
+  const {t} = useTranslation()
   return (
     <Card className={classes.cardContainer} onClick={onSelect}>
       <Box className={classes.detail_wrapper}>
@@ -48,7 +50,7 @@ const CustomCard = ({ price, description, expires, text, onSelect, isSelected })
         color="text.secondary"
         gutterBottom
       >
-        expires in {moment(expires).diff(moment().format('YYYY-MM-DD'),'days')}
+        {t("expires in")} {moment(expires).diff(moment().format('YYYY-MM-DD'),'days')}
       </Typography>}
     </Card>
   );

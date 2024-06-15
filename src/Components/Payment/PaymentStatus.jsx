@@ -9,6 +9,7 @@ import { setPaymentStatus } from "../../Services/store/authSlice";
 import { useEffect } from "react";
 import { useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
+import { useTranslation } from "react-i18next";
 
 const mainContainer = {
   position: 'relative',
@@ -29,6 +30,7 @@ const PaymentStatus = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const {t} = useTranslation();
   const handleClose = (e) =>
     dispatch(setPaymentStatus({ paymentSuccess: false, paymentError: false }));
 
@@ -87,7 +89,7 @@ const PaymentStatus = () => {
           fontWeight={700}
           ml={2}
         >
-          Card Payment
+          {t("Card Payment")}
         </Typography>
 
         <IconButton sx={{ width: '35px', height: '35px' }} onClick={handleClose}>
@@ -126,14 +128,14 @@ const PaymentStatus = () => {
         </Box>
         <Box className={classes.textContainer}>
           <Typography className={classes.text}>
-            {status ? "Payment Done!" : "Payment Failed!"}
+            {status ? `${t("Payment Done")}!` : `${t("Payment Failed")}!`}
           </Typography>
         </Box>
         <Box className={classes.textContainer}>
           <Typography className={classes.text2}>
             {status
-              ? "Thank you for completing your secure online payment. Have a great day!"
-              : "Unfortunately payment was rejected"}
+              ? `${t("Thank you for completing your secure online payment. Have a great day")}!`
+              : t("Unfortunately payment was rejected")}
           </Typography>
         </Box>
         <Grid item sx={{ width: "100%", marginTop: "30px" }}>
@@ -146,7 +148,7 @@ const PaymentStatus = () => {
               type="submit"
               className={classes.btn1}
             >
-              {status ? "Done" : "Try another card"}
+              {status ? t("Done") : t("Try another card")}
             </Button>
           </Box>
         </Grid>

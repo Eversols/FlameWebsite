@@ -89,6 +89,7 @@ import CustomCard from "../../Components/CustomCard";
 import useStyles from "../../Pages/Mood/style";
 import { get } from "../../Services/api";
 import { setMood } from "../../Services/store/authSlice";
+import { useTranslation } from "react-i18next";
 
 const index = () => {
   const { role } = useSelector((state) => state.auth);
@@ -101,6 +102,7 @@ const index = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {t} = useTranslation()
 
   // useEffect(() => {
   //   get("/getMood")
@@ -128,10 +130,10 @@ const index = () => {
       <Container className={classes.container}>
         <Container className={classes.paragraph_container}>
           <Typography variant="h4" className={classes.heading1}>
-            How Is Your Mood Today?
+            {t("How Is Your Mood Today")}?
           </Typography>
           <Typography variant="h6" className={classes.heading2}>
-            "We'll match you with the women who are in the same mood as you"
+            {t("We'll match you with the women who are in the same mood as you")}
           </Typography>
         </Container>
         <Container className={classes.moodcontainer}>
@@ -169,7 +171,7 @@ const index = () => {
           variant="contained"
           className={classes.btn}
         >
-          next
+          {t("Next")}
         </Button>
       </Container>
     </>

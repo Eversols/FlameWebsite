@@ -9,12 +9,14 @@ import { post } from "../../Services/api";
 import { setError } from "../../Services/store/authSlice";
 import useStyles from "./style";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const StepOtp = ({ onNext, setStep }) => {
   const { pathname } = useLocation()
   const [OTP, setOTP] = useState("");
   const { error, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const classes = useStyles();
+  const { t } = useTranslation()
 
   const confirmSubmit = async (e) => {
     console.log(user.email)
@@ -44,7 +46,7 @@ const StepOtp = ({ onNext, setStep }) => {
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
             <Typography variant="h5" className={classes.heading}>
-              Check your email for an OTP
+              {t("Check your email for an OTP")}
             </Typography>
 
             <Box className={classes.fieldWrapper}>
@@ -56,7 +58,7 @@ const StepOtp = ({ onNext, setStep }) => {
                 }}
                 type="text"
                 value={OTP}
-                placeholder="Confirm OTP sent to your Email ID"
+                placeholder={t("Confirm OTP sent to your Email ID")}
                 className={classes.input1}
                 fullWidth
               />
@@ -67,7 +69,7 @@ const StepOtp = ({ onNext, setStep }) => {
                 variant="contained"
                 className={classes.btn}
               >
-                next
+                {t("Next")}
               </Button>
             </Box>
           </Container>

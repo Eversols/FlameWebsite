@@ -7,12 +7,14 @@ import bgHeart from "../../Assets/images/bg_heart.svg";
 import flameLogo from "../../Assets/images/flame logo.svg";
 import { setUser } from "../../Services/store/authSlice";
 import useStyles from "./style";
+import { useTranslation } from "react-i18next";
 
 const StepName = ({ onNext }) => {
   const [name, setName] = useState("");
   const { error } = useSelector((state) => state.auth);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { t } = useTranslation()
   const confirmSubmit = async (e) => {
     if (name) {
       dispatch(setUser({ displayName: name }));
@@ -28,14 +30,14 @@ const StepName = ({ onNext }) => {
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
             <Typography variant="h5" className={classes.heading}>
-            Set a screen name
+              {t("Set a screen name")}
             </Typography>
             <Box className={classes.fieldWrapper}>
               <TextField
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your name"
+                placeholder={t("Enter your name")}
                 className={classes.input1}
                 fullWidth
               />
@@ -47,7 +49,7 @@ const StepName = ({ onNext }) => {
                 variant="contained"
                 className={classes.btn}
               >
-                next
+                {t("Next")}
               </Button>
             </Box>
           </Container>

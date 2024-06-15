@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import bgBlock from "../../Assets/images/bg_block.svg";
 import bgHeart from "../../Assets/images/bg_heart.svg";
 import flameLogo from "../../Assets/images/flame logo.svg";
@@ -24,6 +24,7 @@ import {
 } from "../../Services/store/authSlice";
 import { voxLogin, voxRegister } from "../../Services/utils";
 import useStyles from "./style";
+import { useTranslation } from "react-i18next";
 
 const StepPassword = () => {
   const { pathname } = useLocation()
@@ -37,6 +38,7 @@ const StepPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
+  const { t } = useTranslation()
   const confirmSubmit = async (e) => {
     if (password !== cPassword && !user.emailExist) {
       dispatch(setError("Confirm password not match!"));
@@ -48,7 +50,7 @@ const StepPassword = () => {
         const { data } = await post("/changePassword", { email: user.email, password: password });
         if (data) {
           window.location.href = `/${role}/authentication`
-          
+
           return
         }
       }
@@ -149,14 +151,14 @@ const StepPassword = () => {
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
             <Typography variant="h5" className={classes.headingOne}>
-              {!user.emailExist ? "Set your password" : "Enter your password"}
+              {!user.emailExist ? t("Set your password") : t("Enter your password")}
             </Typography>
             <Box className={classes.fieldWrapper}>
               <Box className={classes.passwordWrapper}>
                 <TextField
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Password"
+                  placeholder={t("Password")}
                   className={classes.input1}
                   value={password}
                   fullWidth
@@ -197,7 +199,7 @@ const StepPassword = () => {
                     name="cPassword"
                     type={showCPassword ? "text" : "password"}
                     value={cPassword}
-                    placeholder="Confirm Password"
+                    placeholder={t("Confirm Password")}
                     className={classes.input2}
                     onChange={(e) => {
                       setCPassword(e.target.value);
@@ -233,6 +235,9 @@ const StepPassword = () => {
                     }}
                   />
                 )}
+              {!pathname.includes('forgetpassword') && <Link to={`/${role}/forgetpassword`} style={{ marginTop: '12px', textDecoration: "none", fontSize: "12px", color: "blue" }}>
+                {t("Forget Password")}
+              </Link>}
               </Box>
               {error && <p className={classes.error}>{error}</p>}
               <Button
@@ -241,7 +246,7 @@ const StepPassword = () => {
                 variant="contained"
                 className={classes.btn}
               >
-                next
+                {t("Next")}
               </Button>
             </Box>
           </Container>

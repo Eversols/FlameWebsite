@@ -1,11 +1,14 @@
 import * as VoxImplant from "voximplant-websdk";
 import {
+  
   onConversationCreated,
   onMessageMarkAsRead,
   onMessageSent,
   onlineReceived,
   reloginVox,
+  translateText,
 } from "../utils";
+import i18n from "../i18n";
 
 const TIME_NOTIFICATION = 3000;
 export const MY_APP = "flame.flameadmin";
@@ -89,7 +92,7 @@ export default class MessengerService {
     MessengerService.messenger.on(
       VoxImplant.Messaging.MessengerEvents.CreateConversation,
       (e) => {
-        console.log('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ',e);
+        console.log('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ', e);
         onConversationCreated(e);
       }
     );
@@ -104,7 +107,7 @@ export default class MessengerService {
   }
 
   getCurrentConversations(conversationsList) {
-    console.log(conversationsList);
+    console.log('conversationsList ::::::::::::::::::',conversationsList);
     return MessengerService.messenger
       .getConversations(conversationsList)
       .catch((e) => {
@@ -379,14 +382,19 @@ export default class MessengerService {
     );
   }
 
-  sendMessage(currentConversation, text, payload) {
+  async sendMessage(currentConversation, text, payload) {
+    let translatedText = text;
+    // const detectedLanguage = await detectLanguage(text);
+    // if (detectedLanguage !== i18n.resolvedLanguage) {
+    translatedText = await translateText(text, i18n.resolvedLanguage)
     if (payload) {
       return currentConversation
-        .sendMessage(text, [payload])
+        .sendMessage(translatedText, [payload])
         .catch(console.error);
     } else {
-      return currentConversation.sendMessage(text, [{}]).catch(console.error);
+      return currentConversation.sendMessage(translatedText, [{}]).catch(console.error);
     }
+    // }
   }
 
   removeMessage(message) {

@@ -10,6 +10,10 @@ import {
   Button,
   IconButton,
   Grid,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import logo from "../../../Assets/images/logo_flame.png";
 // import AnimatedText from "react-animated-text-content";
@@ -30,10 +34,13 @@ import { setRole } from "../../../Services/store/authSlice";
 import { Link } from "react-router-dom";
 import { css } from '@emotion/react';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 
-const AnimatedText = ({ words,className }) => {
+const AnimatedText = ({ words, className }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -81,15 +88,21 @@ const index = () => {
   const [currentWord, setcurrentWord] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const [carouselImage, setcarouselImage] = useState([
     carousel_1,
     carousel_2,
     carousel_3,
   ]);
+  const { i18n } = useTranslation();
+
+  const handleLanguageChange = (lng) => {
+    console.log('GGGGGGGGGGGGGGGGGGGGGGG', lng, i18n)
+    i18n.changeLanguage(lng);
+  };
 
   useEffect(() => {
-    if(token){
+    if (token) {
       navigate(`/${role}/home`);
     }
     const timeout = setInterval(() => {
@@ -127,6 +140,21 @@ const index = () => {
           <Container>
             <Typography variant="h4">LOGO</Typography>
           </Container>
+          <Box sx={{ minWidth: 180, marginRight: '18rem', bg: 'white', color: 'white' }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Language</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={i18n.resolvedLanguage}
+                onChange={(e) => handleLanguageChange(e.target.value)}
+              >
+                <MenuItem value="en">English</MenuItem>
+                <MenuItem value="ru">Russian</MenuItem>
+                <MenuItem value="hi">Hindi</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </Container>
         <Box className={classes.page_content_container}>
           <Box className={classes.page_heading_text_container}>
@@ -138,7 +166,7 @@ const index = () => {
                 &lt;
               </Typography>
               <Box className={classes.text_anim_container}>
-              <AnimatedText words={words} className={classes.heading_primary_text}/>
+                <AnimatedText words={words} className={classes.heading_primary_text} />
                 {/* <AnimatedText
                   className={classes.heading_primary_text}
                   type="chars"

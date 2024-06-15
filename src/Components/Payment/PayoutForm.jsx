@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
 import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
+import { useTranslation } from "react-i18next";
 
 const gridStyle = {
   padding: "10px 20px",
@@ -20,7 +21,8 @@ const PayoutForm = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [confirmModal, setConfirmModal] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const {t} = useTranslation()
 
   const submitHandler = () => {
     post('/pointsPayout', { user_id: userData.id, points_payout: userData.available_points }).then((result) => { setConfirmModal(false); dispatch(getProfile({ id: userData.id })); }).catch((error) => { })
@@ -38,7 +40,7 @@ const PayoutForm = () => {
           }}
         >
           <Typography variant="h5" className={classes.label}>
-            enter points
+            {t("enter points")}
           </Typography>
           <Box sx={{ width: "100%", display: "flex", gap: "10px" }}>
             <Button
@@ -54,7 +56,7 @@ const PayoutForm = () => {
               variant="contained"
               onClick={() => setConfirmModal(true)}
             >
-              Confirm
+              {t("Confirm")}
             </Button>
           </Box>
         </Grid>
@@ -68,7 +70,7 @@ const PayoutForm = () => {
           }}
         >
           <Typography variant="h5" className={classes.label}>
-            leave request
+            {t("leave request")}
           </Typography>
           <Box sx={{ width: "100%", maxWidth: "60%" }}>
             <Box className={classes.text_container}>{userData.available_points} Points</Box>
@@ -76,7 +78,7 @@ const PayoutForm = () => {
         </Grid>
         <Grid item sx={{ width: "100%", marginTop: "40px" }}>
           <Typography variant="h5" className={classes.label}>
-            leave request
+            {t("leave request")}
           </Typography>
         </Grid>
         <Grid
@@ -98,7 +100,7 @@ const PayoutForm = () => {
             }}
           >
             <Typography variant="h5" className={classes.label}>
-              approved
+              {t("approved")}
             </Typography>
             <Box className={classes.text_container}>{userData?.approved_points || 0}</Box>
           </Box>
@@ -111,7 +113,7 @@ const PayoutForm = () => {
             }}
           >
             <Typography variant="h5" className={classes.label}>
-              rejected
+              {t("rejected")}
             </Typography>
             <Box className={classes.text_container}>{userData?.rejected_points || 0}</Box>
           </Box>
@@ -155,7 +157,7 @@ const PayoutForm = () => {
           data-cy={`activity-close`}
         // onClick={handleClose}
         >
-          Confirm Redeem
+          {t("Confirm Redeem")}
         </Box>
 
         <Box
@@ -180,16 +182,16 @@ const PayoutForm = () => {
             }}
           >
             <Typography variant="h5" className={classes.label}>
-              Are you sure you want to redeem the points
+              {t("Are you sure you want to redeem the points")}
             </Typography>
           </Box>
           <Box sx={{ width: "100%", display: "flex", gap: "10px", justifyContent: "center" }}>
 
             <Button variant="contained" className={classes.btn} onClick={submitHandler}>
-              Yes
+              {t("Yes")}
             </Button>
             <Button variant="contained" className={classes.btnCancel} onClick={() => setConfirmModal(false)}>
-              No
+              {t("No")}
             </Button>
           </Box>
         </Box>

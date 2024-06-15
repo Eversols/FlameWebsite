@@ -27,6 +27,7 @@ import {
 import { voxService } from "../../Services/voximplant";
 import Drawer from "./Drawer";
 import useStyles from "./style";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const { role, userData, rechargeModel, profileModel, payoutModel } =
@@ -34,6 +35,7 @@ const Header = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [isDrawerOpen, setDrawerOpen] = useState(null);
   const logout = async () => {
     try {
@@ -103,7 +105,7 @@ const Header = () => {
             variant="contained"
             onClick={recharge}
           >
-            Recharge
+            {t("Recharge")}
           </Button>
           <Box
             display="flex"
@@ -126,7 +128,7 @@ const Header = () => {
                 ml={1}
                 className={classes.fontadjust}
               >
-                min
+                {t("min")}
               </Typography>
             </Box>
             <Box textAlign="center" className={classes.marginHandler}>
@@ -144,7 +146,7 @@ const Header = () => {
                 className={classes.fontadjust}
                 ml={1}
               >
-                messages
+                {t("messages")}
               </Typography>
             </Box>
             <Box
@@ -170,7 +172,7 @@ const Header = () => {
                 ml={1}
                 mr={1}
               >
-                points
+                {t("points")}
               </Typography>
               <Button
                 className={classes.payout_btn}
@@ -178,7 +180,7 @@ const Header = () => {
                 variant="outlined"
                 onClick={payoutHandle}
               >
-                Payout
+                {t("Payout")}
               </Button>
             </Box>
           </Box>
@@ -218,7 +220,7 @@ const Header = () => {
               ml={1}
               className={classes.remove}
             >
-              Logout
+              {t("Logout")}
             </Typography>
           </IconButton>
         </Box>

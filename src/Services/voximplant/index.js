@@ -67,7 +67,7 @@ class VoxService {
       .catch((error) => {
         persistor.purge();
         localStorage.removeItem("persist:root");
-        window.location.href = '/'
+        // window.location.href = '/'
         console.error('Connection failed', error);
       });
   }

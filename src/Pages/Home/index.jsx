@@ -46,6 +46,7 @@ import CallService from "../../Services/voximplant/call";
 import CallModal from "../../Components/Home/CallModal";
 import PaymentStatus from "../../Components/Payment/PaymentStatus";
 import LogoutModal from "../../Components/Logout";
+import { useTranslation } from "react-i18next";
 const loveLabels = ["Sport", "food", "fashion"];
 const hateLabels = ["Make up", "books", "tv"];
 const index = () => {
@@ -64,8 +65,14 @@ const index = () => {
   const [isMicMuted, setIsMicMuted] = useState(false);
   const [callingUser, setCallingUser] = useState(null);
   const [showIncomingCallDialog, setShowIncomingCallDialog] = useState(false);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    totalPages: 0
+  });
   const classes = useStyles();
   const dispatch = useDispatch();
+  const {t} = useTranslation()
 
   useEffect(async () => {
     dispatch(
@@ -83,15 +90,19 @@ const index = () => {
       console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNN', result)
       if (result) {
         // const url = role === "model" ? "/getUsers" : `/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}`;
-        get(`/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}`)
+        get(`/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}&page_id=${pagination.page}`)
           .then((res) => {
-            setModels(res.data.data);
+            // setModels((prev) => [...prev, ...res.data.data]);
+            if(res.data.data.length >0){
+              setModels((prev)=> [...prev, ...res.data.data]);  
+              setPagination({ ...pagination, totalPages: res.data.total_pages });
+            }
           })
           .catch((err) => { });
       }
     }
-    dispatch(getAllUsers());
-  }, []);
+    dispatch(getAllUsers()) 
+  }, [pagination.page]);
 
   // Initialize the CallService when the component mounts
   useEffect(() => {
@@ -205,14 +216,14 @@ const index = () => {
           </Typography>
 
           <Typography variant="h6" className={classes.profile_heading}>
-            About me
+            {t("About me")}
           </Typography>
 
           <Typography variant="h6" className={classes.profile_text}>
             {modelData?.metaData?.about}
           </Typography>
           <Typography variant="h6" className={classes.profile_answer}>
-            Things I Love
+            {t("Things I Love")}
           </Typography>
           {console.log('DDDDDDDDDDDDDDDDDDDDDDDDD', modelData)}
           <Box className={classes.btnContainer}>
@@ -228,7 +239,7 @@ const index = () => {
               ))}
           </Box>
           <Typography variant="h6" className={classes.profile_answer}>
-            Things I Hate
+            {t("Things I Hate")}
           </Typography>
           <Box className={classes.btnContainer}>
             {modelData?.metaData?.unlike &&
@@ -256,7 +267,7 @@ const index = () => {
             component="div"
             className={classes.heading}
           >
-            History
+            {t("History")}
           </Typography>
           <Box className={classes.box_leftInner}>
             <ChatHistory
@@ -308,6 +319,8 @@ const index = () => {
                   models={models}
                   callUser={handleMakeAudioCall}
                   setModelData={setModelData}
+                  pagination={pagination}
+                  setPagination={setPagination}
                 />
               )}
             </>
@@ -320,7 +333,7 @@ const index = () => {
             component="div"
             className={classes.heading}
           >
-            History
+            {t("History")}
           </Typography>
           <Box className={classes.box_leftInner}>
             <ChatHistory

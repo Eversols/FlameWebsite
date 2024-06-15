@@ -19,11 +19,12 @@ const Profile = lazy(() => import('./Pages/Profile'));
 const Recharge = lazy(() => import('./Pages/Recharge'));
 const Payment = lazy(() => import('./Pages/Payment'));
 const Completion = lazy(() => import('./Pages/Payment/Completion'));
+const LandingPages = lazy(() => import('./Pages/LandingPages'));
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<UserLandingPage />} />
+      <Route path="/" element={<LandingPages />} />
       <Route path="/model" element={<ModelLandingPage />} />
       <Route path="/:role" element={<Layout />}>
         <Route path="authentication" element={<Authenticate />} />
