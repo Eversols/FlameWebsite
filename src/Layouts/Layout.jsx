@@ -25,9 +25,9 @@ const Layout = () => {
   const { role: userRole } = useSelector((state) => state.auth);
   const classes = useStyles();
 
-  if (!(role === userRole)) {
-    return <Navigate to="/" />;
-  }
+  // if (!(role === userRole)) {
+  //   return <Navigate to="/" />;
+  // }
   return (
     <div className={classes.body}>
       <Outlet />

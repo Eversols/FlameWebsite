@@ -95,7 +95,7 @@ const MainScreenSlider = ({
         <SwiperSlide key={i} className={classes.slide}>
           {/* {item?.userData?.profileImage && (
             <img
-              src={`https://theflame.life/livebk/public/uploads/${item.userData.profileImage}`}
+              src={`${item.userData.profileImage}`}
               className={classes.img}
             />
           )} */}

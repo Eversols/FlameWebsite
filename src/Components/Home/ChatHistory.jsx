@@ -147,7 +147,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                       className={classes.single_image}
                       style={{
                         backgroundImage: `url(${item.direct && users.first_name
-                          ? `https://theflame.life/livebk/public/uploads/${users.photo}`
+                          ? `${users.photo}`
                           : ProfileImage
                           })`,
 

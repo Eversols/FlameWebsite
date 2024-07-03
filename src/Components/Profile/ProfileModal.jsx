@@ -21,7 +21,7 @@ const mainContainer = {
   width: '100%',
 };
 
-const ProfileModal = () => {
+const ProfileModal = ({setDialog}) => {
   const { profileModel } = useSelector((state) => state.auth);
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -80,7 +80,7 @@ const ProfileModal = () => {
       )}
 
       <Box sx={mainContainer}>
-        <ProfileTabs />
+        <ProfileTabs setDialog={setDialog} />
       </Box>
     </Dialog>
   );

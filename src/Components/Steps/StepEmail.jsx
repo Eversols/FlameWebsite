@@ -40,13 +40,15 @@ const StepEmail = ({ onNext, setStep }) => {
     if (email) {
       if (pathname.includes('forgetpassword')) {
         const { data } = await post("/forgotPasswordOTP", { email });
-        if (data) {
-          console.log('data', data)
+        if (data?.otp) {
           dispatch(setUser({
             email,
             otp: data.otp,
           }))
           onNext();
+          return
+        }else{
+          dispatch(setError(data))
           return
         }
       }
@@ -98,7 +100,7 @@ const StepEmail = ({ onNext, setStep }) => {
   };
   return (
     <>
-      <img src={flameLogo} className={classes.logo} />
+      {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
       <Box className={classes.mainWrapperBox}>

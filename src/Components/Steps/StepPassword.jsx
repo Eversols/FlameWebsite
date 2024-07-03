@@ -26,13 +26,13 @@ import { voxLogin, voxRegister } from "../../Services/utils";
 import useStyles from "./style";
 import { useTranslation } from "react-i18next";
 
-const StepPassword = () => {
+const StepPassword = ({ setStep }) => {
   const { pathname } = useLocation()
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
-  const { error, user, role, mood, region, userData } = useSelector(
+  const { error, user, role, mood, region, userData, siteMeta } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
@@ -58,10 +58,11 @@ const StepPassword = () => {
         let res;
         if (user.emailExist) {
           res = await post("/login", { email: user.email, password });
-          // if (res.data.status === "success") {
-          //   navigate(`/${role}/home`);
-          //   return;
-          // }
+          if (res.data.status === "success") {
+            // navigate(`/${role}/home`);
+            // navigate(`/${role}/profile`);
+            // return;
+          }
         } else {
           res = await post("/register", {
             email: user.email,
@@ -74,6 +75,7 @@ const StepPassword = () => {
               userID: res.data.content.user_id,
               displayName: user.displayName,
               voxUserId: voxRegisterRes.data.user_id,
+              isProfileComplete: siteMeta.is_profile_complete == 'yes' ? false : true,
             });
           }
         }
@@ -85,13 +87,22 @@ const StepPassword = () => {
             );
             if (token?.payload) {
               const user_data = await dispatch(getUser());
+             
               console.log(
                 "KKKKKKKKKKKKKKK",
                 user.emailExist,
                 user_data.payload,
-                user.emailExist && user_data.payload
+                user.emailExist && user_data.payload,
+                user_data.payload.is_active
               );
+              if (res.data.content.role == "user" && user.emailExist && user_data.payload.is_active == 'Inactive') {
+                dispatch(setError("Your account under the review from admin!"))
+                return
+              }
+              if(res.data.content.role === "partner") return navigate(`/${res.data.content.role}/dashboard`);
               if (user.emailExist && user_data.payload) {
+               
+                console.log('TTTTTTTTTTTTTTTTTTTTTT', user_data)
                 const userName = user_data.payload.email.replace(
                   "@",
                   "-flame-"
@@ -102,10 +113,15 @@ const StepPassword = () => {
                 await voxLogin(userName, password, user_data.payload.email);
               }
               if (res.data.content.role === "user") {
-                console.log('TTTTTTTTTTTTTTTTTTTTTT', user_data)
-                if (!user_data.payload.moodID) navigate(`/${role}/mood`);
-                //else if (!region) navigate(`/${role}/region`);
-                else navigate(`/${role}/home`);
+                dispatch(getProfile({ id: user_data.payload.id })).then((res) => {
+                  console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPP', res)
+                  if (res.payload.metadata.isProfileComplete == '1') navigate(`/${role}/home`);
+                  if(!user.emailExist && !user_data.payload.moodID) navigate(`/${role}/mood`);
+                  
+                })
+                // if (!user_data.payload.moodID) navigate(`/${role}/mood`);
+                // //else if (!region) navigate(`/${role}/region`);
+                // else navigate(`/${role}/home`);
               }
               console.log(res.data.content.role);
               if (res.data.content.role === "model" && user_data) {
@@ -121,6 +137,7 @@ const StepPassword = () => {
                   else navigate(`/${role}/home`);
                 }
               }
+             
               if (res.data.content.role === "modelmanager") {
                 navigate("/modelmanager");
               }
@@ -131,7 +148,8 @@ const StepPassword = () => {
           }
         }
       } catch (error) {
-        console.log(error);
+        console.log('ZZZZZZZZZZZZZZZZZZZZZZZZ', error)
+        // navigate(`/${role}/home`);
         dispatch(
           setError(
             error.response?.data?.message
@@ -144,7 +162,7 @@ const StepPassword = () => {
   };
   return (
     <>
-      <img src={flameLogo} className={classes.logo} />
+      {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
       <Box className={classes.mainWrapperBox}>
@@ -235,9 +253,9 @@ const StepPassword = () => {
                     }}
                   />
                 )}
-              {!pathname.includes('forgetpassword') && <Link to={`/${role}/forgetpassword`} style={{ marginTop: '12px', textDecoration: "none", fontSize: "12px", color: "blue" }}>
-                {t("Forget Password")}
-              </Link>}
+                {user.emailExist && !pathname.includes('forgetpassword') && <Link to={`/${role}/forgetpassword`} style={{ marginTop: '12px', textDecoration: "none", fontSize: "12px", color: "#00000080" }} onClick={() => setStep(1)}>
+                  {t("Forget Password")}
+                </Link>}
               </Box>
               {error && <p className={classes.error}>{error}</p>}
               <Button

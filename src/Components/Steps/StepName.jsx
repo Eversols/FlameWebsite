@@ -23,7 +23,7 @@ const StepName = ({ onNext }) => {
   };
   return (
     <>
-      <img src={flameLogo} className={classes.logo} />
+      {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
       <Box className={classes.mainWrapperBox}>

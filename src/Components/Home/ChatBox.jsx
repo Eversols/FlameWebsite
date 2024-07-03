@@ -18,6 +18,7 @@ import ChatBoxIcon from "../../Assets/images/chatboxIcon.svg";
 import ideaIcon from "../../Assets/images/idea_icons.svg";
 import ProfileImage from "../../Assets/images/male.jpg";
 import CallIcon from "../../Assets/images/sayhi.svg";
+import GiftIcon from "../../Assets/images/mdi_gift.svg";
 import VideoCallIcon from "../../Assets/images/video.svg";
 import { post } from "../../Services/api";
 import { setMessages } from "../../Services/store/authSlice";
@@ -27,7 +28,7 @@ import { getCurrentConversation } from "../../Services/utils";
 import { useIntercom } from "react-use-intercom";
 import { useTranslation } from "react-i18next";
 
-const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }) => {
+const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser, setGiftDialog }) => {
   const { boot, shutdown, hide, show, update } = useIntercom();
 
   const {
@@ -43,7 +44,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }
   const messagesEndRef = useRef(null);
   const conversation = conversationHistory[currentConversationId] || [];
   const dispatch = useDispatch();
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   console.log('RRRRRRRRRRRRRRRRR', modelData)
 
   const scrollToBottom = () => {
@@ -55,18 +56,18 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser }
     scrollToBottom();
   }, [conversationHistory]);
   useEffect(() => {
-    
-update({
-  messenger: { // Corrected spelling here
-    appearance: {
-      primary_color: '#FB1F43',
-      icon_url: ChatIcon
-    }
-  }
-})
+
+    update({
+      messenger: { // Corrected spelling here
+        appearance: {
+          primary_color: '#FB1F43',
+          icon_url: ChatIcon
+        }
+      }
+    })
 
     if (modelData) {
-      setUser(users.find((item) => item.customData.userId == modelData?.id))
+      setUser(users?.find((item) => item.customData.userId == modelData?.id))
     }
   }, [modelData]);
 
@@ -103,7 +104,7 @@ update({
 
 
   const call = (userData, video) => {
-    const voxUser = users.find(
+    const voxUser = users?.find(
       (item) => item.customData.userId === userData.id
     );
     if (voxUser) {
@@ -113,7 +114,7 @@ update({
   };
 
   const userConversation = async (userData, type) => {
-    const voxUser = users.find(
+    const voxUser = users?.find(
       (item) => item.customData.userId === userData.id
     );
     if (voxUser) {
@@ -133,7 +134,7 @@ update({
     <>
       <IconButton
         color="primary"
-        onClick={()=>boot()}
+        onClick={() => boot()}
         className={classes.chatbox_container}
       >
         <img src={ChatIcon} />
@@ -192,7 +193,7 @@ update({
             <Box
               className={classes.single_chat_image}
               style={{
-                backgroundImage: modelData?.userData?.profileImage ? `url(https://theflame.life/livebk/public/uploads/${modelData.userData.profileImage})` : `url(${ProfileImage})`,
+                backgroundImage: modelData?.userData?.profileImage ? `url(${modelData.userData.profileImage})` : `url(${ProfileImage})`,
               }}
             ></Box>
 
@@ -228,6 +229,17 @@ update({
                 <IconButton
                   sx={{ margin: 0, padding: 0 }}
                   size="small"
+                  onClick={() => setGiftDialog(()=> ({open: true}))}
+                  className={classes.history_actions_btn}
+                >
+                  <img
+                    src={GiftIcon}
+                    className={classes.history_actions_icons}
+                  />
+                </IconButton>
+                <IconButton
+                  sx={{ margin: 0, padding: 0 }}
+                  size="small"
                   onClick={() => call(modelData.userData, true)}
                   className={classes.history_actions_btn}
                 >
@@ -236,7 +248,6 @@ update({
                     className={classes.history_actions_icons}
                   />
                 </IconButton>
-
                 <IconButton
                   sx={{ margin: 0, padding: 0 }}
                   size="small"
@@ -273,7 +284,7 @@ update({
                   >
                     <Box
                       className={classes.single_image}
-                      style={{ backgroundImage: item._sender === currentUser.userId ? `url(https://theflame.life/livebk/public/uploads/${userData.profileImage})` : `url(https://theflame.life/livebk/public/uploads/${modelData.userData.profileImage})` }}
+                      style={{ backgroundImage: item._sender === currentUser.userId ? `url(${userData.profileImage})` : `url(${modelData.userData.profileImage})` }}
                     ></Box>
                     <Container
                       className={

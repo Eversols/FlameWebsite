@@ -50,7 +50,9 @@ export default class MessengerService {
       .then((evt) => {
         console.log("Current user data received", evt);
         initialData.currentUser = evt.user;
-
+        if(evt.user.conversationsList == undefined){
+          evt.user.conversationsList = [];
+        }
         return this.getCurrentConversations(evt.user.conversationsList);
       })
       .then((evts) => {

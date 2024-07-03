@@ -5,10 +5,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import flamelogo from "../../Assets/images/flame-logo.svg";
+import flameLogoBlack from "../../Assets/images/flame logo.svg";
 import Languagebtn from "./Languagebtn";
 import { useTranslation, I18nextProvider } from "react-i18next";
 import CardMedia from "@mui/material/CardMedia";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setRole } from "../../Services/store/authSlice";
 
@@ -17,6 +18,7 @@ const Header = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { pathname } = useLocation()
 
     const handleScroll = () => {
         const container = document.querySelector('.scroll-container');
@@ -41,7 +43,7 @@ const Header = () => {
 
     const getStartedBtn = () => {
         dispatch(setRole("user"));
-     navigate('/user/authentication')    
+        navigate('/user/authentication')
     };
 
     const { t } = useTranslation();
@@ -56,14 +58,16 @@ const Header = () => {
                     {showLogo && (
                         <CardMedia
                             component="img"
-                            image={flamelogo}
+                            image={pathname == '/' ? flamelogo : flameLogoBlack}
                             alt="Flame Logo"
                             sx={{
-                                width: "8rem",
+                                width: "12rem",
                                 height: "6rem",
                                 objectFit: "contain",
                                 marginRight: "0.2rem",
+                                cursor: "pointer",
                             }}
+                            onClick={() => navigate('/')}
                         />
                     )}
 
@@ -79,6 +83,7 @@ const Header = () => {
                             alignItems: "center",
                         }}
                     >
+                        {pathname == '/' && 
                         <Button
                             onClick={getStartedBtn}
                             sx={{
@@ -102,7 +107,7 @@ const Header = () => {
                             }}
                         >
                             {t("Get Started")}
-                        </Button>
+                        </Button>}
                     </Box>
                     <Box sx={{ marginLeft: { md: "0", xs: "auto" } }}>
                         <Languagebtn />

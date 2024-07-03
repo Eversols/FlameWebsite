@@ -47,6 +47,7 @@ import CallModal from "../../Components/Home/CallModal";
 import PaymentStatus from "../../Components/Payment/PaymentStatus";
 import LogoutModal from "../../Components/Logout";
 import { useTranslation } from "react-i18next";
+import GiftDilog from "../../Components/Home/GiftDialog";
 const loveLabels = ["Sport", "food", "fashion"];
 const hateLabels = ["Make up", "books", "tv"];
 const index = () => {
@@ -59,7 +60,13 @@ const index = () => {
   const [modelData, setModelData] = useState(null);
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [models, setModels] = useState([]);
-  const [dialog, setDialog] = useState(false);
+  const [dialog, setDialog] = useState({
+    open: false,
+    title: "",
+    description: "",
+    action: null,
+  });
+  const [giftDialog, setGiftDialog] = useState(false);
   const [currentCall, setCurrentCall] = useState(null);
   const [showChatBox, setShowChatBox] = useState(false);
   const [isMicMuted, setIsMicMuted] = useState(false);
@@ -90,7 +97,7 @@ const index = () => {
       console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNN', result)
       if (result) {
         // const url = role === "model" ? "/getUsers" : `/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}`;
-        get(`/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}&page_id=${pagination.page}`)
+        get(`/getModels?gender_id=${result.payload.data?.gender == 'Male' ? 'Female': 'Male'}&mood_id=${result.payload.data?.moodID}&page_id=${pagination.page}`)
           .then((res) => {
             // setModels((prev) => [...prev, ...res.data.data]);
             if(res.data.data.length >0){
@@ -202,7 +209,7 @@ const index = () => {
           <Container
             sx={{
               backgroundImage: modelData?.userData?.profileImage
-                ? `url(https://theflame.life/livebk/public/uploads/${modelData?.userData?.profileImage})`
+                ? `url(${modelData?.userData?.profileImage})`
                 : userData?.gender === "Male" ? 'url(https://theflame.life/livebk/public/frontend_images/avatar-man.jpg)' :
                   "url(https://theflame.life/livebk/public/frontend_images/avatar-woman.jpg)",
             }}
@@ -356,7 +363,7 @@ const index = () => {
       {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
-      <Header />
+      <Header setDialog={setDialog} />
       {isSmallScreen === false ? (
         <>{codeDivider()}</>
       ) : isSmallScreen === true && showChatBox !== true ? (
@@ -367,6 +374,7 @@ const index = () => {
       {console.log('YYYYYYYYYYYYYYYYYYYYY', modelData)}
       <ChatBox
         setDialog={setDialog}
+        setGiftDialog={setGiftDialog}
         showChatBox={showChatBox}
         setShowChatBox={setShowChatBox}
         modelData={modelData}
@@ -376,6 +384,7 @@ const index = () => {
       // uuid={convUuid}
       />
       <WorningDilog dialog={dialog} setDialog={setDialog} />
+      <GiftDilog dialog={giftDialog} setDialog={setGiftDialog} modelData={modelData} />
       {showIncomingCallDialog && (
         <IncomingCallDialog
           callingUser={callingUser}
@@ -384,7 +393,7 @@ const index = () => {
         />
       )}
       <RechargeModal />
-      <ProfileModal />
+      <ProfileModal setDialog={setDialog}/>
       <PayoutModal />
       <CallModal />
       <CardPaymentModal />

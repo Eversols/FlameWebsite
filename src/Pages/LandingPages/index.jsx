@@ -12,7 +12,8 @@ import SlideImage from "../../Components/LandingPage/SlideImage";
 import Footer from "../../Components/LandingPage/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setRole } from "../../Services/store/authSlice";
+import { getSiteMeta, setPrivacyModel, setRole } from "../../Services/store/authSlice";
+import PrivacyModal from "../../Components/Privacy";
 
 const LandingPages = () => {
   const scrollContainerRef = useRef(null);
@@ -38,6 +39,10 @@ const LandingPages = () => {
   const heroflameTitle = "Flame \nMoments";
 
   useEffect(() => {
+    if(!(localStorage.getItem('privacyPolicy'))){
+      dispatch(setPrivacyModel(true))
+    }
+    dispatch(getSiteMeta())
     // if (token) {
     //     navigate(`/${role}/home`);
     //   }
@@ -129,6 +134,8 @@ const LandingPages = () => {
           <Footer />
         </Box>
       </Box>
+
+      <PrivacyModal />
     </ReactLenis>
   );
 };

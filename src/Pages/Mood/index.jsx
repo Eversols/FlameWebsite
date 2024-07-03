@@ -90,19 +90,21 @@ import useStyles from "../../Pages/Mood/style";
 import { get } from "../../Services/api";
 import { setMood } from "../../Services/store/authSlice";
 import { useTranslation } from "react-i18next";
+import Header from "../../Components/LandingPage/Header";
 
 const index = () => {
   const { role } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState("");
+  const [error, setError] = useState("");
   const [moods, setMoods] = useState([
-    {id: 1, text: "Casual Flirting", description: "Charm them silly. Simply dummy text of the printing and typesetting industry."},
-    {id: 2, text: "Find Love", description: "I want to find love. Simply dummy text of the printing and typesetting industry."},
-    {id: 3, text: "We’ll see when we meet", description: "Discover wonders. Simply dummy text of the printing and typesetting industry."},
+    { id: 1, text: "Casual Flirting", description: "Charm them silly. Simply dummy text of the printing and typesetting industry." },
+    { id: 2, text: "Find Love", description: "I want to find love. Simply dummy text of the printing and typesetting industry." },
+    { id: 3, text: "We’ll see when we meet", description: "Discover wonders. Simply dummy text of the printing and typesetting industry." },
   ]);
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   // useEffect(() => {
   //   get("/getMood")
@@ -118,13 +120,16 @@ const index = () => {
     if (selected) {
       dispatch(setMood(selected));
       navigate(`/${role}/gender`);
+    } else {
+      setError('Please select your mood')
     }
   };
 
   return (
     <>
       {" "}
-      <img src={flameLogo} className={classes.logo} />
+      <Header />
+      {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgHeart} className={classes.heart_bg} />
       <img src={bgBlock} className={classes.block_bg} />
       <Container className={classes.container}>
@@ -165,6 +170,7 @@ const index = () => {
             />
           ))} */}
         </Container>
+        <Box color={'red'}>{error}</Box>
         <Button
           type="submit"
           onClick={confirmSubmit}

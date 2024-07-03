@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StepEmail from "../../Components/Steps/StepEmail";
 import StepName from "../../Components/Steps/StepName";
 import StepOtp from "../../Components/Steps/StepOtp";
 import StepPassword from "../../Components/Steps/StepPassword";
+import Header from "../../Components/LandingPage/Header";
 // import Gender from "../Gender/index";
 // import Mood from "../Mood/index";
 // import Orientation from "../Orientation/index";
@@ -24,7 +25,12 @@ const index = () => {
     setStep(step + 1);
   }
 
-  return <Step onNext={onNext} setStep={setStep} step={step} />;
+  return (
+    <>
+      <Header />
+      <Step onNext={onNext} setStep={setStep} step={step} />
+    </>
+  );
 };
 
 export default index;

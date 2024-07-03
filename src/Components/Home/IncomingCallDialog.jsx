@@ -29,7 +29,7 @@ const IncomingCallDialog = ({
           </DialogContentText>
           <Avatar
             alt={callingUser?.first_name}
-            src={`https://theflame.life/livebk/public/uploads/${callingUser.photo}`}
+            src={`${callingUser.photo}`}
             sx={{ width: 100, height: 100, margin: "0 auto" }}
           />
         </DialogContent>

@@ -6,11 +6,16 @@ export const getUser = createAsyncThunk("/getUser", async () => {
   return response.data;
 });
 export const getProfile = createAsyncThunk("/getProfile", async (body) => {
+  console.log('ZZZZZZZZZZZZZZZZZZZZZZZZZZZ', body)
   const response = await post("/userprofile", { userID: body.id });
   return response.data;
 });
 export const getAllUsers = createAsyncThunk("/getAllUsers", async () => {
   const response = await get("/getAllUsers");
+  return response.data;
+});
+export const getSiteMeta = createAsyncThunk("/getSiteMeta", async () => {
+  const response = await get("/sitemeta");
   return response.data;
 });
 
@@ -34,10 +39,12 @@ export const authSlice = createSlice({
     rechargeModel: false,
     profileModel: false,
     payoutModel: false,
+    privacyModel: false,
     paymentModel: false,
     paymentSuccess: false,
     paymentError: false,
     plan: "",
+    siteMeta: null
   },
   reducers: {
     setError: (state, { payload }) => {
@@ -86,6 +93,9 @@ export const authSlice = createSlice({
     setPayoutModel: (state, { payload }) => {
       state.payoutModel = payload;
     },
+    setPrivacyModel: (state, { payload }) => {
+      state.privacyModel = payload;
+    },
     setPaymentModel: (state, { payload }) => {
       state.paymentModel = payload?.paymentModel;
       state.plan = payload?.package;
@@ -125,6 +135,9 @@ export const authSlice = createSlice({
     [getAllUsers.pending]: (state) => {
       state.isLoading = true;
     },
+    [getSiteMeta.pending]: (state) => {
+      state.isLoading = true;
+    },
     [getUser.fulfilled]: (state, action) => {
       state.userData = action.payload;
     },
@@ -136,12 +149,16 @@ export const authSlice = createSlice({
       //       ...action.payload.metadata,
       //     }
       //   : { ...action.payload.data, ...action.payload.metadata };
-      state.userData =  {  ...action.payload.metadata, ...action.payload.data };
+      state.userData = { ...action.payload.metadata, ...action.payload.data };
       state.isLoading = false;
-      
+
     },
     [getAllUsers.fulfilled]: (state, action) => {
       state.allUsers = action.payload.data;
+      state.isLoading = false;
+    },
+    [getSiteMeta.fulfilled]: (state, action) => {
+      state.siteMeta = action.payload.metadata;
       state.isLoading = false;
     },
     [getUser.rejected]: (state) => {
@@ -151,6 +168,9 @@ export const authSlice = createSlice({
       state.isLoading = false;
     },
     [getAllUsers.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [getSiteMeta.rejected]: (state) => {
       state.isLoading = false;
     },
   },
@@ -171,6 +191,7 @@ export const {
   setPayoutModel,
   setPaymentModel,
   setPaymentStatus,
+  setPrivacyModel,
   setAllModels
 } = authSlice.actions;
 

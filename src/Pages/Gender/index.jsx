@@ -12,6 +12,7 @@ import useStyles from "./style";
 import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 import { useTranslation } from "react-i18next";
+import Header from "../../Components/LandingPage/Header";
 
 const index = () => {
   const { role, userData, mood } = useSelector((state) => state.auth);
@@ -41,7 +42,9 @@ const index = () => {
         });
         if (res) {
           dispatch(getProfile({ id: userData.id }));
-          navigate(`/${role}/home`);
+          console.log('DDDDDDDDDDDDDDDDDD',userData.isProfileComplete,  userData.isProfileComplete == '0')
+          if ((userData?.isProfileComplete == 0)) navigate(`/${role}/profile`);
+          else navigate(`/${role}/home`);
         }
       } catch (error) {
         // navigate(`/${role}/home`);
@@ -52,7 +55,8 @@ const index = () => {
 
   return (
     <>
-      <img src={flameLogo} className={classes.logo} />
+    <Header />
+      {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgFrame} className={classes.gender_bg} />
       <Box className={classes.mainWrapperBox}>
         <Container className={classes.container}>

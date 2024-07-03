@@ -16,16 +16,21 @@ const Orientation = lazy(() => import('./Pages/Orientation'));
 const Gender = lazy(() => import('./Pages/Gender'));
 const Home = lazy(() => import('./Pages/Home'));
 const Profile = lazy(() => import('./Pages/Profile'));
+const Papyout = lazy(() => import('./Pages/Payout'));
 const Recharge = lazy(() => import('./Pages/Recharge'));
 const Payment = lazy(() => import('./Pages/Payment'));
 const Completion = lazy(() => import('./Pages/Payment/Completion'));
 const LandingPages = lazy(() => import('./Pages/LandingPages'));
+const Dashboard = lazy(() => import('./Pages/Dashboard'));
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPages />} />
       <Route path="/model" element={<ModelLandingPage />} />
+      <Route path='/partner' element={<Layout />} >
+        <Route path="dashboard" element={<Dashboard />} />
+      </Route>
       <Route path="/:role" element={<Layout />}>
         <Route path="authentication" element={<Authenticate />} />
         <Route path="forgetpassword" element={<Authenticate />} />
@@ -36,6 +41,7 @@ function App() {
         <Route path="home" element={<Home />} />
         <Route path="profile/:id" element={<Profile />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="payout" element={<Papyout />} />
         <Route path="recharge" element={<Recharge />} />
         <Route path="payment/:planId" element={<Payment />} />
         <Route path="completion" element={<Completion />} />

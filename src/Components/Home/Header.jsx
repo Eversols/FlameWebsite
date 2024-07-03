@@ -28,8 +28,9 @@ import { voxService } from "../../Services/voximplant";
 import Drawer from "./Drawer";
 import useStyles from "./style";
 import { useTranslation } from "react-i18next";
+import Languagebtn from "../LandingPage/Languagebtn";
 
-const Header = () => {
+const Header = ({ setDialog }) => {
   const { role, userData, rechargeModel, profileModel, payoutModel } =
     useSelector((state) => state.auth);
   const classes = useStyles();
@@ -43,12 +44,12 @@ const Header = () => {
       voxService.get().disconnect();
       persistor.purge();
       localStorage.removeItem("persist:root");
-      navigate(`/${role}/authentication`);
+      navigate(`/`);
     } catch (error) {
       voxService.get().disconnect();
       persistor.purge();
       localStorage.removeItem("persist:root");
-      navigate(`/${role}/authentication`);
+      navigate(`/`);
       console.log(error);
     }
   };
@@ -80,10 +81,10 @@ const Header = () => {
         {isDrawerOpen && (
           <div
             className={`${classes.animatedDrawer} ${isDrawerOpen === null
-                ? ""
-                : isDrawerOpen
-                  ? classes.slideOut
-                  : classes.slideIn
+              ? ""
+              : isDrawerOpen
+                ? classes.slideOut
+                : classes.slideIn
               }`}
           >
             {/* Content of the animated drawer */}
@@ -163,7 +164,7 @@ const Header = () => {
                 fontWeight="bold"
                 color="#FB1F43"
               >
-              {userData.available_points || 0}
+                {userData?.available_points || 0}
               </Typography>
               <Typography
                 variant="body1"
@@ -185,6 +186,9 @@ const Header = () => {
             </Box>
           </Box>
         </Box>
+        <Box sx={{ marginLeft: { md: "0", xs: "auto" } }}>
+          <Languagebtn />
+        </Box>
         <Box className={classes.header_mid}>
           <Box
             onClick={profileHandle}
@@ -198,7 +202,7 @@ const Header = () => {
               alt={userData?.displayName}
               src={
                 userData?.profileImage
-                  ? `https://theflame.life/livebk/public/uploads/${userData.profileImage}`
+                  ? `${userData.profileImage}`
                   : userData?.gender === "Male" ? 'https://theflame.life/livebk/public/frontend_images/avatar-man.jpg' :
                     "https://theflame.life/livebk/public/frontend_images/avatar-woman.jpg"
               }
@@ -212,7 +216,7 @@ const Header = () => {
               {userData?.displayName}
             </Typography>
           </Box>
-          <IconButton onClick={logout}>
+          <IconButton onClick={() => setDialog({ open: true, description: 'Are you sure you want to logout?', title: 'Logout', action: () => logout() })}>
             <img src={logoutLogo} className={classes.logout} />
             <Typography
               variant="body1"

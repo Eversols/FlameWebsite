@@ -48,7 +48,7 @@ const PayoutForm = () => {
               type="button"
               variant="contained"
             >
-              {userData.available_points}
+              {userData?.available_points || 0}
             </Button>
             <Button
               className={classes.confirm_btn}

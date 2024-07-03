@@ -49,7 +49,7 @@ const SwiperImages = ({ images = [] }) => {
         <SwiperSlide key={i} >
           {item ? (
             <img
-              src={`https://theflame.life/livebk/public/uploads/${item}`}
+              src={`${item}`}
               className={classes.img}
             />
           ) : (

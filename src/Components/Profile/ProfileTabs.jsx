@@ -16,7 +16,7 @@ function a11yProps(index) {
   };
 }
 
-const ProfileTabs = () => {
+const ProfileTabs = ({setDialog}) => {
   const [value, setValue] = useState(0);
   const [plans, setPlans] = useState([]);
   const [selectedCard, setSelectedCard] = useState(0);
@@ -102,7 +102,7 @@ const ProfileTabs = () => {
           index={0}
           className={classes.CustomTabPanel}
         >
-          <ProfileForm />
+          <ProfileForm setDialog={setDialog} />
         </CustomTabPanel>
         <CustomTabPanel
           value={value}

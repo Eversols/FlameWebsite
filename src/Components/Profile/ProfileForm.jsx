@@ -17,14 +17,14 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Img from "../../Assets/images/image.svg";
 import ProfileImage from "../../Assets/images/male.jpg";
 import video2 from "../../Assets/images/video2.svg";
 
 import { get, post } from "../../Services/api";
-import { getProfile } from "../../Services/store/authSlice";
+import { getProfile, setProfileModel } from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
 import { countries, } from "../../Services/utils/country";
 
@@ -44,9 +44,10 @@ const gridContainer = {
   display: "flex",
 };
 
-const ProfileForm = () => {
+const ProfileForm = ({ setDialog }) => {
   const { id } = useParams();
-  const { userData, role, mood, region } = useSelector((state) => state.auth);
+  const { userData, role, mood, region, siteMeta } = useSelector((state) => state.auth);
+  const { pathname } = useLocation()
 
   const classes = useStyles();
   const [status, setStatus] = useState(true);
@@ -54,8 +55,10 @@ const ProfileForm = () => {
   const theme = useTheme();
   const [images, setImages] = useState([]);
   const [fileError, setFileError] = useState("");
+  const [error, setError] = useState("");
   const [loveList, setLoveList] = useState([]);
   const [hateList, setHateList] = useState([]);
+  const [refferalList, setRefferalList] = useState([]);
   const [imageIsLoading, setImageIsLoading] = useState(false);
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
@@ -69,12 +72,18 @@ const ProfileForm = () => {
     unlike: userData?.unlike ? userData.unlike.split(", ") : [],
     region: userData?.region ?? "",
     about: userData?.about ?? "",
+    referral_code: userData?.referral_code ?? "",
   });
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (pathname.includes('profile')) {
+      setStatus(false)
+    }
     setFileError("");
-    dispatch(getProfile({ id: userData.id }));
+    if (userData?.id) {
+      dispatch(getProfile({ id: userData.id }));
+    }
     get('/hatelovethingsList').then((result) => {
       if (result?.data) {
         if (result.data.hateattributedata) {
@@ -87,11 +96,19 @@ const ProfileForm = () => {
     }).catch((error) => {
 
     })
+
+    get('/getPartner', {}).then((result) => {
+      if (result?.data?.data) {
+        setRefferalList(result.data.data);
+      }
+    }).catch((error) => {
+
+    })
   }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log("WWWWWWWWWWWWWWWWWWWWWWW", name, value);
+
     setProfile((prevProfile) => ({
       ...prevProfile,
       [name]: value,
@@ -116,7 +133,6 @@ const ProfileForm = () => {
     setImageIsLoading(true)
     setFileError("");
     const file = event.target.files[0];
-    console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN', file)
     try {
       if (file && file.size >= (2.5 * 1024 * 1024)) {
         setFileError("File size should be less than 2.5 MB");
@@ -126,7 +142,7 @@ const ProfileForm = () => {
       if (
         file &&
         file.type.split("/")[0] == "video" &&
-        file.size <= 10 * 1024 * 1024
+        file.size >= (10 * 1024 * 1024)
       ) {
         setFileError("File size should be less than 10 MB");
         setImageIsLoading(false)
@@ -142,7 +158,6 @@ const ProfileForm = () => {
       });
       if (res.data) {
         const profileData = await dispatch(getProfile({ id: userData.id }));
-        console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH', profileData.payload)
         if (profileData.payload) {
           setProfile({
             ...profile,
@@ -166,6 +181,15 @@ const ProfileForm = () => {
   };
 
   const confirmSubmit = async () => {
+    setError('')
+    let refferal
+    // if (siteMeta.is_refferal_on_off == 'yes') {
+    //   refferal = refferalList.find((item) => item.referral_code == profile.referral_code.trim())
+    //   if (!refferal) {
+    //     setError("Refferal code not found")
+    //     return
+    //   }
+    // }
     delete profile.profileImage;
     delete profile.profileImage1;
     delete profile.profileImage2;
@@ -176,6 +200,7 @@ const ProfileForm = () => {
         ...profile,
         like: profile.like.join(', '),
         unlike: profile.unlike.join(', '),
+        referral_code: refferal?.id ?? '',
         // like: "",
         // unlike: "",
       });
@@ -193,8 +218,11 @@ const ProfileForm = () => {
             like: metadata?.like ? metadata.like.split(", ") : [],
             unlike: metadata?.unlike ? metadata.unlike.split(", ") : [],
             region: metadata?.region ?? "",
-            about: metadata?.about ?? "",
+            about: metadata?.about ?? ""
           });
+          if ((siteMeta.is_profile_complete == 'yes' && calculatePercentage() == 100)) {
+            navigate(`/${role}/payout`);
+          }
         }
       }
     } catch (error) {
@@ -205,8 +233,8 @@ const ProfileForm = () => {
   const handleDelete = async () => {
     try {
       const res = await post(`/deleteProfile`, { userID: userData.id });
-      if(res){
-        navigate('/user/authentication')
+      if (res) {
+        navigate('/')
       }
     } catch (error) {
       console.log(error);
@@ -245,7 +273,7 @@ const ProfileForm = () => {
                 <img
                   src={
                     profile.profileImage
-                      ? `https://theflame.life/livebk/public/uploads/${profile.profileImage}`
+                      ? `${profile.profileImage}`
                       : ProfileImage
                   }
                   // src={ProfileImage}
@@ -328,7 +356,7 @@ const ProfileForm = () => {
               }}
             >
               <Typography variant="paragraph" className={classes.heading}>
-                upload
+                Upload
               </Typography>
               <Typography variant="paragraph" className={classes.subHeading}>
                 Upto 2 images &lt; 5mb each 1 video &lt; 10 mb
@@ -356,7 +384,7 @@ const ProfileForm = () => {
                   <img
                     src={
                       profile.profileImage1
-                        ? `https://theflame.life/livebk/public/uploads/${profile.profileImage1}`
+                        ? `${profile.profileImage1}`
                         : Img
                     }
                     width="100%"
@@ -393,7 +421,7 @@ const ProfileForm = () => {
                   <img
                     src={
                       profile.profileImage2
-                        ? `https://theflame.life/livebk/public/uploads/${profile.profileImage2}`
+                        ? `${profile.profileImage2}`
                         : Img
                     }
                     width="100%"
@@ -427,7 +455,7 @@ const ProfileForm = () => {
                     // background: "red",
                   }}
                 >
-                  <img src={video2} width="100%" height="90px" />
+                  <video src={video2} width="100%" height="90px" />
                   {!status && (
                     <label htmlFor="video" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
@@ -726,14 +754,40 @@ const ProfileForm = () => {
               fullWidth
               disabled={status}
             />}
+
+
         </Grid>
+        {(siteMeta.is_refferal_on_off == 'yes' && userData.isProfileComplete == '0') &&
+          <>
+            <Grid item xs={12} md={5.5}>
+              <Typography variant="h5" className={classes.label}>
+                Referral Code
+              </Typography>
+              <TextField
+                type="text"
+                name="referral_code"
+                onChange={handleInputChange}
+                value={profile?.referral_code || ''}
+                placeholder="Refferal Code"
+                className={classes.input1}
+                fullWidth
+                disabled={status}
+              />
+              <Box color={"red"} sx={{ fontSize: 12 }}>{error}</Box>
+            </Grid>
+
+            <Grid item xs={12} md={5.5}>
+            </Grid>
+          </>
+
+        }
         <Grid item sx={{ width: "100%" }}>
           <Box
             sx={{ width: "100%", justifyContent: "center", display: "flex", gap: "20px" }}
           >
             <Button
               onClick={() => {
-                setStatus(!status);
+                pathname.includes('/profile') && setStatus(!status);
                 if (!status) {
                   confirmSubmit();
                 }
@@ -744,14 +798,14 @@ const ProfileForm = () => {
             >
               {status ? "Edit Profile" : "Save Profile"}
             </Button>
-            <Button
-              onClick={handleDelete}
+            {!pathname.includes('/profile') && <Button
+              onClick={() => { dispatch(setProfileModel(false)); setDialog({ open: true, description: 'Are you sure you want to delete your profile?', title: 'Delete Profile', action: () => handleDelete() }) }}
               variant="contained"
               type="submit"
               className={classes.btn1}
             >
               Delete Profile
-            </Button>
+            </Button>}
           </Box>
         </Grid>
         {/* <Container className={classes.container}>
@@ -761,7 +815,7 @@ const ProfileForm = () => {
                 {profile?.profileImage ? (
                   <Box className={classes.single_image}>
                     <img
-                      src={`https://theflame.life/livebk/public/uploads/${profile.profileImage}`}
+                      src={`${profile.profileImage}`}
                       alt={`Image`}
                       className={classes.single_image}
                     />

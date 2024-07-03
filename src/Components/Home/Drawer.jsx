@@ -89,7 +89,7 @@ const Drawer = ({
             fontWeight="bold"
             color="#ffff"
           >
-            {userData.available_points || 0}
+            {userData?.available_points || 0}
           </Typography>
           <Typography
             variant="body1"
