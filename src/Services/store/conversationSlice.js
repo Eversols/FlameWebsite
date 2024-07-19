@@ -26,6 +26,7 @@ export const conversationSlice = createSlice({
       }
     },
     setVoxUsers: (state, { payload }) => {
+      console.log("setVoxUsers", payload);
       state.vox_users = payload;
     },
     setConversationHistory: (state, { payload }) => {

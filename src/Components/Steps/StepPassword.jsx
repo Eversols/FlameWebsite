@@ -20,6 +20,7 @@ import {
   getProfile,
   getUser,
   setError,
+  setLanguage,
   setToken,
 } from "../../Services/store/authSlice";
 import { voxLogin, voxRegister } from "../../Services/utils";
@@ -117,7 +118,7 @@ const StepPassword = ({ setStep }) => {
                   console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPP', res)
                   if (res.payload.metadata.isProfileComplete == '1') navigate(`/${role}/home`);
                   if(!user.emailExist && !user_data.payload.moodID) navigate(`/${role}/mood`);
-                  
+                  res.payload.metadata.language && dispatch(setLanguage(res.payload.metadata.language.toLowerCase()))
                 })
                 // if (!user_data.payload.moodID) navigate(`/${role}/mood`);
                 // //else if (!region) navigate(`/${role}/region`);
@@ -148,7 +149,7 @@ const StepPassword = ({ setStep }) => {
           }
         }
       } catch (error) {
-        console.log('ZZZZZZZZZZZZZZZZZZZZZZZZ', error)
+        console.log('ZZZZZZZZZZZZZZZZZZZZZZZZ error ', error)
         // navigate(`/${role}/home`);
         dispatch(
           setError(

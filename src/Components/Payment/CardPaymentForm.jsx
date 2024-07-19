@@ -15,9 +15,10 @@ import creditCard from "../../Assets/images/creditcard.svg";
 import { useForm } from "react-hook-form";
 import { post } from "../../Services/api";
 import { useDispatch, useSelector } from "react-redux";
-import { setPaymentStatus } from "../../Services/store/authSlice";
+import { getProfile, setPaymentStatus } from "../../Services/store/authSlice";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 const gridStyle = {
   padding: "0px 28px",
   gap: "15px 25px",
@@ -31,7 +32,7 @@ const CardPaymentForm = () => {
   const { userData, plan } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const {
     register,
@@ -67,9 +68,62 @@ const CardPaymentForm = () => {
       console.log(error);
     }
   };
+
+  const onCreateOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: plan.price,
+          },
+        },
+      ],
+    });
+  }
+
+  const onApproveOrder = (data, actions) => {
+
+    const params = new URLSearchParams();
+    return actions.order.capture().then(async (details) => {
+      const formData = {
+        userID: userData.id,
+        planID: plan.id,
+        payment_id: details.id,
+        transaction_id: details.purchase_units[0].payments.captures[0].id,
+        status: details.status,
+        currency_code: details.purchase_units[0].amount.currency_code,
+        amount: details.purchase_units[0].amount.value,
+        payer_id: details.payer.payer_id,
+        transaction_date_time: details.create_time,
+        payment_method: 'paypal'
+      }
+      for (const key in formData) {
+        if (Object.prototype.hasOwnProperty.call(formData, key)) {
+          const element = formData[key];
+          params.set(key, element)
+        }
+      }
+      try {
+        const { data } = await post(`/proccesPlan?${params}`);
+        if (data.message) {
+          // localStorage.setItem('user', JSON.stringify(data.authUser))
+
+
+          dispatch(setPaymentStatus({ paymentSuccess: true, paymentError: false }));
+          dispatch(getProfile({ id: userData.id }));
+        }
+      } catch (error) {
+
+        dispatch(setPaymentStatus({ paymentSuccess: false, paymentError: true }));
+        console.log(error)
+      }
+
+    }).catch(() => dispatch(setPaymentStatus({ paymentSuccess: false, paymentError: true })))
+  }
   return (
     <Grid container sx={gridStyle}>
-      <form onSubmit={handleSubmit(confirmSubmit)}>
+      <PayPalScriptProvider options={{ clientId: "AZ14k0vPCKHE5Ho2Rnprj0BM5ap081VPvnA5AAK880mlnmFPYpeh3y37GFxtfAbgSeQWJpF9WGdArvMB", components: "buttons", currency: "USD", intent: "capture", }}>
+        {/* <form onSubmit={handleSubmit(confirmSubmit)}>
         <Grid
           item
           sx={{
@@ -270,20 +324,7 @@ const CardPaymentForm = () => {
           <label className={classes.checkBoxLabel} htmlFor="termsAndConditions">By making this payment I confirm I’m 18+ years old, agree Terms and Conditions of this purchase, and have read the Privacy Policy</label>
           {errors.termsAndConditions && <p>{errors.termsAndConditions.message}</p>}
 
-            {/* <IconButton
-              disableRipple
-              // onClick={() => handleChange(item.number)}
-            >
-              <img
-                src={checkedBox}
-                style={{ maxWidth: "15px" }}
-                alt={"Checked"}
-              />
-            </IconButton>
-            <Typography variant="h4" className={classes.checkBoxLabel}>
-              By making this payment I confirm I’m 18+ years old, agree Terms
-              and Conditions of this purchase, and have read the Privacy Policy
-            </Typography> */}
+            
           </Box>
         </Grid>
 
@@ -302,7 +343,16 @@ const CardPaymentForm = () => {
             </Button>
           </Box>
         </Grid>
-      </form>
+      </form> */}
+        <PayPalButtons
+          // style={style}
+          disabled={false}
+          // forceReRender={[style]}
+          fundingSource={undefined}
+          createOrder={(data, actions) => onCreateOrder(data, actions)}
+          onApprove={(data, actions) => onApproveOrder(data, actions)}
+        />
+      </PayPalScriptProvider>
     </Grid>
   );
 };

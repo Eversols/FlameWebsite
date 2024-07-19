@@ -8,6 +8,7 @@ import {
   CircularProgress,
   Container,
   Grid,
+  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -24,9 +25,16 @@ import ProfileImage from "../../Assets/images/male.jpg";
 import video2 from "../../Assets/images/video2.svg";
 
 import { get, post } from "../../Services/api";
-import { getProfile, setProfileModel } from "../../Services/store/authSlice";
+import { getProfile, setLanguage, setProfileModel } from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
 import { countries, } from "../../Services/utils/country";
+import us from '../../Assets/images/us.png';
+import sp from '../../Assets/images/sp.png';
+import fr from '../../Assets/images/fr.png';
+import gr from '../../Assets/images/gr.png';
+import ru from '../../Assets/images/ru.png';
+import ch from '../../Assets/images/ch.png';
+import { useTranslation } from "react-i18next";
 
 const gridStyle = {
   padding: "10px 20px",
@@ -43,6 +51,17 @@ const gridContainer = {
   justifyContent: "space-between",
   display: "flex",
 };
+
+
+const languages = [
+  { name: 'English (EN)', value: 'EN', flag: us },
+  { name: 'Spanish (SP)', value: 'SP', flag: sp },
+  { name: 'French (FR)', value: 'FR', flag: fr },
+  { name: 'German (GR)', value: 'GR', flag: gr },
+  { name: 'Russian (RU)', value: 'RU', flag: ru },
+  { name: 'Chinese (CH)', value: 'CH', flag: ch },
+];
+
 
 const ProfileForm = ({ setDialog }) => {
   const { id } = useParams();
@@ -73,6 +92,7 @@ const ProfileForm = ({ setDialog }) => {
     region: userData?.region ?? "",
     about: userData?.about ?? "",
     referral_code: userData?.referral_code ?? "",
+    language: userData?.language ?? "",
   });
   const dispatch = useDispatch();
 
@@ -218,8 +238,10 @@ const ProfileForm = ({ setDialog }) => {
             like: metadata?.like ? metadata.like.split(", ") : [],
             unlike: metadata?.unlike ? metadata.unlike.split(", ") : [],
             region: metadata?.region ?? "",
-            about: metadata?.about ?? ""
+            about: metadata?.about ?? "",
+            language: metadata?.language ?? "",
           });
+          metadata?.language && dispatch(setLanguage(metadata.language.toLowerCase()))
           if ((siteMeta.is_profile_complete == 'yes' && calculatePercentage() == 100)) {
             navigate(`/${role}/payout`);
           }
@@ -305,6 +327,16 @@ const ProfileForm = ({ setDialog }) => {
                     progressValue <= 50 ? "#FB1F43" : "#FB1F43", // Color for the progress area
                   position: "absolute",
                 }}
+              />
+              <img
+                src={
+                  profile.profileImage
+                    ? `${profile.profileImage}`
+                    : Img
+                }
+                width="108%"
+                height="108%"
+                style={{ borderRadius: "50%" }}
               />
               {!status && (
                 <Grid
@@ -757,9 +789,38 @@ const ProfileForm = ({ setDialog }) => {
 
 
         </Grid>
-        {(siteMeta.is_refferal_on_off == 'yes' && userData.isProfileComplete == '0') &&
-          <>
-            <Grid item xs={12} md={5.5}>
+        <Grid item xs={12} md={5.5}>
+          <Typography variant="h5" className={classes.label}>
+            Preferred Language
+          </Typography>
+          <Select
+            name="language"
+            id="demo-simple-select"
+            value={profile.language}
+            onChange={handleInputChange}
+            className={classes.input1}
+            fullWidth
+            disabled={status}
+          >
+            {languages.map((language) => (
+              <MenuItem
+                key={language.value}
+                value={language.value}
+                disableRipple
+              >
+                <img
+                  src={language.flag}
+                  alt={`${language.name} flag`}
+                  style={{ width: '20px', marginRight: '8px' }}
+                />
+                {language.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} md={5.5}>
+          {(siteMeta.is_refferal_on_off == 'yes' && userData.isProfileComplete == '0') &&
+            <>
               <Typography variant="h5" className={classes.label}>
                 Referral Code
               </Typography>
@@ -774,20 +835,17 @@ const ProfileForm = ({ setDialog }) => {
                 disabled={status}
               />
               <Box color={"red"} sx={{ fontSize: 12 }}>{error}</Box>
-            </Grid>
+            </>
+          }
+        </Grid>
 
-            <Grid item xs={12} md={5.5}>
-            </Grid>
-          </>
-
-        }
         <Grid item sx={{ width: "100%" }}>
           <Box
             sx={{ width: "100%", justifyContent: "center", display: "flex", gap: "20px" }}
           >
             <Button
               onClick={() => {
-                pathname.includes('/profile') && setStatus(!status);
+                !pathname.includes('/profile') && setStatus(!status);
                 if (!status) {
                   confirmSubmit();
                 }

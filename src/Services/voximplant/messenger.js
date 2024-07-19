@@ -83,13 +83,13 @@ export default class MessengerService {
   }
 
   addMessengerEventListeners() {
-    MessengerService.messenger.on(
-      VoxImplant.Messaging.MessengerEvents.SetStatus,
-      (e) => {
-        console.log("FFFFFFFFFFFFFFFFFF", e);
-        onlineReceived(e.initiator, e.online);
-      }
-    );
+    // MessengerService.messenger.on(
+    //   VoxImplant.Messaging.MessengerEvents.SetStatus,
+    //   (e) => {
+    //     console.log("FFFFFFFFFFFFFFFFFF", e);
+    //     onlineReceived(e.initiator, e.online);
+    //   }
+    // );
 
     MessengerService.messenger.on(
       VoxImplant.Messaging.MessengerEvents.CreateConversation,
@@ -102,10 +102,10 @@ export default class MessengerService {
       VoxImplant.Messaging.MessengerEvents.SendMessage,
       (e) => onMessageSent(e)
     );
-    MessengerService.messenger.on(
-      VoxImplant.Messaging.MessengerEvents.Read,
-      (e) => onMessageMarkAsRead(e)
-    );
+    // MessengerService.messenger.on(
+    //   VoxImplant.Messaging.MessengerEvents.Read,
+    //   (e) => onMessageMarkAsRead(e)
+    // );
   }
 
   getCurrentConversations(conversationsList) {
@@ -392,7 +392,7 @@ export default class MessengerService {
     if (payload) {
       return currentConversation
         .sendMessage(translatedText, [payload])
-        .catch(console.error);
+        .catch((e) => console.error('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ',e));
     } else {
       return currentConversation.sendMessage(translatedText, [{}]).catch(console.error);
     }

@@ -135,6 +135,7 @@ export const onlineReceived = (userId, online) => {
         })
       );
     } catch (error) {
+      console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE', error)
       reject({ error: error });
     }
   });
@@ -464,43 +465,48 @@ export const voxRegister = async (data, name) => {
   return voxRegister;
 };
 export const voxLogin = async (user, password, email) => {
-  const login = await voxService.onLogin(
-    {
-      user: `${user}@${APP_NAME}.${ACC_NAME}.voximplant.com`,
-      password: password,
-    },
-    null
-  );
-  console.log(login, user, password, email);
-  if (login.result) {
-    store.dispatch(
-      setTokens({
-        auth_token: login.tokens,
-        login: email.replace("@", "-flame-"),
-      })
+  try {
+
+    const login = await voxService.onLogin(
+      {
+        user: `${user}@${APP_NAME}.${ACC_NAME}.voximplant.com`,
+        password: password,
+      },
+      null
     );
-    let messengerService = MessengerService.get();
-    store.dispatch(setLoading(true));
-    await messengerService
-      .init()
-      .then((data) => {
-        console.log("voximplant messenger service initialize", data);
-        store.dispatch(setVoxUsers(data));
-        store.dispatch(setLoading(false));
-        // const {
-        //   user: { currentConversationId },
-        // } = store.getState();
-        // getCurrentConversation(currentConversationId);
-        loadAllConversation(data.conversations, data.currentUser, data.users);
-      })
-      .catch((error) => {
-        console.log("voximplant messenger service initialize failed", error);
-        store.dispatch(setVoxUsers({}));
-        store.dispatch(setLoading(false));
-      });
-  } else {
-    console.log("voximplant user login failure", login);
+    if (login?.result) {
+      store.dispatch(
+        setTokens({
+          auth_token: login.tokens,
+          login: email.replace("@", "-flame-"),
+        })
+      );
+      let messengerService = MessengerService.get();
+      store.dispatch(setLoading(true));
+      await messengerService
+        .init()
+        .then((data) => {
+          console.log("voximplant messenger service initialize", data);
+          store.dispatch(setVoxUsers(data));
+          store.dispatch(setLoading(false));
+          // const {
+          //   user: { currentConversationId },
+          // } = store.getState();
+          // getCurrentConversation(currentConversationId);
+          loadAllConversation(data.conversations, data.currentUser, data.users);
+        })
+        .catch((error) => {
+          console.log("voximplant messenger service initialize failed", error);
+          store.dispatch(setVoxUsers({}));
+          store.dispatch(setLoading(false));
+        });
+    } else {
+      console.log("voximplant user login failure", login);
+    }
+  } catch (error) {
+    voxService.connectToVoxCloud()
   }
+  
 };
 
 // export const detectLanguage = async (text) => {
@@ -527,12 +533,12 @@ export const translateText = async (text, targetLanguage) => {
   const response = await axios.post(
     `${API_URL}?key=${API_KEY}`,
     {
-      
+
       q: text,
       target: targetLanguage,
     },
     {
-      headers:{
+      headers: {
         "x-goog-api-key": API_KEY,
       }
     }

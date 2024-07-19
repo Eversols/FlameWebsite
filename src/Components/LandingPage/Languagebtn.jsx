@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -11,6 +11,7 @@ import fr from '../../Assets/images/fr.png';
 import gr from '../../Assets/images/gr.png';
 import ru from '../../Assets/images/ru.png';
 import ch from '../../Assets/images/ch.png';
+import { useSelector } from 'react-redux';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -54,9 +55,10 @@ const StyledMenu = styled((props) => (
 }));
 
 const Languagebtn = () => {
+  const { language } = useSelector((state) => state.auth);
   const [anchorEl, setAnchorEl] = useState(null);
   const { i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState('EN');
+  const [selectedLanguage, setSelectedLanguage] = useState(language);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -65,6 +67,12 @@ const Languagebtn = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  useEffect(() => {
+    if (language) {
+      setSelectedLanguage(language);
+      i18n.changeLanguage(language.toLowerCase());
+    }
+  }, [language])
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
@@ -73,14 +81,14 @@ const Languagebtn = () => {
   };
 
   const languages = [
-    { name: 'EN', flag: us },
-    { name: 'SP', flag: sp },
-    { name: 'FR', flag: fr },
-    { name: 'GR', flag: gr },
-    { name: 'RU', flag: ru },
-    { name: 'CH', flag: ch },
+    { name: 'EN', value: 'en', flag: us },
+    { name: 'SP', value: 'sp', flag: sp },
+    { name: 'FR', value: 'fr', flag: fr },
+    { name: 'GR', value: 'gr', flag: gr },
+    { name: 'RU', value: 'ru', flag: ru },
+    { name: 'CH', value: 'ch', flag: ch },
   ];
- 
+
 
   return (
     <div>
@@ -99,14 +107,14 @@ const Languagebtn = () => {
           paddingInline: ".65rem",
           paddingBlock: ".45rem",
           borderRadius: "999px",
-          fontSize: {xs:"16px", md:"14px", xl:"16px"},
+          fontSize: { xs: "16px", md: "14px", xl: "16px" },
           '&:hover': {
             backgroundColor: 'white',
           },
         }}
       >
         <img
-          src={languages.find(lang => lang.name === selectedLanguage)?.flag}
+          src={languages.find(lang => lang.value === selectedLanguage)?.flag}
           alt={`${selectedLanguage} flag`}
           style={{ width: '20px', marginRight: '8px' }}
         />
@@ -124,7 +132,8 @@ const Languagebtn = () => {
         {languages.map((language) => (
           <MenuItem
             key={language.name}
-            onClick={() => handleLanguageChange(language.name)}
+            value={language.value}
+            onClick={() => handleLanguageChange(language.value)}
             disableRipple
           >
             <img

@@ -79,9 +79,9 @@ const index = () => {
   });
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(
       setAllModels({
         rechargeModel: false,
@@ -93,23 +93,27 @@ const index = () => {
       })
     );
     if (userData?.id) {
-      const result = await dispatch(getProfile({ id: userData.id }));
-      console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNN', result)
-      if (result) {
-        // const url = role === "model" ? "/getUsers" : `/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}`;
-        get(`/getModels?gender_id=${result.payload.data?.gender == 'Male' ? 'Female': 'Male'}&mood_id=${result.payload.data?.moodID}&page_id=${pagination.page}`)
-          .then((res) => {
-            // setModels((prev) => [...prev, ...res.data.data]);
-            if(res.data.data.length >0){
-              setModels((prev)=> [...prev, ...res.data.data]);  
-              setPagination({ ...pagination, totalPages: res.data.total_pages });
-            }
-          })
-          .catch((err) => { });
-      }
+      getModels()
     }
-    dispatch(getAllUsers()) 
+    dispatch(getAllUsers())
   }, [pagination.page]);
+
+  const getModels = async () => {
+    const result = await dispatch(getProfile({ id: userData.id }));
+    console.log('NNNNNNNNNNNNNNNNNNNNNNNNNNN', result)
+    if (result) {
+      // const url = role === "model" ? "/getUsers" : `/getModels?gender_id=${result.payload.data?.gender}&mood_id=${result.payload.data?.moodID}`;
+      get(`/getModels?gender_id=${result.payload.data?.gender == 'Male' ? 'Female' : 'Male'}&mood_id=${result.payload.data?.moodID}&page_id=${pagination.page}`)
+        .then((res) => {
+          // setModels((prev) => [...prev, ...res.data.data]);
+          if (res.data.data.length > 0) {
+            setModels((prev) => [...prev, ...res.data.data]);
+            setPagination({ ...pagination, totalPages: res.data.total_pages });
+          }
+        })
+        .catch((err) => { });
+    }
+  }
 
   // Initialize the CallService when the component mounts
   useEffect(() => {
@@ -162,7 +166,7 @@ const index = () => {
 
   const handleMakeAudioCall = (userName, video) => {
     if (userData.minutes === 0) {
-      setDialog(true);
+      setDialog({open: true, title: "Alert Message", description: "You have 0 minutes. Please recharge your account.",});
       return;
     }
     // Make an audio and video call
@@ -393,7 +397,7 @@ const index = () => {
         />
       )}
       <RechargeModal />
-      <ProfileModal setDialog={setDialog}/>
+      <ProfileModal setDialog={setDialog} />
       <PayoutModal />
       <CallModal />
       <CardPaymentModal />

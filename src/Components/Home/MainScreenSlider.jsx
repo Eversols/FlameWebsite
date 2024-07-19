@@ -34,8 +34,7 @@ const MainScreenSlider = ({
 }) => {
   const {
     currentConversationId,
-    conversationHistory,
-    vox_users: { conversations, currentUser, users },
+    vox_users: { conversations, users },
   } = useSelector((state) => state.conversation);
   const classes = useStyles();
   useEffect(() => {

@@ -44,12 +44,8 @@ const Header = ({ setDialog }) => {
       voxService.get().disconnect();
       persistor.purge();
       localStorage.removeItem("persist:root");
-      navigate(`/`);
+      navigate(`/`, { replace: true });
     } catch (error) {
-      voxService.get().disconnect();
-      persistor.purge();
-      localStorage.removeItem("persist:root");
-      navigate(`/`);
       console.log(error);
     }
   };

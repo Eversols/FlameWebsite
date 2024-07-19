@@ -1,6 +1,6 @@
 import * as VoxImplant from 'voximplant-websdk';
 import { reloginVox } from '../utils';
-import { persistor } from  "../store";
+import { persistor } from "../store";
 
 class VoxService {
   constructor() {
@@ -71,6 +71,22 @@ class VoxService {
         console.error('Connection failed', error);
       });
   }
+
+  /**
+  * Log out from the Voximplant cloud
+  */
+  logout() {
+    VoxService.inst.disconnect()
+      .then(() => {
+        console.log('Disconnected successfully');
+        // Perform any additional cleanup or state reset if needed
+        // For example, clear tokens, reset application state, etc.
+      })
+      .catch((error) => {
+        console.error('Disconnection failed', error);
+      });
+  }
+
 }
 
 export const voxService = new VoxService();

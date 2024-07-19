@@ -23,9 +23,6 @@ import { getCurrentConversation } from "../../Services/utils";
 import useStyles from "./style";
 
 const SwiperImages = ({ images = [] }) => {
-  const {
-    vox_users: { users },
-  } = useSelector((state) => state.conversation);
   const classes = useStyles();
   const handleSlideChange = (e) => {
     // Custom logic to run when slide changes

@@ -38,9 +38,9 @@ const ProfileModal = ({setDialog}) => {
       onClose={handleClose}
       sx={{
         '& .MuiDialog-paper': {
-          maxWidth: { xs: '100%', sm: '600px', md: '680px' },
+          maxWidth: { xs: '100%', sm: '600px', md: '780px' },
           width: '100%',
-          minHeight: '500px',
+          minHeight: '700px',
           height: '100%',
           maxHeight: { xs: '100vh', sm: '600px' },
           background: '#fff',

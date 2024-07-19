@@ -47,30 +47,30 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser, 
   const { t } = useTranslation()
   console.log('RRRRRRRRRRRRRRRRR', modelData)
 
-  const scrollToBottom = () => {
-    messagesEndRef &&
-      messagesEndRef.current &&
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  };
   useEffect(() => {
     scrollToBottom();
   }, [conversationHistory]);
   useEffect(() => {
 
-    update({
-      messenger: { // Corrected spelling here
-        appearance: {
-          primary_color: '#FB1F43',
-          icon_url: ChatIcon
-        }
-      }
-    })
+    // update({
+    //   messenger: { // Corrected spelling here
+    //     appearance: {
+    //       primary_color: '#FB1F43',
+    //       icon_url: ChatIcon
+    //     }
+    //   }
+    // })
 
     if (modelData) {
       setUser(users?.find((item) => item.customData.userId == modelData?.id))
     }
   }, [modelData]);
-
+  
+  const scrollToBottom = () => {
+    messagesEndRef &&
+      messagesEndRef.current &&
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
   const handleToggleChatBox = () => {
     setShowChatBox((prev) => !prev);
   };
@@ -78,8 +78,9 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser, 
     setInputMessage(e.target.value);
   };
   const sendMessage = () => {
+    console.log('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC', userData)
     if (userData.messages === 0) {
-      setDialog(true);
+      setDialog({open: true, title: "Alert Message", description: "You have 0 messages. Please recharge your account.",});
       return;
     }
     const currentConversation =

@@ -109,9 +109,9 @@ const index = () => {
       if (currentWord > words.length - 2) setcurrentWord(0);
       else setcurrentWord(currentWord + 1);
     }, 3000);
-    return () => {
-      clearInterval(timeout);
-    };
+    // return () => {
+    //   clearInterval(timeout);
+    // };
   }, [currentWord]);
 
   const carousel_move_left = () => {

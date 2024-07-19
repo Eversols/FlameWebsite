@@ -498,7 +498,7 @@ const useStyles = makeStyles((theme) => ({
     // marginRight: "10px",
     borderRadius: "10px",
     backgroundColor: "rgba(255,255,255,0.3)",
-    textAlign: "left",
+    textAlign: "right",
     padding: theme.spacing(1),
   },
   incoming_text_box: {

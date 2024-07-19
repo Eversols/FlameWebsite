@@ -211,7 +211,7 @@ const ChatHistory = ({ setShowChatBox, callUser }) => {
                             sx={{ margin: 0, padding: 0 }}
                             size="small"
                             onClick={() => {
-                              getCurrentConversation(item.uuid);
+                              getCurrentConversation(item.userId);
                               setShowChatBox(true);
                             }}
                             className={classes.history_actions_btn}

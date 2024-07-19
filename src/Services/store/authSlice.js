@@ -44,7 +44,8 @@ export const authSlice = createSlice({
     paymentSuccess: false,
     paymentError: false,
     plan: "",
-    siteMeta: null
+    siteMeta: null,
+    language: 'en'
   },
   reducers: {
     setError: (state, { payload }) => {
@@ -123,6 +124,9 @@ export const authSlice = createSlice({
       state.paymentSuccess = payload.paymentSuccess;
       state.paymentError = payload.paymentSuccess;
     },
+    setLanguage: (state, {payload})=>{
+      state.language = payload
+    }
   },
 
   extraReducers: {
@@ -192,7 +196,8 @@ export const {
   setPaymentModel,
   setPaymentStatus,
   setPrivacyModel,
-  setAllModels
+  setAllModels,
+  setLanguage
 } = authSlice.actions;
 
 export default authSlice.reducer;
