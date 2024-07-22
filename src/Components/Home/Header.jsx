@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import drawer from "../../Assets/images/drawer.svg";
 import flameLogo from "../../Assets/images/flame logo.svg";
-import power from "../../Assets/images/logout.png";
 import logoutLogo from "../../Assets/images/logout.svg";
 import profile from "../../Assets/images/profile.png";
 import VideoCallIcon from "../../Assets/images/video_call.png";

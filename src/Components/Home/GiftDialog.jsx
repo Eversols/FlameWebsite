@@ -18,16 +18,18 @@ import { setRechargeModel } from "../../Services/store/authSlice";
 import { useTranslation } from "react-i18next";
 import useStyles from "./style";
 import { post } from "../../Services/api";
+import { LoadingButton } from "@mui/lab";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const GiftDilog = ({ dialog, setDialog, modelData}) => {
+const GiftDilog = ({ dialog, setDialog, modelData }) => {
     const { role, userData, siteMeta } = useSelector((state) => state.auth);
     const [title, setTitle] = useState();
     const [points, setPoints] = useState(0);
     const [discription, setDiscription] = useState();
+    const [loading, setLoading] = useState(false);
     const { t } = useTranslation()
     const classes = useStyles();
 
@@ -45,6 +47,7 @@ const GiftDilog = ({ dialog, setDialog, modelData}) => {
     }, [])
 
     const active = async () => {
+        setLoading(true);
         try {
             const res = await post(`/proccesGift`, {
                 sendUserID: userData.userID,
@@ -56,9 +59,11 @@ const GiftDilog = ({ dialog, setDialog, modelData}) => {
             if (res) {
                 setTitle('')
                 setDiscription('Congrats! You got a gift.')
+                setLoading(false);
             }
         } catch (error) {
             console.log(error);
+            setLoading(false);
         }
     }
     return (
@@ -125,14 +130,16 @@ const GiftDilog = ({ dialog, setDialog, modelData}) => {
             {title && <DialogActions>
 
                 <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
-                    <Button
+                    <LoadingButton
                         onClick={() => active()}
+                        loading={loading}
+                        loadingPosition="center"
                         variant="contained"
                         type="submit"
                         className={classes.btn2}
                     >
                         {t("Yes")}
-                    </Button>
+                    </LoadingButton>
                     <Button
                         onClick={() => setDialog(() => ({ open: false }))}
                         variant="contained"

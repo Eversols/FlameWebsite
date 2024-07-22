@@ -35,6 +35,7 @@ import gr from '../../Assets/images/gr.png';
 import ru from '../../Assets/images/ru.png';
 import ch from '../../Assets/images/ch.png';
 import { useTranslation } from "react-i18next";
+import { LoadingButton } from "@mui/lab";
 
 const gridStyle = {
   padding: "10px 20px",
@@ -80,6 +81,7 @@ const ProfileForm = ({ setDialog }) => {
   const [refferalList, setRefferalList] = useState([]);
   const [imageIsLoading, setImageIsLoading] = useState(false);
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const [loading, setLoading] = useState(false);
 
   const [profile, setProfile] = useState({
     profileImage: userData?.profileImage ?? "",
@@ -201,6 +203,7 @@ const ProfileForm = ({ setDialog }) => {
   };
 
   const confirmSubmit = async () => {
+    setLoading(true);
     setError('')
     let refferal
     // if (siteMeta.is_refferal_on_off == 'yes') {
@@ -245,9 +248,11 @@ const ProfileForm = ({ setDialog }) => {
           if ((siteMeta.is_profile_complete == 'yes' && calculatePercentage() == 100)) {
             navigate(`/${role}/payout`);
           }
+          setLoading(false);
         }
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -604,6 +609,7 @@ const ProfileForm = ({ setDialog }) => {
             id="country-select-demo"
             sx={{ width: 300 }}
             options={countries}
+            value={countries.find((item)=> item.label === profile.region)}
             autoHighlight
             disabled={status}
             getOptionLabel={(option) => option.label}
@@ -843,19 +849,21 @@ const ProfileForm = ({ setDialog }) => {
           <Box
             sx={{ width: "100%", justifyContent: "center", display: "flex", gap: "20px" }}
           >
-            <Button
+            <LoadingButton
               onClick={() => {
                 !pathname.includes('/profile') && setStatus(!status);
                 if (!status) {
                   confirmSubmit();
                 }
               }}
+              loading={loading}
+              loadingPosition="center"
               variant="contained"
               type="submit"
               className={classes.btn1}
             >
               {status ? "Edit Profile" : "Save Profile"}
-            </Button>
+            </LoadingButton>
             {!pathname.includes('/profile') && <Button
               onClick={() => { dispatch(setProfileModel(false)); setDialog({ open: true, description: 'Are you sure you want to delete your profile?', title: 'Delete Profile', action: () => handleDelete() }) }}
               variant="contained"

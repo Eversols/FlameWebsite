@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { Link, matchRoutes, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { LoadingButton } from "@mui/lab";
 
 const routes = [{ path: "/members/:id" }]
 
@@ -19,6 +20,7 @@ const StepEmail = ({ onNext, setStep }) => {
   const { pathname } = useLocation()
   const [email, setEmail] = useState("");
   const { error, role } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation()
@@ -36,6 +38,7 @@ const StepEmail = ({ onNext, setStep }) => {
   }, []);
 
   const confirmSubmit = async (data) => {
+    setLoading(true);
     const { email } = data;
     if (email) {
       if (pathname.includes('forgetpassword')) {
@@ -46,9 +49,11 @@ const StepEmail = ({ onNext, setStep }) => {
             otp: data.otp,
           }))
           onNext();
+          setLoading(false);
           return
-        }else{
+        } else {
           dispatch(setError(data))
+          setLoading(false);
           return
         }
       }
@@ -62,14 +67,17 @@ const StepEmail = ({ onNext, setStep }) => {
               otp: res.data.otp,
             })
           );
+          setLoading(false);
           setStep(4);
         } else {
           dispatch(setUser({ email, otp: res.data.otp }));
+          setLoading(false);
           onNext();
         }
       } catch (error) {
         console.log(error);
         dispatch(setError(error.response.data.message));
+        setLoading(false);
       }
     }
     // e.preventDefault();
@@ -130,13 +138,15 @@ const StepEmail = ({ onNext, setStep }) => {
                   <p className={classes.error}>{errors.email.message}</p>
                 )}
                 {error && <p className={classes.error}>{error}</p>}
-                <Button
+                <LoadingButton
                   type="submit"
+                  loading={loading}
+                  loadingPosition="center"
                   variant="contained"
                   className={classes.btn}
                 >
                   {t("Next")}
-                </Button>
+                </LoadingButton>
               </form>
             </Box>
           </Container>

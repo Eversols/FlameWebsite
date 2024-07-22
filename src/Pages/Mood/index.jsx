@@ -91,11 +91,13 @@ import { get } from "../../Services/api";
 import { setMood } from "../../Services/store/authSlice";
 import { useTranslation } from "react-i18next";
 import Header from "../../Components/LandingPage/Header";
+import { LoadingButton } from "@mui/lab";
 
 const index = () => {
   const { role } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [moods, setMoods] = useState([
     { id: 1, text: "Casual Flirting", description: "Charm them silly. Simply dummy text of the printing and typesetting industry." },
     { id: 2, text: "Find Love", description: "I want to find love. Simply dummy text of the printing and typesetting industry." },
@@ -117,11 +119,14 @@ const index = () => {
   // }, []);
 
   const confirmSubmit = () => {
+    setLoading(true)
     if (selected) {
       dispatch(setMood(selected));
-      navigate(`/${role}/gender`);
+      navigate('/user/gender');
+      setLoading(false)
     } else {
       setError('Please select your mood')
+      setLoading(false)
     }
   };
 
@@ -171,14 +176,16 @@ const index = () => {
           ))} */}
         </Container>
         <Box color={'red'}>{error}</Box>
-        <Button
+        <LoadingButton
           type="submit"
+          loading={loading}
+          loadingPosition="center"
           onClick={confirmSubmit}
           variant="contained"
           className={classes.btn}
         >
           {t("Next")}
-        </Button>
+        </LoadingButton>
       </Container>
     </>
   );

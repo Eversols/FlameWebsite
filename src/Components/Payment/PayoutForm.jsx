@@ -6,6 +6,7 @@ import { useTheme } from "@emotion/react";
 import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 import { useTranslation } from "react-i18next";
+import { LoadingButton } from "@mui/lab";
 
 const gridStyle = {
   padding: "10px 20px",
@@ -21,11 +22,13 @@ const PayoutForm = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [confirmModal, setConfirmModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const {t} = useTranslation()
 
   const submitHandler = () => {
-    post('/pointsPayout', { user_id: userData.id, points_payout: userData.available_points }).then((result) => { setConfirmModal(false); dispatch(getProfile({ id: userData.id })); }).catch((error) => { })
+    setLoading(true);
+    post('/pointsPayout', { user_id: userData.id, points_payout: userData.available_points }).then((result) => { setConfirmModal(false); dispatch(getProfile({ id: userData.id })); setLoading(false); }).catch((error) => { })
   }
   return (
     <>
@@ -187,9 +190,10 @@ const PayoutForm = () => {
           </Box>
           <Box sx={{ width: "100%", display: "flex", gap: "10px", justifyContent: "center" }}>
 
-            <Button variant="contained" className={classes.btn} onClick={submitHandler}>
+            <LoadingButton variant="contained" loading={loading}
+                loadingPosition="center" className={classes.btn} onClick={submitHandler}>
               {t("Yes")}
-            </Button>
+            </LoadingButton>
             <Button variant="contained" className={classes.btnCancel} onClick={() => setConfirmModal(false)}>
               {t("No")}
             </Button>

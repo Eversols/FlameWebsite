@@ -1,5 +1,4 @@
 import { makeStyles } from "@mui/styles";
-import BackgroundGradient from "../../Assets/images/background_gradient.png";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -642,18 +641,18 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
 
-  root: {
-    "& .MuiPaper-root": {
-      backgroundImage: `url(${BackgroundGradient})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      fontFamily: "Inter, sans-serif",
-    },
-  },
+  // root: {
+  //   "& .MuiPaper-root": {
+  //     backgroundImage: `url(${BackgroundGradient})`,
+  //     backgroundSize: "cover",
+  //     backgroundPosition: "center",
+  //     display: "flex",
+  //     flexDirection: "column",
+  //     justifyContent: "center",
+  //     alignItems: "center",
+  //     fontFamily: "Inter, sans-serif",
+  //   },
+  // },
   acceptCallBtn: {
     color: "white",
     backgroundColor: "green",

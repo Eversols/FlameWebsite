@@ -26,6 +26,7 @@ import {
 import { voxLogin, voxRegister } from "../../Services/utils";
 import useStyles from "./style";
 import { useTranslation } from "react-i18next";
+import { LoadingButton } from "@mui/lab";
 
 const StepPassword = ({ setStep }) => {
   const { pathname } = useLocation()
@@ -36,13 +37,16 @@ const StepPassword = ({ setStep }) => {
   const { error, user, role, mood, region, userData, siteMeta } = useSelector(
     (state) => state.auth
   );
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
   const { t } = useTranslation()
   const confirmSubmit = async (e) => {
+    setLoading(true);
     if (password !== cPassword && !user.emailExist) {
       dispatch(setError("Confirm password not match!"));
+      setLoading(false);
       return;
     }
     if (password) {
@@ -51,7 +55,7 @@ const StepPassword = ({ setStep }) => {
         const { data } = await post("/changePassword", { email: user.email, password: password });
         if (data) {
           window.location.href = `/${role}/authentication`
-
+          setLoading(false);
           return
         }
       }
@@ -98,9 +102,14 @@ const StepPassword = ({ setStep }) => {
               );
               if (res.data.content.role == "user" && user.emailExist && user_data.payload.is_active == 'Inactive') {
                 dispatch(setError("Your account under the review from admin!"))
+                setLoading(false);
                 return
               }
-              if(res.data.content.role === "partner") return navigate(`/${res.data.content.role}/dashboard`);
+              if(res.data.content.role === "partner"){
+                setLoading(false);
+                 navigate(`/${res.data.content.role}/dashboard`)
+                 return 
+                };
               if (user.emailExist && user_data.payload) {
                
                 console.log('TTTTTTTTTTTTTTTTTTTTTT', user_data)
@@ -147,6 +156,7 @@ const StepPassword = ({ setStep }) => {
               }
             }
           }
+          setLoading(false);
         }
       } catch (error) {
         console.log('ZZZZZZZZZZZZZZZZZZZZZZZZ error ', error)
@@ -158,6 +168,7 @@ const StepPassword = ({ setStep }) => {
               : error.message
           )
         );
+        setLoading(false);
       }
     }
   };
@@ -259,14 +270,16 @@ const StepPassword = ({ setStep }) => {
                 </Link>}
               </Box>
               {error && <p className={classes.error}>{error}</p>}
-              <Button
+              <LoadingButton
                 type="button"
+                loading={loading}
+                loadingPosition="center"
                 onClick={confirmSubmit}
                 variant="contained"
                 className={classes.btn}
               >
                 {t("Next")}
-              </Button>
+              </LoadingButton>
             </Box>
           </Container>
         </Box>

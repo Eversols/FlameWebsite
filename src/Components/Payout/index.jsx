@@ -15,6 +15,7 @@ import downloadFile from "../../Assets/images/downloadfile.svg";
 import { get, post } from "../../Services/api";
 import useStyles from "./style";
 import { getProfile, setProfileModel } from "../../Services/store/authSlice";
+import { LoadingButton } from "@mui/lab";
 
 const gridStyle = {
     padding: " 10px 20px",
@@ -26,7 +27,7 @@ const gridStyle = {
 };
 
 
-const Payout = () => {
+const Payout = ({setDialog}) => {
 
     const { planId } = useParams();
     const { userData, role, profileModel, siteMeta } = useSelector((state) => state.auth);
@@ -44,6 +45,7 @@ const Payout = () => {
     });
     const [bankList, setBankList] = useState([]);
     const [currencyList, setCurrencyList] = useState([]);
+    const [loading, setLoading] = useState(false);
     const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -86,10 +88,11 @@ const Payout = () => {
     };
 
     const confirmSubmit = async () => {
-
+        setLoading(true);
         setError('')
         if ((formData.payout_bankName == '' && formData.payout_currency == '' && formData.payout_firstName == '' && formData.payout_lastName == '' && formData.payout_phoneNumber == '' && formData.payout_cardNumber == '' && formData.paypal_id == '')) {
             setError('All fields are required')
+            setLoading(false);
             return
         }
         try {
@@ -100,12 +103,16 @@ const Payout = () => {
                     isProfileComplete: true
                 })
             });
-            navigate('/')
+            if(!userData.isProfileComplete){
+                setDialog({ open: true, description: 'Your account is Under admin Review Once it will aprove you are able to Login within 24 hours',  action: () => navigate('/') })
+            }
             if (data) {
                 dispatch(getProfile({ id: userData.id }));
                 dispatch(setProfileModel(!profileModel));
+                setLoading(false);
             }
         } catch (error) {
+            setLoading(false);
             console.log(error);
         }
     };
@@ -128,7 +135,7 @@ const Payout = () => {
                 const profileData = await dispatch(getProfile({ id: userData.id }));
 
                 if (profileData.payload) {
-                    setFarmData((prev)=>({
+                    setFarmData((prev) => ({
                         ...prev,
                         passport_image: profileData.payload.data?.passport_image ?? "",
                     }));
@@ -306,14 +313,16 @@ const Payout = () => {
                 <Box
                     sx={{ width: "100%", justifyContent: "center", display: "flex" }}
                 >
-                    <Button
+                    <LoadingButton
                         onClick={confirmSubmit}
+                        loading={loading}
+                        loadingPosition="center"
                         variant="contained"
                         type="submit"
                         className={classes.btn1}
                     >
                         Update
-                    </Button>
+                    </LoadingButton>
                 </Box>
             </Grid>
         </Grid>

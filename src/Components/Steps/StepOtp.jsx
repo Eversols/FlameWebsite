@@ -10,31 +10,38 @@ import { setError } from "../../Services/store/authSlice";
 import useStyles from "./style";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { LoadingButton } from "@mui/lab";
 const StepOtp = ({ onNext, setStep }) => {
   const { pathname } = useLocation()
   const [OTP, setOTP] = useState("");
   const { error, user } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const classes = useStyles();
   const { t } = useTranslation()
 
   const confirmSubmit = async (e) => {
+    setLoading(true);
     console.log(user.email)
     if (parseInt(user.otp) == parseInt(OTP)) {
       if (pathname.includes('forgetpassword')) {
         setStep(4);
+        setLoading(false);
         return
       }
       try {
         const res = await post("/check-otp", { email: user.email, otp: OTP });
         if (res.data.email_exist && res.data.otp_verified) {
           onNext();
+          setLoading(false);
         }
       } catch (error) {
         dispatch(setError(error.response.data.message));
+        setLoading(false);
       }
     } else {
       dispatch(setError("OTP not correct"));
+      setLoading(false);
     }
   };
   return (
@@ -63,14 +70,16 @@ const StepOtp = ({ onNext, setStep }) => {
                 fullWidth
               />
               {error && <p className={classes.error}>{error}</p>}
-              <Button
+              <LoadingButton
                 type="button"
+                loading={loading}
+                loadingPosition="center"
                 onClick={confirmSubmit}
                 variant="contained"
                 className={classes.btn}
               >
                 {t("Next")}
-              </Button>
+              </LoadingButton>
             </Box>
           </Container>
         </Box>

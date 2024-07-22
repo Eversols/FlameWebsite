@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Button, Container, Radio, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import bgFrame from "../../Assets/images/bg_frame.svg";
@@ -13,11 +13,13 @@ import { post } from "../../Services/api";
 import { getProfile } from "../../Services/store/authSlice";
 import { useTranslation } from "react-i18next";
 import Header from "../../Components/LandingPage/Header";
+import { LoadingButton } from "@mui/lab";
 
 const index = () => {
   const { role, userData, mood } = useSelector((state) => state.auth);
   const classes = useStyles();
   const [selectedValue, setSelectedValue] = React.useState("Male");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation()
@@ -32,6 +34,7 @@ const index = () => {
 
 
   const confirmSubmit = async () => {
+    setLoading(true);
     if (selectedValue) {
 
       try {
@@ -42,12 +45,14 @@ const index = () => {
         });
         if (res) {
           dispatch(getProfile({ id: userData.id }));
-          console.log('DDDDDDDDDDDDDDDDDD',userData.isProfileComplete,  userData.isProfileComplete == '0')
+          console.log('DDDDDDDDDDDDDDDDDD', userData.isProfileComplete, userData.isProfileComplete == '0')
+          setLoading(false);
           if ((userData?.isProfileComplete == 0)) navigate(`/${role}/profile`);
           else navigate(`/${role}/home`);
         }
       } catch (error) {
         // navigate(`/${role}/home`);
+        setLoading(false);
         console.log(error);
       }
     }
@@ -55,7 +60,7 @@ const index = () => {
 
   return (
     <>
-    <Header />
+      <Header />
       {/* <img src={flameLogo} className={classes.logo} /> */}
       <img src={bgFrame} className={classes.gender_bg} />
       <Box className={classes.mainWrapperBox}>
@@ -106,14 +111,16 @@ const index = () => {
             </Box>
           </Box>
 
-          <Button
+          <LoadingButton
             type="submit"
+            loading={loading}
+            loadingPosition="center"
             onClick={confirmSubmit}
             variant="contained"
             className={classes.btn}
           >
             {t("Next")}
-          </Button>
+          </LoadingButton>
         </Container>
       </Box>
     </>

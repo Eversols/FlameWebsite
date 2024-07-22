@@ -1,5 +1,5 @@
 import { CardMedia } from "@mui/material";
-import SlideVideo2 from "../../Assets/images/firstlanding-video.webm";
+import SlideVideo2 from "../../Assets/images/Landingpage.webm";
 
 const Mobilemockup = () => {
   return (

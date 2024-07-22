@@ -11,7 +11,8 @@ import fr from '../../Assets/images/fr.png';
 import gr from '../../Assets/images/gr.png';
 import ru from '../../Assets/images/ru.png';
 import ch from '../../Assets/images/ch.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLanguage } from '../../Services/store/authSlice';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -59,6 +60,7 @@ const Languagebtn = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(language);
+  const dispatch = useDispatch();
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -68,6 +70,7 @@ const Languagebtn = () => {
     setAnchorEl(null);
   };
   useEffect(() => {
+    console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV', language)
     if (language) {
       setSelectedLanguage(language);
       i18n.changeLanguage(language.toLowerCase());
@@ -76,6 +79,7 @@ const Languagebtn = () => {
 
   const handleLanguageChange = (language) => {
     setSelectedLanguage(language);
+    dispatch(setLanguage(language));
     i18n.changeLanguage(language.toLowerCase());
     handleClose();
   };
