@@ -3,12 +3,12 @@ import { lazy } from 'react';
 
 const Layout = lazy(() => import('./Layouts/Layout'));
 
-const ModelLandingPage = lazy(() =>
-  import('./Pages/LandingPages/LandingPageModel')
-);
-const UserLandingPage = lazy(() =>
-  import('./Pages/LandingPages/LandingPageUser')
-);
+// const ModelLandingPage = lazy(() =>
+//   import('./Pages/LandingPages/LandingPageModel')
+// );
+// const UserLandingPage = lazy(() =>
+//   import('./Pages/LandingPages/LandingPageUser')
+// );
 const Authenticate = lazy(() => import('./Pages/Authenticate'));
 const Mood = lazy(() => import('./Pages/Mood'));
 const Region = lazy(() => import('./Pages/Region'));
@@ -27,7 +27,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPages />} />
-      <Route path="/model" element={<ModelLandingPage />} />
+      {/* <Route path="/model" element={<ModelLandingPage />} /> */}
       <Route path='/partner' element={<Layout />} >
         <Route path="dashboard" element={<Dashboard />} />
       </Route>

@@ -1,5 +1,4 @@
 import { makeStyles } from "@mui/styles";
-import BackgroundGradient from "../../Assets/images/background_gradient.png";
 
 const useStyles = makeStyles((theme) => ({
   selected: {
