@@ -65,7 +65,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser, 
       setUser(users?.find((item) => item.customData.userId == modelData?.id))
     }
   }, [modelData]);
-  
+
   const scrollToBottom = () => {
     messagesEndRef &&
       messagesEndRef.current &&
@@ -80,7 +80,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser, 
   const sendMessage = () => {
     console.log('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC', userData)
     if (userData.messages === 0) {
-      setDialog({open: true, title: "Alert Message", description: "You have 0 messages. Please recharge your account.",});
+      setDialog({ open: true, title: "Alert Message", description: "You have 0 messages. Please recharge your account.", });
       return;
     }
     const currentConversation =
@@ -190,89 +190,89 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser, 
 
       {showChatBox && (
         <Paper elevation={3} className={classes.paper}>
-          <Box className={classes.chat_wrapper}>
-            <Box
-              className={classes.single_chat_image}
-              style={{
-                backgroundImage: modelData?.userData?.profileImage ? `url(${modelData.userData.profileImage})` : `url(${ProfileImage})`,
-              }}
-            ></Box>
-
-            <Box className={classes.single_user_chat_text}>
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <Typography variant="h5" className={classes.history_name}>
-                  {modelData?.metaData?.displayName}
-                </Typography>
-                <Box display="flex" justifyContent="start" alignItems="center">
-                  {user?.online ? <Box className={classes.online_indicator} />
-                    :
-                    <Box className={classes.offline_indicator} />}
-
-                  <Typography
-                    variant="body1"
-                    component="span"
-                    ml={1}
-                    sx={{ fontSize: "14px" }}
-                  >
-                    {user?.online ? "Online" : "Offline"}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box className={classes.chat_actions}>
-                <IconButton
-                  sx={{ margin: 0, padding: 0 }}
-                  size="small"
-                  onClick={() => setGiftDialog(()=> ({open: true}))}
-                  className={classes.history_actions_btn}
-                >
-                  <img
-                    src={GiftIcon}
-                    className={classes.history_actions_icons}
-                  />
-                </IconButton>
-                <IconButton
-                  sx={{ margin: 0, padding: 0 }}
-                  size="small"
-                  onClick={() => call(modelData.userData, true)}
-                  className={classes.history_actions_btn}
-                >
-                  <img
-                    src={VideoCallIcon}
-                    className={classes.history_actions_icons}
-                  />
-                </IconButton>
-                <IconButton
-                  sx={{ margin: 0, padding: 0 }}
-                  size="small"
-                  onClick={() => userConversation(modelData.userData, 'poke')}
-                  className={classes.history_actions_btn}
-                >
-                  <img
-                    src={CallIcon}
-                    className={classes.history_actions_icons}
-                  />
-                </IconButton>
-                <IconButton
-                  sx={{ margin: 0, padding: 0 }}
-                  size="small"
-                  onClick={handleToggleChatBox}
-                  className={classes.history_actions_btn}
-                >
-                  <CloseIcon sx={{ fill: "#AAAAAA", width: "16px" }} />
-                </IconButton>
-              </Box>
-            </Box>
-          </Box>
 
           <Container className={classes.msg_window}>
+            <Box className={classes.chat_wrapper}>
+              <Box
+                className={classes.single_chat_image}
+                style={{
+                  backgroundImage: modelData?.userData?.profileImage ? `url(${modelData.userData.profileImage})` : `url(${ProfileImage})`,
+                }}
+              ></Box>
+
+              <Box className={classes.single_user_chat_text}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <Typography variant="h5" className={classes.history_name}>
+                    {modelData?.metaData?.displayName}
+                  </Typography>
+                  <Box display="flex" justifyContent="start" alignItems="center">
+                    {user?.online ? <Box className={classes.online_indicator} />
+                      :
+                      <Box className={classes.offline_indicator} />}
+
+                    <Typography
+                      variant="body1"
+                      component="span"
+                      ml={1}
+                      sx={{ fontSize: "14px" }}
+                    >
+                      {user?.online ? "Online" : "Offline"}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box className={classes.chat_actions}>
+                  <IconButton
+                    sx={{ margin: 0, padding: 0 }}
+                    size="small"
+                    onClick={() => setGiftDialog(true)}
+                    className={classes.history_actions_btn}
+                  >
+                    <img
+                      src={GiftIcon}
+                      className={classes.history_actions_icons}
+                    />
+                  </IconButton>
+                  <IconButton
+                    sx={{ margin: 0, padding: 0 }}
+                    size="small"
+                    onClick={() => call(modelData.userData, true)}
+                    className={classes.history_actions_btn}
+                  >
+                    <img
+                      src={VideoCallIcon}
+                      className={classes.history_actions_icons}
+                    />
+                  </IconButton>
+                  <IconButton
+                    sx={{ margin: 0, padding: 0 }}
+                    size="small"
+                    onClick={() => userConversation(modelData.userData, 'poke')}
+                    className={classes.history_actions_btn}
+                  >
+                    <img
+                      src={CallIcon}
+                      className={classes.history_actions_icons}
+                    />
+                  </IconButton>
+                  <IconButton
+                    sx={{ margin: 0, padding: 0 }}
+                    size="small"
+                    onClick={handleToggleChatBox}
+                    className={classes.history_actions_btn}
+                  >
+                    <CloseIcon sx={{ fill: "#AAAAAA", width: "16px" }} />
+                  </IconButton>
+                </Box>
+              </Box>
+            </Box>
             <Box className={classes.incoming_container}>
               {conversation.length > 0 ? (
                 conversation.map((item) => (

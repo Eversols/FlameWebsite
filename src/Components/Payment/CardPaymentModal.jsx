@@ -66,7 +66,7 @@ const CardPaymentModal = () => {
           p: '10px',
         }}
         data-cy={`activity-close`}
-        // onClick={handleClose}
+        onClick={handleClose}
       >
         <Typography
           variant="body1"
@@ -85,7 +85,7 @@ const CardPaymentModal = () => {
         </IconButton>
       </Box>
 
-      <Box sx={mainContainer}>
+      <Box sx={{...mainContainer, height: "480px",}}>
         <CardPaymentForm />
       </Box>
     </Dialog>

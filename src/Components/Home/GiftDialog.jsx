@@ -100,7 +100,7 @@ const GiftDilog = ({ dialog, setDialog, modelData }) => {
                     p: "10px",
                 }}
                 data-cy={`activity-close`}
-                onClick={() => setDialog(() => ({ open: false }))}
+                onClick={() => setDialog(false)}
             >
                 <Box sx={{ width: "42px" }}></Box>
                 <Typography
@@ -115,7 +115,7 @@ const GiftDilog = ({ dialog, setDialog, modelData }) => {
                     {title && t(title)}
                 </Typography>
 
-                <IconButton sx={{ width: "35px", height: "35px" }}>
+                <IconButton sx={{ width: "35px", height: "35px" }} onClick={() => setDialog(false)}>
                     <CloseIcon sx={{ fill: "#ffff", width: "20px" }} />
                 </IconButton>
             </Box>
