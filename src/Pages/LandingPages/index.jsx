@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Lenis as ReactLenis } from "@studio-freight/react-lenis";
 import { Box } from "@mui/material";
 // import SlideImg01 from "/slider-bg1.jpg";
@@ -14,9 +14,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getSiteMeta, setPrivacyModel, setRole } from "../../Services/store/authSlice";
 import PrivacyModal from "../../Components/Privacy";
+import Termandcondition from "../../Components/Privacy/Termandcondition";
+import PrivacyPolicy from "../../Components/Privacy/PrivacyPolicy";
 
 const LandingPages = () => {
   const scrollContainerRef = useRef(null);
+  const [termModal, setTermModal] = useState(false);
+  const [privacyModal, setPrivacyModal] = useState(false);
   const { token, role } = useSelector(
     (state) => state.auth
   );
@@ -131,11 +135,13 @@ const LandingPages = () => {
           />
         </Box>
         <Box className="footer-container">
-          <Footer />
+          <Footer setTermModal={setTermModal} termModal={termModal} setPrivacyModal={setPrivacyModal} privacyModal={privacyModal} />
         </Box>
       </Box>
 
       <PrivacyModal />
+      <Termandcondition setModal={setTermModal} modal={termModal} />
+      <PrivacyPolicy setModal={setPrivacyModal} modal={privacyModal} />
     </ReactLenis>
   );
 };

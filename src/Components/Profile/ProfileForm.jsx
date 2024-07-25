@@ -599,6 +599,7 @@ const ProfileForm = ({ setDialog }) => {
             className={classes.input1}
             fullWidth
             disabled={status}
+            autoComplete="off"
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
@@ -612,6 +613,7 @@ const ProfileForm = ({ setDialog }) => {
             value={countries.find((item)=> item.label === profile.region)}
             autoHighlight
             disabled={status}
+            autoComplete="off"
             getOptionLabel={(option) => option.label}
             onChange={(event, value) => handleInputChange({ target: { name: "region", value: value.label } })}
             renderOption={(props, option) => (
@@ -665,6 +667,7 @@ const ProfileForm = ({ setDialog }) => {
             length={200}
             className={classes.placeholderStyle}
             disabled={status}
+            autoComplete="off"
             name="about"
             value={profile?.about}
             // value={values.currentaddress || ""}
@@ -701,6 +704,7 @@ const ProfileForm = ({ setDialog }) => {
               id="tags-filled"
               value={profile.like}
               options={loveList.sort((a, b) => b.title - a.title)}
+              autoComplete="off"
               // options={loveList.map((option) => option.title)}
               getOptionLabel={(option) => option.title}
               // defaultValue={[top100Films[13].title]}
@@ -736,6 +740,7 @@ const ProfileForm = ({ setDialog }) => {
               name="like"
               onChange={handleInputChange}
               value={profile.like.join('  ')}
+              autoComplete="off"
               // placeholder="What do you do?"
               className={classes.input1}
               fullWidth
@@ -752,6 +757,7 @@ const ProfileForm = ({ setDialog }) => {
             id="tags-filled"
             value={profile.unlike}
             options={hateList.sort((a, b) => b.title - a.title)}
+            autoComplete="off"
             // options={loveList.map((option) => option.title)}
             getOptionLabel={(option) => option.title}
             // defaultValue={[top100Films[13].title]}
@@ -773,6 +779,7 @@ const ProfileForm = ({ setDialog }) => {
                 <TextField
                   {...params}
                   name="unlike"
+                  autoComplete="off"
                   value={profile.unlike}
                   variant="filled"
                   label="unlike"
@@ -787,6 +794,7 @@ const ProfileForm = ({ setDialog }) => {
               name="unlike"
               onChange={handleInputChange}
               value={profile.unlike.join('  ')}
+              autoComplete="off"
               // placeholder="What do you like in a partner?"
               className={classes.input1}
               fullWidth
@@ -804,6 +812,7 @@ const ProfileForm = ({ setDialog }) => {
             id="demo-simple-select"
             value={profile.language}
             onChange={handleInputChange}
+            autoComplete="off"
             className={classes.input1}
             fullWidth
             disabled={status}
@@ -834,6 +843,7 @@ const ProfileForm = ({ setDialog }) => {
                 type="text"
                 name="referral_code"
                 onChange={handleInputChange}
+                autoComplete="off"
                 value={profile?.referral_code || ''}
                 placeholder="Refferal Code"
                 className={classes.input1}
