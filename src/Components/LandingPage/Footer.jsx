@@ -17,16 +17,16 @@ import {
   
   const socialMediaLinks = [
     {
-      href: "https://www.twitter.com",
+      href: "https://x.com/Xtheflamelife",
       icon: (
         <XIcon style={{ width: 16, height: 16 }} />
       ),
     },
-    { href: "https://www.youtube.com", icon: <YouTubeIcon /> },
+    { href: "https://youtube.com/@jointheflamelife?si=4HYiivuS9tCDhtVA", icon: <YouTubeIcon /> },
     { href: "https://www.tiktok.com", icon: <TikTokIcon /> },
-    { href: "https://www.linkedin.com", icon: <LinkedInIcon /> },
+    { href: "https://www.linkedin.com/company/theflamelife ", icon: <LinkedInIcon /> },
     { href: "https://www.facebook.com", icon: <FacebookIcon /> },
-    { href: "https://www.instagram.com", icon: <InstagramIcon /> },
+    { href: "https://www.instagram.com/jointheflamelife/", icon: <InstagramIcon /> },
   ];
   
   const privaypolicylinks = [

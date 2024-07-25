@@ -115,7 +115,7 @@ const StepEmail = ({ onNext, setStep }) => {
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
             <Typography variant="h5" className={classes.heading}>
-              {t("Please enter your email")}
+              {t("Please Enter Your Email")}
             </Typography>
             <Box className={classes.fieldWrapper}>
               <form onSubmit={handleSubmit(confirmSubmit)}>
