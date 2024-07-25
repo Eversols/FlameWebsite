@@ -75,7 +75,7 @@ const LandingPages = () => {
           <SlideImage
             isVideo={true}
             videoSrc={SlideVideo1}
-            heroTitle={"Find your"}
+            heroTitle={"Find Your"}
             heroPara={heroParaOne}
             btnClick={getStarted}
             heroSpan={true}
