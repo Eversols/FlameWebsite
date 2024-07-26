@@ -2,13 +2,13 @@
     "Please Enter Your Email": "Please Enter Your Email",
     "Next": "Next",
     "Email is required": "Email is required",
-    "Invalid email ID": "Invalid email ID",
+    "Invalid email ID": "Invalid Email ID",
     "Check your email for an OTP": "Check Your Email For an OTP",
     "Confirm OTP sent to your Email ID": "Confirm OTP sent to your Email ID",
     "Set a screen name": "Set a Screen Name",
     "Enter your name": "Enter your name",
     "Set your password": "Set Your Password",
-    "Enter your password": "Enter your password",
+    "Enter your password": "Enter Your Password",
     "Password": "Password",
     "Confirm Password": "Confirm Password",
     "Forget Password": "Forget Password",
@@ -37,8 +37,8 @@
     "points": "Points",
     "Payout": "Payout",
     "Logout": "Logout",
-    "enter points": "Enter points",
-    "leave request": "Leave request",
+    "enter points": "Enter Points",
+    "leave request": "Leave Request",
     "approved": "Approved",
     "rejected": "Rejected",
     "Confirm Redeem": "Confirm Redeem",
@@ -56,5 +56,5 @@
     "Try another card": "Try another card",
     "Confirm Logout": "Confirm Logout",
     "Cancel": "Cancel",
-    "Find your": "Find your"
+    "Find your": "Find Your"
 }
