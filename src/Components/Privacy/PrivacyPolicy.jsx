@@ -91,7 +91,7 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                         fontWeight={700}
                         my={2}
                     >
-                        Privacy Policy
+                       {t(" Privacy Policy")}
                     </Typography>
                     <Typography
                         variant="caption"
@@ -109,10 +109,10 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                             fontWeight={700}
                             my={2}
                         >
-                            1. Where This Privacy Policy Applies
+                           {t(" 1. Where This Privacy Policy Applies")}
                         </Typography>
-                        This Privacy Policy applies to websites, apps, events and other services we operate under the Flame brand. Whether you're searching for your soulmate, joining us at one of our events, or using any of our other awesome services, this Policy has got you covered. For simplicity, we just refer to all of these as our “service” in this Privacy Policy.
-                        If for some reason, one of our services requires its own separate privacy policy, then that policy will be made available to you and that policy -- not this Privacy Policy -- will apply
+                       {t(` This Privacy Policy applies to websites, apps, events and other services we operate under the Flame brand. Whether you're searching for your soulmate, joining us at one of our events, or using any of our other awesome services, this Policy has got you covered. For simplicity, we just refer to all of these as our “service” in this Privacy Policy.
+                        If for some reason, one of our services requires its own separate privacy policy, then that policy will be made available to you and that policy -- not this Privacy Policy -- will apply`)}
                         <Typography
                             variant="h6"
                             component="div"
@@ -120,7 +120,7 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                             fontWeight={700}
                             my={2}
                         >
-                            2. Data we collect
+                            {("2. Data we collect")}
                         </Typography>
                         <Typography
                             variant="h6"
@@ -129,9 +129,9 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                             fontWeight={700}
                             my={2}
                         >
-                            a. Account Data:
+                            {t("a. Account Data:")}
                         </Typography>
-                        When you create an account, you give us basic information for your account to be set up such as your phone number, email address, and date of birth
+                   {t("When you create an account, you give us basic information for your account to be set up such as your phone number, email address, and date of birth")}
                         <Typography
                             variant="h6"
                             component="div"
@@ -139,9 +139,9 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                             fontWeight={700}
                             my={2}
                         >
-                            b. Profile data:
+                           {t(" b. Profile data:")}
                         </Typography>
-                        When you complete your profile, you share additional details about you, such as your gender, interests, preferences, approximate location, etc. Some of this data may be considered sensitive or special in certain countries, such as details about sexual orientation, sexual life, health, or political beliefs. If you choose to provide this data, you consent to us using it as laid out in this Privacy Policy
+                      {t("When you complete your profile, you share additional details about you, such as your gender, interests, preferences, approximate location, etc. Some of this data may be considered sensitive or special in certain countries, such as details about sexual orientation, sexual life, health, or political beliefs. If you choose to provide this data, you consent to us using it as laid out in this Privacy Policy")}
                         <Typography
                             variant="h6"
                             component="div"
@@ -149,9 +149,9 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                             fontWeight={700}
                             my={2}
                         >
-                            3. Data we share
+                            {t('3. Data we share')}
                         </Typography>
-                        None of your data is shared with any third party or related parties
+                        {t("None of your data is shared with any third party or related parties")}
                     </Typography>
 
                 </Box>
