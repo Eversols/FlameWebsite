@@ -8,10 +8,12 @@ import { setPrivacyModel } from "../../Services/store/authSlice";
 import useStyles from "./style";
 import { useTranslation } from "react-i18next";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { textAlign } from "@mui/system";
 
 // ---------Component style------------
 
 const mainContainer = {
+    textAlign: "justify",
     position: "relative",
     display: "flex",
     alignItems: "center",

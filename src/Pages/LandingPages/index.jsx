@@ -40,7 +40,7 @@ const LandingPages = () => {
     console.log("getStarted");
   };
 
-  const heroflameTitle = "Flame \nMoments";
+  const heroflameTitle = "Flame \n Moments";
 
   useEffect(() => {
     if(!(localStorage.getItem('privacyPolicy'))){
