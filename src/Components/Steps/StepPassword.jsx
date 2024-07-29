@@ -29,7 +29,7 @@ import { useTranslation } from "react-i18next";
 import { LoadingButton } from "@mui/lab";
 
 const StepPassword = ({ setStep }) => {
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +41,7 @@ const StepPassword = ({ setStep }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const confirmSubmit = async (e) => {
     setLoading(true);
     if (password !== cPassword && !user.emailExist) {
@@ -50,13 +50,16 @@ const StepPassword = ({ setStep }) => {
       return;
     }
     if (password) {
-      if (pathname.includes('forgetpassword')) {
+      if (pathname.includes("forgetpassword")) {
         // https://theflame.life/livebk/public/api/changePassword?email=male001@gmail.com&password=1234
-        const { data } = await post("/changePassword", { email: user.email, password: password });
+        const { data } = await post("/changePassword", {
+          email: user.email,
+          password: password,
+        });
         if (data) {
-          window.location.href = `/${role}/authentication`
+          window.location.href = `/${role}/authentication`;
           setLoading(false);
-          return
+          return;
         }
       }
       try {
@@ -72,7 +75,7 @@ const StepPassword = ({ setStep }) => {
           res = await post("/register", {
             email: user.email,
             password,
-            role: role,
+            role: role ? role : "user",
           });
           const voxRegisterRes = await voxRegister(res, user.displayName);
           if (voxRegisterRes) {
@@ -80,7 +83,8 @@ const StepPassword = ({ setStep }) => {
               userID: res.data.content.user_id,
               displayName: user.displayName,
               voxUserId: voxRegisterRes.data.user_id,
-              isProfileComplete: siteMeta.is_profile_complete == 'yes' ? false : true,
+              isProfileComplete:
+                siteMeta.is_profile_complete == "yes" ? false : true,
             });
           }
         }
@@ -92,7 +96,7 @@ const StepPassword = ({ setStep }) => {
             );
             if (token?.payload) {
               const user_data = await dispatch(getUser());
-             
+
               console.log(
                 "KKKKKKKKKKKKKKK",
                 user.emailExist,
@@ -100,35 +104,46 @@ const StepPassword = ({ setStep }) => {
                 user.emailExist && user_data.payload,
                 user_data.payload.is_active
               );
-              if (res.data.content.role == "user" && user.emailExist && user_data.payload.is_active == 'Inactive') {
-                dispatch(setError("Your account under the review from admin!"))
+              if (
+                res.data.content.role == "user" &&
+                user.emailExist &&
+                user_data.payload.is_active == "Inactive"
+              ) {
+                dispatch(setError("Your account under the review from admin!"));
                 setLoading(false);
-                return
+                return;
               }
-              if(res.data.content.role === "partner"){
+              if (res.data.content.role === "partner") {
                 setLoading(false);
-                 navigate(`/${res.data.content.role}/dashboard`)
-                 return 
-                };
+                navigate(`/${res.data.content.role}/dashboard`);
+                return;
+              }
               if (user.emailExist && user_data.payload) {
-               
-                console.log('TTTTTTTTTTTTTTTTTTTTTT', user_data)
+                console.log("TTTTTTTTTTTTTTTTTTTTTT", user_data);
                 const userName = user_data.payload.email.replace(
                   "@",
                   "-flame-"
                 );
-                const password = `${user_data.payload.email.split("@")[0]}${user_data.payload.id
-                  }`;
+                const password = `${user_data.payload.email.split("@")[0]}${
+                  user_data.payload.id
+                }`;
                 console.log(res.data.content.role, mood, region);
                 await voxLogin(userName, password, user_data.payload.email);
               }
               if (res.data.content.role === "user") {
-                dispatch(getProfile({ id: user_data.payload.id })).then((res) => {
-                  console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPP', res)
-                  if (res.payload.metadata.isProfileComplete == '1') navigate(`/${role}/home`);
-                  if(!user.emailExist && !user_data.payload.moodID) navigate(`/${role}/mood`);
-                  res.payload.metadata.language && dispatch(setLanguage(res.payload.metadata.language.toLowerCase()))
-                })
+                dispatch(getProfile({ id: user_data.payload.id })).then(
+                  (res) => {
+                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPP", res);
+                    if (res.payload.metadata.isProfileComplete == "1")
+                      navigate(`/${role}/home`);
+                    if (!user.emailExist && !user_data.payload.moodID)
+                      navigate(`/${role}/mood`);
+                    res.payload.metadata.language &&
+                      dispatch(
+                        setLanguage(res.payload.metadata.language.toLowerCase())
+                      );
+                  }
+                );
                 // if (!user_data.payload.moodID) navigate(`/${role}/mood`);
                 // //else if (!region) navigate(`/${role}/region`);
                 // else navigate(`/${role}/home`);
@@ -147,7 +162,7 @@ const StepPassword = ({ setStep }) => {
                   else navigate(`/${role}/home`);
                 }
               }
-             
+
               if (res.data.content.role === "modelmanager") {
                 navigate("/modelmanager");
               }
@@ -159,7 +174,7 @@ const StepPassword = ({ setStep }) => {
           setLoading(false);
         }
       } catch (error) {
-        console.log('ZZZZZZZZZZZZZZZZZZZZZZZZ error ', error)
+        console.log("ZZZZZZZZZZZZZZZZZZZZZZZZ error ", error);
         // navigate(`/${role}/home`);
         dispatch(
           setError(
@@ -181,7 +196,9 @@ const StepPassword = ({ setStep }) => {
         <Box className={classes.mainBox}>
           <Container className={classes.container}>
             <Typography variant="h5" className={classes.headingOne}>
-              {!user.emailExist ? t("Set your password") : t("Enter your password")}
+              {!user.emailExist
+                ? t("Set your password")
+                : t("Enter your password")}
             </Typography>
             <Box className={classes.fieldWrapper}>
               <Box className={classes.passwordWrapper}>
@@ -224,7 +241,7 @@ const StepPassword = ({ setStep }) => {
                   }}
                 />
                 {/* {error && <p className={classes.error}>{error}</p>} */}
-                {(!user.emailExist || pathname.includes('forgetpassword')) && (
+                {(!user.emailExist || pathname.includes("forgetpassword")) && (
                   <TextField
                     name="cPassword"
                     type={showCPassword ? "text" : "password"}
@@ -265,9 +282,20 @@ const StepPassword = ({ setStep }) => {
                     }}
                   />
                 )}
-                {user.emailExist && !pathname.includes('forgetpassword') && <Link to={`/${role}/forgetpassword`} style={{ marginTop: '12px', textDecoration: "none", fontSize: "12px", color: "#00000080" }} onClick={() => setStep(1)}>
-                  {t("Forget Password")}
-                </Link>}
+                {user.emailExist && !pathname.includes("forgetpassword") && (
+                  <Link
+                    to={`/${role}/forgetpassword`}
+                    style={{
+                      marginTop: "12px",
+                      textDecoration: "none",
+                      fontSize: "12px",
+                      color: "#00000080",
+                    }}
+                    onClick={() => setStep(1)}
+                  >
+                    {t("Forget Password")}
+                  </Link>
+                )}
               </Box>
               {error && <p className={classes.error}>{t(error)}</p>}
               <LoadingButton
