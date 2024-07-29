@@ -65,6 +65,7 @@ const languages = [
 
 
 const ProfileForm = ({ setDialog }) => {
+  const {t} = useTranslation()
   const { id } = useParams();
   const { userData, role, mood, region, siteMeta } = useSelector((state) => state.auth);
   const { pathname } = useLocation()
@@ -850,7 +851,7 @@ const ProfileForm = ({ setDialog }) => {
                 fullWidth
                 disabled={status}
               />
-              <Box color={"red"} sx={{ fontSize: 12 }}>{error}</Box>
+              <Box color={"red"} sx={{ fontSize: 12 }}>{t(error)}</Box>
             </>
           }
         </Grid>

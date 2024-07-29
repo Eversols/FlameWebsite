@@ -137,7 +137,7 @@ const StepEmail = ({ onNext, setStep }) => {
                 {errors.email && (
                   <p className={classes.error}>{errors.email.message}</p>
                 )}
-                {error && <p className={classes.error}>{error}</p>}
+                {error && <p className={classes.error}>{t(error)}</p>}
                 <LoadingButton
                   type="submit"
                   loading={loading}

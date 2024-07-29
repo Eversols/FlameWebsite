@@ -42,7 +42,7 @@ const StepName = ({ onNext }) => {
                 fullWidth
               />
 
-              {error && <p className={classes.error}>{error}</p>}
+              {error && <p className={classes.error}>{t(error)}</p>}
               <Button
                 type="button"
                 onClick={confirmSubmit}

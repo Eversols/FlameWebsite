@@ -16,6 +16,7 @@ import { get, post } from "../../Services/api";
 import useStyles from "./style";
 import { getProfile, setProfileModel } from "../../Services/store/authSlice";
 import { LoadingButton } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 
 const gridStyle = {
     padding: " 10px 20px",
@@ -28,7 +29,7 @@ const gridStyle = {
 
 
 const Payout = ({setDialog}) => {
-
+    const {t} = useTranslation()
     const { planId } = useParams();
     const { userData, role, profileModel, siteMeta } = useSelector((state) => state.auth);
     const [clientSecret, setClientSecret] = useState("");
@@ -308,7 +309,7 @@ const Payout = ({setDialog}) => {
                 />
             </Grid>
             <Grid item xs={12} md={5.5}></Grid>
-            <Box color={'red'} sx={{ fontSize: 12 }}>{error}</Box>
+            <Box color={'red'} sx={{ fontSize: 12 }}>{t(error)}</Box>
             <Grid item sx={{ width: "100%" }}>
                 <Box
                     sx={{ width: "100%", justifyContent: "center", display: "flex" }}

@@ -175,7 +175,7 @@ const index = () => {
             />
           ))} */}
         </Container>
-        <Box color={'red'}>{error}</Box>
+        <Box color={'red'}>{t(error)}</Box>
         <LoadingButton
           type="submit"
           loading={loading}

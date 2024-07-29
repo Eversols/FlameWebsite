@@ -20,11 +20,14 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 const gridStyle = {
+  height  : "100%",
   padding: "0px 28px",
   gap: "15px 25px",
   maxWidth: "100%",
   justifyContent: "center",
+  alignItems: "center",
   display: "flex",
+  marginTop: "80px",
 };
 
 const CardPaymentForm = () => {

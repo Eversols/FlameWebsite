@@ -269,7 +269,7 @@ const StepPassword = ({ setStep }) => {
                   {t("Forget Password")}
                 </Link>}
               </Box>
-              {error && <p className={classes.error}>{error}</p>}
+              {error && <p className={classes.error}>{t(error)}</p>}
               <LoadingButton
                 type="button"
                 loading={loading}
