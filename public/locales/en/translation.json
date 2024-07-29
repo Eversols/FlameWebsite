@@ -67,5 +67,17 @@
     "When you complete your profile, you share additional details about you, such as your gender, interests, preferences, approximate location, etc. Some of this data may be considered sensitive or special in certain countries, such as details about sexual orientation, sexual life, health, or political beliefs. If you choose to provide this data, you consent to us using it as laid out in this Privacy Policy": "When you complete your profile, you share additional details about you, such as your gender, interests, preferences, approximate location, etc. Some of this data may be considered sensitive or special in certain countries, such as details about sexual orientation, sexual life, health, or political beliefs. If you choose to provide this data, you consent to us using it as laid out in this Privacy Policy",
     "3. Data we share": "3. Data we share",
     "None of your data is shared with any third party or related parties": "None of your data is shared with any third party or related parties",
-    "We’ll see when we meet":"We’ll See When We Meet"
+    "We’ll see when we meet": "We’ll See When We Meet",
+    "payment details saved successfully": "Payment details saved successfully",
+    "payment details not saved successfully": "Payment details not saved successfully",
+    "User name updated successfully": "User name updated successfully",
+    "User not found": "User not found",
+    "Receiver User not found": "Receiver User not found",
+    "sender User not found": "Sender User not found",
+    "Gift Processed successfully": "Gift processed successfully",
+    "sendUserID' is required": "'sendUserID' is required",
+    "receiveUserID' is required": "'receiveUserID' is required",
+    "minutes' is required": "'minutes' is required",
+    "messages' is required": "'messages' is required",
+    "points' is required": "'points' is required"
 }
