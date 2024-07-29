@@ -94,6 +94,23 @@
     "Flame \n Moments": "Моменты Пламени",
     "There's always someone for you.\n Everytime. Everywhere.": "Для тебя всегда найдется кто-то. Каждый раз. Везде.",
     "Terms of Use": "Условия использования",
-    "Privacy Policy": "Политика конфиденциальности"
+    "Privacy Policy": "Политика конфиденциальности",
+    "payment details saved successfully": "Данные о платеже успешно сохранены",
+    "payment details not saved successfully": "Не удалось сохранить данные о платеже",
+    "User name updated successfully": "Имя пользователя успешно обновлено",
+    "User not found": "Пользователь не найден",
+    "sender User not found": "Отправитель не найден",
+    "Gift Processed successfully": "Подарок успешно обработан",
+    "sendUserID' is required": "Требуется sendUserID",
+    "minutes' is required": "Требуются минуты",
+    "messages' is required": "Требуются сообщения",
+    "points' is required": "Требуются очки",
+    "receiveUserID' is required": "Требуется receiveUserID",
+    "Receiver User not found": "Получатель не найден",
+    "Your account is under review from admin": "Ваш аккаунт находится на рассмотрении у администратора",
+    "Invalid login details": "Неверные данные для входа"
+
+
+
     
 }

@@ -99,5 +99,22 @@
     "None of your data is shared with any third party or related parties": "Keine Ihrer Daten werden an Dritte oder verwandte Parteien weitergegeben.",
     "Flame \n Moments": "Flammenmomente",
     "Terms of Use": "Nutzungsbedingungen",
-    "Privacy Policy": "Datenschutzrichtlinie"
+    "Privacy Policy": "Datenschutzrichtlinie",
+    "payment details saved successfully": "Zahlungsdetails erfolgreich gespeichert",
+    "payment details not saved successfully": "Zahlungsdetails konnten nicht gespeichert werden",
+    "User name updated successfully": "Benutzername erfolgreich aktualisiert",
+    "User not found": "Benutzer nicht gefunden",
+    "sender User not found": "Absenderbenutzer nicht gefunden",
+    "Gift Processed successfully": "Geschenk erfolgreich verarbeitet",
+    "sendUserID' is required": "sendUserID wird benötigt",
+    "minutes' is required": "Minuten werden benötigt",
+    "messages' is required": "Nachrichten werden benötigt",
+    "points' is required": "Punkte werden benötigt",
+    "receiveUserID' is required": "receiveUserID wird benötigt",
+    "Receiver User not found": "Empfängerbenutzer nicht gefunden",
+    "Your account is under review from admin": "Ihr Konto wird vom Administrator überprüft",
+    "Invalid login details": "Ungültige Anmeldedaten"
+
+
+
 }

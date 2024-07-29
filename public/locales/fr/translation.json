@@ -102,5 +102,22 @@
   "Flame \n Moments": "Moments de Flamme",
   "There's always someone for you.\n Everytime. Everywhere.": "Il y a toujours quelqu'un pour toi. À tout moment. Partout.",
   "Terms of Use": "Conditions d'Utilisation",
-  "Privacy Policy": "Politique de Confidentialité"
+  "Privacy Policy": "Politique de Confidentialité",
+  "payment details saved successfully": "Détails de paiement enregistrés avec succès",
+  "payment details not saved successfully": "Détails de paiement non enregistrés avec succès",
+  "User name updated successfully": "Nom d'utilisateur mis à jour avec succès",
+  "User not found": "Utilisateur non trouvé",
+  "sender User not found": "Utilisateur expéditeur non trouvé",
+  "Gift Processed successfully": "Cadeau traité avec succès",
+  "sendUserID' is required": "sendUserID est requis",
+  "minutes' is required": "minutes est requis",
+  "messages' is required": "messages est requis",
+  "points' is required": "points est requis",
+  "receiveUserID' is required": "receiveUserID est requis",
+  "Receiver User not found": "Utilisateur récepteur non trouvé",
+  "Your account is under review from admin": "Votre compte est en cours de révision par l'administrateur",
+  "Invalid login details": "Informations de connexion invalides"
+
+
+
 }
