@@ -45,7 +45,7 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser, 
   const conversation = conversationHistory[currentConversationId] || [];
   const dispatch = useDispatch();
   const { t } = useTranslation()
-  console.log('RRRRRRRRRRRRRRRRR', modelData)
+  console.log('RRRRRRRRRRRRRRRRR', conversation)
 
   useEffect(() => {
     scrollToBottom();

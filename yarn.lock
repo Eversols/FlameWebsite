@@ -4089,10 +4089,10 @@ void-elements@3.1.0:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
 
-voximplant-websdk@4.6.3-2641:
-  version "4.6.3-2641"
-  resolved "https://registry.yarnpkg.com/voximplant-websdk/-/voximplant-websdk-4.6.3-2641.tgz#2011e7ab661585c8d29b2c89788aeb842d274893"
-  integrity sha512-PD2qxiguJd9sL6Ale0pvEcttvqlgoyRAvQN5/Kr+g6YIv3l0ZL9XyRhENgfEJgbYjKFDVXNU0h0j0x01/k0YAA==
+voximplant-websdk@4.7.6-2772:
+  version "4.7.6-2772"
+  resolved "https://registry.yarnpkg.com/voximplant-websdk/-/voximplant-websdk-4.7.6-2772.tgz#0fcff955774151f97cbbbe701250476f70f87a37"
+  integrity sha512-gIJA9zVcbF8WP0b5UWkFAp0tQotgi/5EG8j5xZI3d1TXEJLHeBkTinrbxLH2rY2WfLaDuufGwj7uc+i2wOP8Fw==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
