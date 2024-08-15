@@ -5,13 +5,14 @@ import ProfileForm from "../../Components/Profile/ProfileForm";
 import ProfileModal from "../../Components/Profile/ProfileModal";
 import Header from "../../Components/LandingPage/Header";
 
+
 const index = () => {
   return (
     <>
-    <Header/>
+      <Header />
       <Box
         sx={{
-          width: {xs: "100%", md: "50%"},
+          width: { xs: "100%", md: "50%" },
           display: "flex",
           justifyContent: "center",
           flexDirection: "column",
@@ -19,12 +20,12 @@ const index = () => {
           alignItems: "center",
         }}
       >
-        <Box sx={{ marginBottom: "72px" }}>
-          <Typography variant="h2">Profile</Typography >
+        <Box sx={{ marginBottom: "72px" }} >
+          {/* <Typography variant="h2">Profile</Typography > */}
         </Box>
-        <Card elevation={8} sx={{padding: "24px", }}>
+        <Card elevation={8} sx={{ padding: "24px", }}>
 
-        <ProfileForm />
+          <ProfileForm />
         </Card>
       </Box>
     </>

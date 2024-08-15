@@ -111,8 +111,10 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                         >
                            {t(" 1. Where This Privacy Policy Applies")}
                         </Typography>
+                        <div style={{lineHeight:"26px"}}>
                        {t(` This Privacy Policy applies to websites, apps, events and other services we operate under the Flame brand. Whether you're searching for your soulmate, joining us at one of our events, or using any of our other awesome services, this Policy has got you covered. For simplicity, we just refer to all of these as our “service” in this Privacy Policy.
                         If for some reason, one of our services requires its own separate privacy policy, then that policy will be made available to you and that policy -- not this Privacy Policy -- will apply`)}
+                        </div>
                         <Typography
                             variant="h6"
                             component="div"
@@ -131,7 +133,9 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                         >
                             {t("a. Account Data:")}
                         </Typography>
+                        <div style={{lineHeight:"26px"}}>
                    {t("When you create an account, you give us basic information for your account to be set up such as your phone number, email address, and date of birth")}
+                   </div>
                         <Typography
                             variant="h6"
                             component="div"
@@ -141,7 +145,9 @@ const PrivacyPolicy = ({ setModal, modal}) => {
                         >
                            {t(" b. Profile data:")}
                         </Typography>
+                        <div style={{lineHeight:"26px"}}>
                       {t("When you complete your profile, you share additional details about you, such as your gender, interests, preferences, approximate location, etc. Some of this data may be considered sensitive or special in certain countries, such as details about sexual orientation, sexual life, health, or political beliefs. If you choose to provide this data, you consent to us using it as laid out in this Privacy Policy")}
+                      </div>
                         <Typography
                             variant="h6"
                             component="div"

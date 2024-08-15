@@ -25,50 +25,58 @@ import ProfileImage from "../../Assets/images/male.jpg";
 import video2 from "../../Assets/images/video2.svg";
 
 import { get, post } from "../../Services/api";
-import { getProfile, setLanguage, setProfileModel } from "../../Services/store/authSlice";
+import {
+  getProfile,
+  setLanguage,
+  setProfileModel,
+} from "../../Services/store/authSlice";
 import useStyles from "./profileStyle";
-import { countries, } from "../../Services/utils/country";
-import us from '../../Assets/images/us.png';
-import sp from '../../Assets/images/sp.png';
-import fr from '../../Assets/images/fr.png';
-import gr from '../../Assets/images/gr.png';
-import ru from '../../Assets/images/ru.png';
-import ch from '../../Assets/images/ch.png';
+import { countries } from "../../Services/utils/country";
+import us from "../../Assets/images/us.png";
+import sp from "../../Assets/images/sp.png";
+import fr from "../../Assets/images/fr.png";
+import gr from "../../Assets/images/gr.png";
+import ru from "../../Assets/images/ru.png";
+import ch from "../../Assets/images/ch.png";
 import { useTranslation } from "react-i18next";
 import { LoadingButton } from "@mui/lab";
+import { display } from "@mui/system";
 
 const gridStyle = {
   padding: "10px 20px",
+  alignItems: "center",
   gap: "15px 25px",
-  maxWidth: { xs: "100%", sm: "90%" },
+  maxWidth: { xs: "100%", sm: "100%" },
   justifyContent: "center",
   display: "flex",
+
 };
 
 const gridContainer = {
+  alignItems: "center",
   padding: " 10px 20px",
   gap: "25px",
-  maxWidth: { xs: "100%", sm: "90%" },
+  maxWidth: { xs: "100%", sm: "100%" },
   justifyContent: "space-between",
   display: "flex",
 };
 
-
 const languages = [
-  { name: 'English (EN)', value: 'EN', flag: us },
-  { name: 'Spanish (SP)', value: 'SP', flag: sp },
-  { name: 'French (FR)', value: 'FR', flag: fr },
-  { name: 'German (GR)', value: 'GR', flag: gr },
-  { name: 'Russian (RU)', value: 'RU', flag: ru },
-  { name: 'Chinese (CH)', value: 'CH', flag: ch },
+  { name: "English (EN)", value: "EN", flag: us },
+  { name: "Spanish (SP)", value: "SP", flag: sp },
+  { name: "French (FR)", value: "FR", flag: fr },
+  { name: "German (GR)", value: "GR", flag: gr },
+  { name: "Russian (RU)", value: "RU", flag: ru },
+  { name: "Chinese (CH)", value: "CH", flag: ch },
 ];
 
-
 const ProfileForm = ({ setDialog }) => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const { id } = useParams();
-  const { userData, role, mood, region, siteMeta } = useSelector((state) => state.auth);
-  const { pathname } = useLocation()
+  const { userData, role, mood, region, siteMeta } = useSelector(
+    (state) => state.auth
+  );
+  const { pathname } = useLocation();
 
   const classes = useStyles();
   const [status, setStatus] = useState(true);
@@ -100,33 +108,43 @@ const ProfileForm = ({ setDialog }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (pathname.includes('profile')) {
-      setStatus(false)
+    if (pathname.includes("profile")) {
+      setStatus(false);
     }
     setFileError("");
     if (userData?.id) {
       dispatch(getProfile({ id: userData.id }));
     }
-    get('/hatelovethingsList').then((result) => {
-      if (result?.data) {
-        if (result.data.hateattributedata) {
-          setHateList(result.data.hateattributedata.map((item) => ({ title: item.attribute_name, value: item.attribute_name })))
+    get("/hatelovethingsList")
+      .then((result) => {
+        if (result?.data) {
+          if (result.data.hateattributedata) {
+            setHateList(
+              result.data.hateattributedata.map((item) => ({
+                title: item.attribute_name,
+                value: item.attribute_name,
+              }))
+            );
+          }
+          if (result.data.loveattributedata) {
+            setLoveList(
+              result.data.loveattributedata.map((item) => ({
+                title: item.attribute_name,
+                value: item.attribute_name,
+              }))
+            );
+          }
         }
-        if (result.data.loveattributedata) {
-          setLoveList(result.data.loveattributedata.map((item) => ({ title: item.attribute_name, value: item.attribute_name })))
+      })
+      .catch((error) => { });
+
+    get("/getPartner", {})
+      .then((result) => {
+        if (result?.data?.data) {
+          setRefferalList(result.data.data);
         }
-      }
-    }).catch((error) => {
-
-    })
-
-    get('/getPartner', {}).then((result) => {
-      if (result?.data?.data) {
-        setRefferalList(result.data.data);
-      }
-    }).catch((error) => {
-
-    })
+      })
+      .catch((error) => { });
   }, []);
 
   const handleInputChange = (event) => {
@@ -142,7 +160,7 @@ const ProfileForm = ({ setDialog }) => {
     // const { name, value } = event.target;
     // console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', name, value,)
     if (name && value) {
-      if (profile[name].includes(`#${value}`)) return
+      if (profile[name].includes(`#${value}`)) return;
       setProfile((prevProfile) => ({
         ...prevProfile,
         [name]:
@@ -153,22 +171,22 @@ const ProfileForm = ({ setDialog }) => {
     }
   };
   const handleImageChange = async (event, url) => {
-    setImageIsLoading(true)
+    setImageIsLoading(true);
     setFileError("");
     const file = event.target.files[0];
     try {
-      if (file && file.size >= (2.5 * 1024 * 1024)) {
+      if (file && file.size >= 2.5 * 1024 * 1024) {
         setFileError("File size should be less than 2.5 MB");
-        setImageIsLoading(false)
+        setImageIsLoading(false);
         return;
       }
       if (
         file &&
         file.type.split("/")[0] == "video" &&
-        file.size >= (10 * 1024 * 1024)
+        file.size >= 10 * 1024 * 1024
       ) {
         setFileError("File size should be less than 10 MB");
-        setImageIsLoading(false)
+        setImageIsLoading(false);
         return;
       }
       const formData = new FormData();
@@ -189,7 +207,7 @@ const ProfileForm = ({ setDialog }) => {
             profileImage2: profileData.payload.data?.profileImage2 ?? "",
             video: profileData.payload.data?.video ?? "",
           });
-          setImageIsLoading(false)
+          setImageIsLoading(false);
         }
       }
     } catch (error) {
@@ -205,8 +223,8 @@ const ProfileForm = ({ setDialog }) => {
 
   const confirmSubmit = async () => {
     setLoading(true);
-    setError('')
-    let refferal
+    setError("");
+    let refferal;
     // if (siteMeta.is_refferal_on_off == 'yes') {
     //   refferal = refferalList.find((item) => item.referral_code == profile.referral_code.trim())
     //   if (!refferal) {
@@ -222,16 +240,16 @@ const ProfileForm = ({ setDialog }) => {
       const res = await post("/updateUserMeta", {
         userID: userData.id,
         ...profile,
-        like: profile.like.join(', '),
-        unlike: profile.unlike.join(', '),
-        referral_code: refferal?.id ?? '',
+        like: profile.like.join(", "),
+        unlike: profile.unlike.join(", "),
+        referral_code: refferal?.id ?? "",
         // like: "",
         // unlike: "",
       });
       if (res) {
         const profileData = await dispatch(getProfile({ id: userData.id }));
         if (profileData.payload) {
-          const { data, metadata } = profileData.payload
+          const { data, metadata } = profileData.payload;
 
           setProfile({
             profileImage: data?.profileImage ?? "",
@@ -245,8 +263,12 @@ const ProfileForm = ({ setDialog }) => {
             about: metadata?.about ?? "",
             language: metadata?.language ?? "",
           });
-          metadata?.language && dispatch(setLanguage(metadata.language.toLowerCase()))
-          if ((siteMeta.is_profile_complete == 'yes' && calculatePercentage() == 100)) {
+          metadata?.language &&
+            dispatch(setLanguage(metadata.language.toLowerCase()));
+          if (
+            siteMeta.is_profile_complete == "yes" &&
+            calculatePercentage() == 100
+          ) {
             navigate(`/${role}/payout`);
           }
           setLoading(false);
@@ -262,7 +284,7 @@ const ProfileForm = ({ setDialog }) => {
     try {
       const res = await post(`/deleteProfile`, { userID: userData.id });
       if (res) {
-        navigate('/')
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -283,303 +305,360 @@ const ProfileForm = ({ setDialog }) => {
       <Grid container sx={gridContainer}>
         <Box
           sx={{
-            display: "flex",
-            width: "100%",
-            alignItems: "self-start",
-            flexDirection: { xs: "column", sm: "row" },
-            gap: { xs: "20px", sm: 0 },
+            fontSize: "24px",
+            fontWeight: "600",
+            lineHeight: "46px",
           }}
+          component="h2"
         >
-          <Box className={classes.single_image_circle}>
-            {/* <CircularProgress variant="determinate" value={75} /> */}
-
-            <div style={{ position: "relative", width: 100, height: 100 }}>
-              <Typography variant="paragraph" className={classes.percentage}>
-                {calculatePercentage()}%
-              </Typography>
-              {status && (
-                <img
-                  src={
-                    profile.profileImage
-                      ? `${profile.profileImage}`
-                      : ProfileImage
-                  }
-                  // src={ProfileImage}
-                  alt={`Image`}
-                  className={classes.single_image}
-                />
-              )}
-              {/* CircularProgress for the remaining area */}
-              <CircularProgress
-                variant="determinate"
-                value={100} // Value set to 100 for the full circle
-                size={110}
-                thickness={1}
-                sx={{
-                  color: "#DADEE6", // Color for the circular track
-                  position: "absolute",
-                  opacity: 0.3, // Adjust opacity to suit your design
-                }}
-              />
-
-              {/* CircularProgress for the progress */}
-              <CircularProgress
-                variant="determinate"
-                value={progressValue}
-                size={110}
-                thickness={1}
-                sx={{
-                  color: (theme) =>
-                    progressValue <= 50 ? "#FB1F43" : "#FB1F43", // Color for the progress area
-                  position: "absolute",
-                }}
-              />
-              <img
-                src={
-                  profile.profileImage
-                    ? `${profile.profileImage}`
-                    : Img
-                }
-                width="108%"
-                height="108%"
-                style={{ borderRadius: "50%" }}
-              />
-              {!status && (
-                <Grid
-                  container
-                  className={classes.gridStyle}
-                // spacing={{ xs: 2, md: 3 }}
-                // columns={{ xs: 4, sm: 8, md: 12 }}
-                >
-                  <>
-                    <Grid item xs={6} md={4}>
-                      <input
-                        type="file"
-                        id="additionalImages"
-                        name="image"
-                        accept="image/*"
-                        onChange={(e) => handleImageChange(e, "upload")}
-                        style={{ display: "none" }}
-                      />
-                    </Grid>
-                    <label
-                      htmlFor="additionalImages"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <Box className={classes.single_image}>
-                        <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
-                        </Typography>
-                      </Box>
-                    </label>
-                  </>
-                </Grid>
-              )}
-            </div>
-          </Box>
+          Please complete your profile
+          
+        </Box>
           <Box
             sx={{
               display: "flex",
-              width: "100%",
-              maxWidth: "400px",
-              flexDirection: "column",
-              margin: { xs: "20px 0px", sm: 0 },
+              width: "99%",
+              margin:'auto',
+              alignItems: "self-start",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: { xs: "20px", sm: 0 },
+              border: "2px solid #D9D9D9",
+              padding: "20px 0",
             }}
           >
+            <Box className={classes.single_image_circle}>
+              {/* <CircularProgress variant="determinate" value={75} /> */}
+
+              <div style={{ position: "relative", width: 100, height: 100 }}>
+                <Typography variant="paragraph" className={classes.percentage}>
+                  {calculatePercentage()}%
+                </Typography>
+                {status && (
+                  <img
+                    src={
+                      profile.profileImage
+                        ? `${profile.profileImage}`
+                        : ProfileImage
+                    }
+                    // src={ProfileImage}
+                    alt={`Image`}
+                    className={classes.single_image}
+                  />
+                )}
+                {/* CircularProgress for the remaining area */}
+                <CircularProgress
+                  variant="determinate"
+                  value={100} // Value set to 100 for the full circle
+                  size={110}
+                  thickness={1}
+                  sx={{
+                    color: "#DADEE6", // Color for the circular track
+                    position: "absolute",
+                    opacity: 0.3, // Adjust opacity to suit your design
+                  }}
+                />
+
+                {/* CircularProgress for the progress */}
+                <CircularProgress
+                  variant="determinate"
+                  value={progressValue}
+                  size={110}
+                  thickness={1}
+                  sx={{
+                    color: (theme) =>
+                      progressValue <= 50 ? "#FB1F43" : "#FB1F43", // Color for the progress area
+                    position: "absolute",
+                  }}
+                />
+                <img
+                  src={profile.profileImage ? `${profile.profileImage}` : Img}
+                  width="108%"
+                  height="108%"
+                  style={{ borderRadius: "50%" }}
+                />
+                {!status && (
+                  <Grid
+                    container
+                    className={classes.gridStyle}
+                  // spacing={{ xs: 2, md: 3 }}
+                  // columns={{ xs: 4, sm: 8, md: 12 }}
+                  >
+                    <>
+                      <Grid item xs={6} md={4}>
+                        <input
+                          type="file"
+                          id="additionalImages"
+                          name="image"
+                          accept="image/*"
+                          onChange={(e) => handleImageChange(e, "upload")}
+                          style={{ display: "none" }}
+                        />
+                      </Grid>
+                      <label
+                        htmlFor="additionalImages"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <Box className={classes.single_image}>
+                          <Typography variant="h6" className={classes.body_text}>
+                            {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                          </Typography>
+                        </Box>
+                      </label>
+                    </>
+                  </Grid>
+                  
+                )}
+              </div>
+            </Box>
+        
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            maxWidth: "400px",
+            flexDirection: "column",
+            margin: { xs: "20px 0px", sm: 0 },
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "12px",
+            }}
+          >
+            <Typography variant="paragraph" className={classes.heading}>
+              Upload
+            </Typography>
+            <Typography variant="paragraph" className={classes.subHeading}>
+              Upto 2 images &lt; 5mb each 1 video &lt; 10 mb
+              <Box color={"red"}>{fileError}</Box>
+            </Typography>
+          </Box>
+          {!isSmallScreen && (
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                marginBottom: "12px",
+                width: "95%",
+                gap: "10px",
+                justifyContent: "space-between",
               }}
             >
-              <Typography variant="paragraph" className={classes.heading}>
-                Upload
-              </Typography>
-              <Typography variant="paragraph" className={classes.subHeading}>
-                Upto 2 images &lt; 5mb each 1 video &lt; 10 mb
-                <Box color={"red"}>{fileError}</Box>
-              </Typography>
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "90px",
+                  height: "90px",
+                  position: "relative",
+                  // background: "red",
+                }}
+              >
+                <img
+                  src={
+                    profile.profileImage1 ? `${profile.profileImage1}` : Img
+                  }
+                  width="100%"
+                  height="90px"
+                />
+                {!status && (
+                  <label htmlFor="image1" style={{ cursor: "pointer" }}>
+                    <Box className={classes.images}>
+                      <Typography variant="h6" className={classes.body_text}>
+                        {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                      </Typography>
+                    </Box>
+                  </label>
+                )}
+              </Box>
+              <input
+                type="file"
+                id="image1"
+                name="image"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, "upload1")}
+                style={{ display: "none" }}
+              />
+
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "90px",
+                  height: "90px",
+                  position: "relative",
+                  // background: "red",
+                }}
+              >
+                <img
+                  src={
+                    profile.profileImage2 ? `${profile.profileImage2}` : Img
+                  }
+                  width="100%"
+                  height="90px"
+                />
+                {!status && (
+                  <label htmlFor="image2" style={{ cursor: "pointer" }}>
+                    <Box className={classes.images}>
+                      <Typography variant="h6" className={classes.body_text}>
+                        {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                      </Typography>
+                    </Box>
+                  </label>
+                )}
+              </Box>
+              <input
+                type="file"
+                id="image2"
+                name="image"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, "upload2")}
+                style={{ display: "none" }}
+              />
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "138px",
+                  // minWidth: "138px",
+                  height: "90px",
+                  position: "relative",
+                  // background: "red",
+                }}
+              >
+                <video src={video2} width="100%" height="90px" />
+                {!status && (
+                  <label htmlFor="video" style={{ cursor: "pointer" }}>
+                    <Box className={classes.images}>
+                      <Typography variant="h6" className={classes.body_text}>
+                        {imageIsLoading ? "Uploading..." : "Upload a video"}
+                      </Typography>
+                    </Box>
+                  </label>
+                )}
+              </Box>
+              <input
+                type="file"
+                id="video"
+                name="video"
+                accept="video/*"
+                onChange={(e) => handleImageChange(e, "uploadvideo")}
+                style={{ display: "none" }}
+              />
             </Box>
-            {!isSmallScreen && (
+          )}
+
+          {isSmallScreen && (
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+                justifyContent: "space-between",
+              }}
+            >
               <Box
                 sx={{
+                  flex: "1 1 calc(50% - 5px)", // Adjust this width based on your layout needs
+                  maxWidth: "100%",
                   display: "flex",
-                  width: "95%",
+                  flexDirection: "column",
                   gap: "10px",
-                  justifyContent: "space-between",
                 }}
               >
-                <Box
-                  sx={{
+                <img
+                  src={Img}
+                  alt="img"
+                  style={{
                     width: "100%",
-                    maxWidth: "90px",
-                    height: "90px",
-                    position: "relative",
-                    // background: "red",
+                    height: "100%",
+                    objectFit: "cover",
                   }}
-                >
-                  <img
-                    src={
-                      profile.profileImage1
-                        ? `${profile.profileImage1}`
-                        : Img
-                    }
-                    width="100%"
-                    height="90px"
-                  />
-                  {!status && (
-                    <label htmlFor="image1" style={{ cursor: "pointer" }}>
-                      <Box className={classes.images}>
-                        <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
-                        </Typography>
-                      </Box>
-                    </label>
-                  )}
-                </Box>
-                <input
-                  type="file"
-                  id="image1"
-                  name="image"
-                  accept="image/*"
-                  onChange={(e) => handleImageChange(e, "upload1")}
-                  style={{ display: "none" }}
                 />
-
-                <Box
-                  sx={{
+                <img
+                  src={Img}
+                  alt="img"
+                  style={{
                     width: "100%",
-                    maxWidth: "90px",
-                    height: "90px",
-                    position: "relative",
-                    // background: "red",
+                    height: "100%",
+                    objectFit: "cover",
                   }}
-                >
-                  <img
-                    src={
-                      profile.profileImage2
-                        ? `${profile.profileImage2}`
-                        : Img
-                    }
-                    width="100%"
-                    height="90px"
-                  />
-                  {!status && (
-                    <label htmlFor="image2" style={{ cursor: "pointer" }}>
-                      <Box className={classes.images}>
-                        <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
-                        </Typography>
-                      </Box>
-                    </label>
-                  )}
-                </Box>
-                <input
-                  type="file"
-                  id="image2"
-                  name="image"
-                  accept="image/*"
-                  onChange={(e) => handleImageChange(e, "upload2")}
-                  style={{ display: "none" }}
-                />
-                <Box
-                  sx={{
-                    width: "100%",
-                    maxWidth: "138px",
-                    // minWidth: "138px",
-                    height: "90px",
-                    position: "relative",
-                    // background: "red",
-                  }}
-                >
-                  <video src={video2} width="100%" height="90px" />
-                  {!status && (
-                    <label htmlFor="video" style={{ cursor: "pointer" }}>
-                      <Box className={classes.images}>
-                        <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a video"}
-                        </Typography>
-                      </Box>
-                    </label>
-                  )}
-                </Box>
-                <input
-                  type="file"
-                  id="video"
-                  name="video"
-                  accept="video/*"
-                  onChange={(e) => handleImageChange(e, "uploadvideo")}
-                  style={{ display: "none" }}
                 />
               </Box>
-            )}
 
-            {isSmallScreen && (
               <Box
                 sx={{
+                  flex: "1 1 calc(50% - 5px)", // Adjust this width based on your layout needs
+                  maxWidth: "100%",
                   display: "flex",
-                  flexWrap: "wrap",
-                  gap: "10px",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 5px)", // Adjust this width based on your layout needs
-                    maxWidth: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
+                <img
+                  src={video2}
+                  alt="img"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    maxHeight: "100%",
+                    maxWidth: "none",
                   }}
-                >
-                  <img
-                    src={Img}
-                    alt="img"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <img
-                    src={Img}
-                    alt="img"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </Box>
-
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 5px)", // Adjust this width based on your layout needs
-                    maxWidth: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={video2}
-                    alt="img"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      maxHeight: "100%",
-                      maxWidth: "none",
-                    }}
-                  />
-                </Box>
+                />
               </Box>
-            )}
-          </Box>
+            </Box>
+          )}
         </Box>
-      </Grid>
+      </Box>
+    </Grid >
+    {/* <Typography variant="h5" className={classes.label}>
+        About you
+      </Typography> */}
+      <Grid Grid
+  item
+  xs = { 12}
+  md = { 11.5}
+  sx = {{
+    display: "flex",
+      justifyContent: "center",
+        alignItems: "center",
+        }
+}
+      >
+  <TextField
+    multiline
+    rows={6}
+    helperText={`${profile?.about.length}/200`}
+    error={profile?.about.length >= 200}
+    placeholder="Write your information here "
+    length={200}
+    className={classes.placeholderStyle}
+    disabled={status}
+    autoComplete="off"
+    name="about"
+    value={profile?.about}
+    // value={values.currentaddress || ""}
+    onChange={handleInputChange}
+    style={{
+      marginTop:'10px',
+      width: "96%",
+      margin:'auto',
+      height: "220px",
+      // resize: "none",
+      // padding: "0px 0px 0px 0px",
+      // border: "none",
+      borderRadius: "6px",
+      // backgroundColor: "#F2F2F2",
+      color: "#828282",
+      fontSize: "14px",
+      fontWeight: 400,
+      // fontFamily: "inherit",
+      // background: !edit && !add ? "white" : "white",
+      outline: "none",
+      // color:
+      //   !edit && !add ? "rgba(141, 141, 141, 141)" : "rgba(0, 0, 0, 1)",
+    }}
+  />
+      </Grid >
 
       <Grid
         container
@@ -596,11 +675,20 @@ const ProfileForm = ({ setDialog }) => {
             name="displayName"
             onChange={handleInputChange}
             value={profile.displayName}
-            placeholder="your text"
+            placeholder="Write your comment here"
             className={classes.input1}
             fullWidth
             disabled={status}
             autoComplete="off"
+            InputProps={{
+              style: {
+                backgroundColor: "transparent",
+                border: "1px solid #D9D9D9",
+                borderRadius: "2px",
+                width: "20vw",
+                height: "50px",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12} md={5.5}>
@@ -611,14 +699,22 @@ const ProfileForm = ({ setDialog }) => {
             id="country-select-demo"
             sx={{ width: 300 }}
             options={countries}
-            value={countries.find((item)=> item.label === profile.region)}
+            value={countries.find((item) => item.label === profile.region)}
             autoHighlight
             disabled={status}
             autoComplete="off"
             getOptionLabel={(option) => option.label}
-            onChange={(event, value) => handleInputChange({ target: { name: "region", value: value.label } })}
+            onChange={(event, value) =>
+              handleInputChange({
+                target: { name: "region", value: value.label },
+              })
+            }
             renderOption={(props, option) => (
-              <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+              <Box
+                component="li"
+                sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                {...props}
+              >
                 <img
                   loading="lazy"
                   width="20"
@@ -635,12 +731,23 @@ const ProfileForm = ({ setDialog }) => {
                 // label="Choose a country"
                 inputProps={{
                   ...params.inputProps,
-                  autoComplete: 'new-password', // disable autocomplete and autofill
+                  autoComplete: "new-password", // disable autocomplete and autofill
                 }}
                 value={profile.region}
                 className={classes.input1}
                 fullWidth
                 disabled={status}
+                InputProps={{
+                  ...params.InputProps,
+                  style: {
+                    ...params.InputProps?.style,
+                    backgroundColor: "transparent",
+                    border: "1px solid #D9D9D9",
+                    borderRadius: "2px",
+                    width: "20vw",
+                    height: "50px",
+                  },
+                }}
               />
             )}
           />
@@ -655,53 +762,18 @@ const ProfileForm = ({ setDialog }) => {
             disabled={status}
           /> */}
         </Grid>
-        <Grid item xs={12} md={11.5}>
-          <Typography variant="h5" className={classes.label}>
-            About you
-          </Typography>
-          <TextField
-            multiline
-            rows={2}
-            helperText={`${profile?.about.length}/200`}
-            error={profile?.about.length >= 200}
-            placeholder="About you"
-            length={200}
-            className={classes.placeholderStyle}
-            disabled={status}
-            autoComplete="off"
-            name="about"
-            value={profile?.about}
-            // value={values.currentaddress || ""}
-            onChange={handleInputChange}
-            style={{
-              width: "100%",
-              height: "90px",
-              resize: "none",
-              padding: "0px 0px 0px 0px",
-              border: "none",
-              borderRadius: "6px",
 
-              backgroundColor: "#F2F2F2",
-              color: "#828282",
-              fontSize: "14px",
-              fontWeight: 400,
-              // fontFamily: "inherit",
-              // background: !edit && !add ? "white" : "white",
-              outline: "none",
-              // color:
-              //   !edit && !add ? "rgba(141, 141, 141, 141)" : "rgba(0, 0, 0, 1)",
-            }}
-          />
-        </Grid>
         <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.label}>
             Three things you love
           </Typography>
 
-          {!status ?
+          {!status ? (
             <Autocomplete
               multiple
-              onChange={(e, v) => handleAutoComplete('like', v[v.length - 1]?.value)}
+              onChange={(e, v) =>
+                handleAutoComplete("like", v[v.length - 1]?.value)
+              }
               id="tags-filled"
               value={profile.like}
               options={loveList.sort((a, b) => b.title - a.title)}
@@ -719,7 +791,7 @@ const ProfileForm = ({ setDialog }) => {
                       label={option}
                       {...getTagProps({ index })}
                     />
-                  )
+                  );
                 })
               }
               renderInput={(params) => {
@@ -730,81 +802,100 @@ const ProfileForm = ({ setDialog }) => {
                     value={profile.like}
                     variant="filled"
                     label="like"
-                  // placeholder="Favorites"
+                    // placeholder="Favorites"
+                    InputProps={{
+                      style: {
+                        backgroundColor: "transparent",
+                        border: "1px solid #D9D9D9",
+                        borderRadius: "2px",
+                        height: "100px",
+                      },
+                    }}
                   />
                 );
               }}
             />
-            :
+          ) : (
             <TextField
               type="text"
               name="like"
               onChange={handleInputChange}
-              value={profile.like.join('  ')}
+              value={profile.like.join("  ")}
               autoComplete="off"
               // placeholder="What do you do?"
               className={classes.input1}
               fullWidth
               disabled={status}
-            />}
+            />
+          )}
         </Grid>
         <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.label}>
             Three things that you hate
           </Typography>
-          {!status ? <Autocomplete
-            multiple
-            onChange={(e, v) => handleAutoComplete('unlike', v[v.length - 1]?.value)}
-            id="tags-filled"
-            value={profile.unlike}
-            options={hateList.sort((a, b) => b.title - a.title)}
-            autoComplete="off"
-            // options={loveList.map((option) => option.title)}
-            getOptionLabel={(option) => option.title}
-            // defaultValue={[top100Films[13].title]}
-            freeSolo
-            // value={JSON.parse(profile.like)}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
+          {!status ? (
+            <Autocomplete
+              multiple
+              onChange={(e, v) =>
+                handleAutoComplete("unlike", v[v.length - 1]?.value)
+              }
+              id="tags-filled"
+              value={profile.unlike}
+              options={hateList.sort((a, b) => b.title - a.title)}
+              autoComplete="off"
+              // options={loveList.map((option) => option.title)}
+              getOptionLabel={(option) => option.title}
+              // defaultValue={[top100Films[13].title]}
+              freeSolo
+              // value={JSON.parse(profile.like)}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => {
+                  return (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  );
+                })
+              }
+              renderInput={(params) => {
                 return (
-                  <Chip
-                    variant="outlined"
-                    label={option}
-                    {...getTagProps({ index })}
+                  <TextField
+                    {...params}
+                    name="unlike"
+                    autoComplete="off"
+                    value={profile.unlike}
+                    variant="filled"
+                    label="unlike"
+                    // placeholder="Favorites"
+                    InputProps={{
+                      style: {
+                        backgroundColor: "transparent",
+                        border: "1px solid #D9D9D9",
+                        borderRadius: "2px",
+                        height: "100px",
+                      },
+                    }}
                   />
-                )
-              })
-            }
-            renderInput={(params) => {
-              return (
-                <TextField
-                  {...params}
-                  name="unlike"
-                  autoComplete="off"
-                  value={profile.unlike}
-                  variant="filled"
-                  label="unlike"
-                // placeholder="Favorites"
-                />
-              );
-            }}
-          />
-            :
+                );
+              }}
+            />
+          ) : (
             <TextField
               type="text"
               name="unlike"
               onChange={handleInputChange}
-              value={profile.unlike.join('  ')}
+              value={profile.unlike.join("  ")}
               autoComplete="off"
               // placeholder="What do you like in a partner?"
               className={classes.input1}
               fullWidth
               disabled={status}
-            />}
-
-
+            />
+          )}
         </Grid>
-        <Grid item xs={12} md={5.5}>
+        {/* <Grid item xs={12} md={5.5}>
           <Typography variant="h5" className={classes.label}>
             Preferred Language
           </Typography>
@@ -817,6 +908,7 @@ const ProfileForm = ({ setDialog }) => {
             className={classes.input1}
             fullWidth
             disabled={status}
+            
           >
             {languages.map((language) => (
               <MenuItem
@@ -850,19 +942,27 @@ const ProfileForm = ({ setDialog }) => {
                 className={classes.input1}
                 fullWidth
                 disabled={status}
+                InputProps={{
+                  style: { backgroundColor: 'transparent', border: '1px solid #D9D9D9', borderRadius: '2px' },
+                }}
               />
               <Box color={"red"} sx={{ fontSize: 12 }}>{t(error)}</Box>
             </>
           }
-        </Grid>
+        </Grid> */}
 
-        <Grid item sx={{ width: "100%" }}>
+        <Grid item sx={{ width: "80%" }}>
           <Box
-            sx={{ width: "100%", justifyContent: "center", display: "flex", gap: "20px" }}
+            sx={{
+              width: "100%",
+              justifyContent: "center",
+              display: "flex",
+              gap: "20px",
+            }}
           >
             <LoadingButton
               onClick={() => {
-                !pathname.includes('/profile') && setStatus(!status);
+                !pathname.includes("/profile") && setStatus(!status);
                 if (!status) {
                   confirmSubmit();
                 }
@@ -873,18 +973,53 @@ const ProfileForm = ({ setDialog }) => {
               type="submit"
               className={classes.btn1}
             >
-              {status ? "Edit Profile" : "Save Profile"}
+              {status ? "Edit Profile" : "Save Changes"}{" "}
             </LoadingButton>
-            {!pathname.includes('/profile') && <Button
-              onClick={() => { dispatch(setProfileModel(false)); setDialog({ open: true, description: 'Are you sure you want to delete your profile?', title: 'Delete Profile', action: () => handleDelete() }) }}
+
+            {/* Cancel Button */}
+            <Button
+              onClick={() => console.log("Cancel Clicked")}
+              variant="contained"
+              type="button"
+              className={classes.btn1}
+              style={{ backgroundColor: 'rgb(255,182,193)', color: '#FB1F43' }}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              onClick={() => console.log("Another Button Clicked")}
               variant="contained"
               type="submit"
               className={classes.btn1}
+              style={{ backgroundColor: 'rgb(255,182,193)', color: '#FB1F43' }}
+
             >
-              Delete Profile
-            </Button>}
+              Delete profile
+            </Button>
+
+            {!pathname.includes("/profile") && (
+              <Button
+                onClick={() => {
+                  dispatch(setProfileModel(false));
+                  setDialog({
+                    open: true,
+                    description:
+                      "Are you sure you want to delete your profile?",
+                    title: "Delete Profile",
+                    action: () => handleDelete(),
+                  });
+                }}
+                variant="contained"
+                type="submit"
+                className={classes.btn1}
+              >
+                Delete Profile
+              </Button>
+            )}
           </Box>
         </Grid>
+
         {/* <Container className={classes.container}>
           <Container className={classes.box_inner}>
             <Box className={classes.box_left}> 
@@ -963,7 +1098,128 @@ const ProfileForm = ({ setDialog }) => {
           </Container>
         </Container>{" "}
         */}
+
       </Grid>
+      <Grid item sx={{ width: "100%" }}>
+        <Box
+          sx={{
+            width: "100%",
+            justifyContent: "center",
+            display: "flex",
+            gap: "20px",
+            flexDirection: "column",
+          }}
+        >
+          {/* Payout Details Heading */}
+          <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: "bold" ,margin:'50px 40px 0'}}>
+            Payout Details
+          </Typography>
+
+          {/* Payout Section */}
+          <Grid style={{display:'flex',justifyContent:'space-around',padding:'20px 0px'}}>
+            <Box
+              sx={{
+                width: "40%",
+                
+
+              }}
+            >
+              <Grid style={{paddingBottom:'30px'}}>
+                <label htmlFor="aa">First Name</label>
+                <TextField label="your text" variant="outlined" fullWidth    sx={{ backgroundColor: "#F2F2F2"}}/>
+              </Grid>
+              <Grid style={{paddingBottom:'30px'}}> <label htmlFor="">Last Name</label> <TextField label="your text" variant="outlined" fullWidth   sx={{ backgroundColor: "#F2F2F2" }}/></Grid>
+              <Grid style={{ paddingBottom: "30px" }}>
+          <label htmlFor="">Phone Number</label>
+          <TextField
+            select
+            label="Select Country Code"
+            variant="outlined"
+            fullWidth
+            sx={{ backgroundColor: "#F2F2F2" }}
+          >
+            <MenuItem value="+1">+1 (USA)</MenuItem>
+            <MenuItem value="+44">+44 (UK)</MenuItem>
+            <MenuItem value="+92">+92 (Pakistan)</MenuItem>
+            <MenuItem value="+91">+91 (India)</MenuItem>
+            {/* Add more options as needed */}
+          </TextField>
+        </Grid>
+            </Box>
+            <Box
+              sx={{
+                width: "40%",
+                gap: "10px",
+
+              }}
+            >
+              <Grid>
+                <label htmlFor="">Select mode of Payment</label>
+                <TextField
+            select
+            label="Webmoney"
+            variant="outlined"
+            fullWidth
+            sx={{ backgroundColor: "#F2F2F2" ,marginBottom:"12px"  }}
+          >
+            <MenuItem value="webmoney">WebMoney</MenuItem>
+          </TextField>              </Grid>
+          <TextField
+            select
+            label="paypal"
+            variant="outlined"
+            fullWidth
+            sx={{ backgroundColor: "#F2F2F2",marginBottom:"12px"  }}
+          >
+            <MenuItem value="paypal">PayPal</MenuItem>
+          </TextField>
+          <TextField
+            select
+            label="Credit card/debit card/ATM card"
+            variant="outlined"
+            fullWidth
+            sx={{ backgroundColor: "#F2F2F2" }}
+          >
+            <MenuItem value="creditcard">Credit Card</MenuItem>
+            <MenuItem value="debbit card">debbit card</MenuItem>
+            <MenuItem value="ATM card">ATM card</MenuItem>
+          </TextField>
+            </Box>
+          </Grid>
+          <Grid style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+            <LoadingButton
+              onClick={() => {
+                !pathname.includes("/profile") && setStatus(!status);
+                if (!status) {
+                  confirmSubmit();
+                }
+              }}
+              loading={loading}
+              loadingPosition="center"
+              variant="contained"
+              type="submit"
+              className={classes.btn1}
+            >
+              {status ? "Edit Profile" : "Save Changes"}{" "}
+            </LoadingButton>
+
+            {/* Cancel Button */}
+            <Button
+              onClick={() => console.log("Cancel Clicked")}
+              variant="contained"
+              type="button"
+              className={classes.btn1}
+              style={{ backgroundColor: 'rgb(255,182,193)', color: '#FB1F43' }}
+            >
+              Cancel
+            </Button>
+          </Grid>
+        </Box>
+      </Grid>
+
+
+
+
     </>
   );
 };

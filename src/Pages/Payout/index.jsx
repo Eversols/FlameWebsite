@@ -15,7 +15,7 @@ const index = () => {
   });
   return (
     <>
-    <Header/>
+      <Header />
       <Box
         sx={{
           width: { xs: "100%", md: "50%" },
@@ -27,12 +27,11 @@ const index = () => {
         }}
       >
         <Box sx={{ marginBottom: "72px" }}>
-          <Typography variant="h2">Payout</Typography >
+          <Typography variant="h2">Payout</Typography>
         </Box>
-        <Card elevation={8} >
-          <Box sx={{ padding: "24px", }}>
-
-          <Payout setDialog={setDialog}/>
+        <Card elevation={8}>
+          <Box sx={{ padding: "24px" }}>
+            <Payout setDialog={setDialog} />
           </Box>
         </Card>
       </Box>

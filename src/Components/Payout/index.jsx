@@ -24,7 +24,7 @@ const gridStyle = {
     maxWidth: "600px",
     justifyContent: "center",
     display: "flex",
-    overflowY: "hidden",
+    // overflowY: "hidden",
 };
 
 
@@ -154,7 +154,7 @@ const Payout = ({setDialog}) => {
             // columns={{ xs: 4, sm: 8, md: 12 }}
             sx={gridStyle}
         >
-            <Grid item xs={12} md={5.5}>
+            <Grid item xs={12} md={5.5} >
                 <Typography variant="h5" className={classes.heading}>
                     Country of receiving bank
                 </Typography>
