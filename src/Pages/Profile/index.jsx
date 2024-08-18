@@ -4,29 +4,23 @@ import { Box, Card, Typography } from "@mui/material";
 import ProfileForm from "../../Components/Profile/ProfileForm";
 import ProfileModal from "../../Components/Profile/ProfileModal";
 import Header from "../../Components/LandingPage/Header";
+import Profile from "../../Components/Profile/Profile";
+import bgBlock from "../../Assets/images/bg_block.svg";
+import bgHeart from "../../Assets/images/bg_heart.svg";
+import useStyles from "./style";
 
 
 const index = () => {
+  const classes = useStyles();
   return (
     <>
-      <Header />
-      <Box
-        sx={{
-          width: { xs: "100%", md: "50%" },
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          height: "100%",
-          alignItems: "center",
-        }}
-      >
-        <Box sx={{ marginBottom: "72px" }} >
-          {/* <Typography variant="h2">Profile</Typography > */}
+      {/* <img src={flameLogo} className={classes.logo} /> */}
+      <img src={bgHeart} className={classes.heart_bg} />
+      <img src={bgBlock} className={classes.block_bg} />
+      <Box className={classes.mainWrapperBox}>
+        <Box className={classes.mainBox}>
+          <Profile />
         </Box>
-        <Card elevation={8} sx={{ padding: "24px", }}>
-
-          <ProfileForm />
-        </Card>
       </Box>
     </>
   );

@@ -15,7 +15,7 @@ class VoxService {
 
     // Init Voximplant
     VoxService.inst.init({
-      showDebugInfo: true,
+      // showDebugInfo: true,
       experiments: {
         messagingV2: true,
       },
