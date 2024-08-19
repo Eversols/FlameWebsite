@@ -6,6 +6,18 @@ import ProfileModal from "../../Components/Profile/ProfileModal";
 import Header from "../../Components/LandingPage/Header";
 
 
+const StyledCard = styled(Card)`
+  padding: 24px;
+  overflow-y: scroll;
+  margin-bottom: 20px;
+
+  /* Custom scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* Optional: just to avoid flickering */
+  }
+`;
+
 const index = () => {
   return (
     <>
@@ -20,11 +32,10 @@ const index = () => {
           alignItems: "center",
         }}
       >
-        <Box sx={{ marginBottom: "72px" }} >
+        <Box sx={{ marginBottom: "72px"}} >
           {/* <Typography variant="h2">Profile</Typography > */}
         </Box>
-        <Card elevation={8} sx={{ padding: "24px", }}>
-
+        <Card elevation={8} sx={{ padding: "24px", overflowY:'scroll',marginBottom:'20px',}}>
           <ProfileForm />
         </Card>
       </Box>
