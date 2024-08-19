@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, Grid, IconButton, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import FailureIcon from "../../Assets/images/failureIcon.svg";
-import SuccessIcon from "../../Assets/images/successIcon.svg";
+import SuccessIcon from "../../Assets/images/clap.png";
 import useStyles from "./style";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,31 +22,18 @@ const mainContainer = {
 };
 
 
-const PaymentStatus = () => {
-  console.log('SSSSSSSSSSSSSSSSSS')
-  const { paymentSuccess, paymentError } = useSelector((state) => state.auth);
-  const [status, setStatus] = useState(false);
+const ProfileStatus = ({ modal, setModal, action }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const { t } = useTranslation();
-  const handleClose = (e) =>
-    dispatch(setPaymentStatus({ paymentSuccess: false, paymentError: false }));
 
-  useEffect(() => {
-    if (paymentSuccess) {
-      setStatus(true);
-    }
-  }, [paymentSuccess]);
-
-  console.log('EEEEEEEEEEEEEEEEEEEEEEE', paymentSuccess, paymentError)
   return (
     <Dialog
       fullScreen={fullScreen}
-      open={paymentSuccess || paymentError}
+      open={modal}
       aria-labelledby="responsive-dialog-title"
-      onClose={handleClose}
+      onClose={() => setModal(false)}
       sx={{
         "& .MuiDialog-paper": {
           maxWidth: { xs: "100%", sm: "600px", md: "780px" },
@@ -89,10 +76,10 @@ const PaymentStatus = () => {
           fontWeight={700}
           ml={2}
         >
-          {t("Card Payment")}
+
         </Typography>
 
-        <IconButton sx={{ width: '35px', height: '35px' }} onClick={handleClose}>
+        <IconButton sx={{ width: '35px', height: '35px' }} onClick={() => setModal(false)}>
           <CloseIcon sx={{ fill: '#AAAAA', width: '20px' }} />
         </IconButton>
       </Box>
@@ -108,34 +95,25 @@ const PaymentStatus = () => {
         >
           <Box
             sx={{
-              background: status ? "#8BD592" : '#FF8688',
+              background: "#8BD592",
             }}
             className={classes.circle}
           >
-            {status ? (
-              <img
-                src={SuccessIcon}
-                className={classes.circleImage}
-                alt="no image"
-              />
-            ) : (
-              <img
-                src={FailureIcon}
-                className={classes.circleImage}
-                alt="no image"
-              />
-            )}
+            <img
+              src={SuccessIcon}
+              className={classes.circleImage1}
+              alt="no image"
+            />
           </Box>
           <Box className={classes.textContainer}>
             <Typography className={classes.text}>
-              {status ? `${t("Payment Done")}!` : `${t("Payment Failed")}!`}
+              Congratulations
             </Typography>
           </Box>
           <Box className={classes.textContainer}>
             <Typography className={classes.text2}>
-              {status
-                ? `${t("Thank you for completing your secure online payment. Have a great day")}!`
-                : t("Unfortunately payment was rejected")}
+              Thank you for completing your profile online.
+              Have a great day!
             </Typography>
           </Box>
           <Grid item sx={{ width: "100%", marginTop: "30px" }}>
@@ -143,12 +121,12 @@ const PaymentStatus = () => {
               sx={{ width: "100%", justifyContent: "center", display: "flex" }}
             >
               <Button
-                onClick={handleClose}
+                onClick={action}
                 variant="contained"
                 type="submit"
                 className={classes.btn1}
               >
-                {status ? t("Done") : t("Try another card")}
+                Done
               </Button>
             </Box>
           </Grid>
@@ -158,4 +136,4 @@ const PaymentStatus = () => {
   );
 };
 
-export default PaymentStatus;
+export default ProfileStatus;
