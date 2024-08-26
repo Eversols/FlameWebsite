@@ -267,6 +267,7 @@ const Profile = ({ setDialog }) => {
         // unlike: "",
       });
       if (res) {
+        console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV', profile)
         if (calculatePercentage() == 100) {
           setLoading(false);
           setModal(true)
@@ -318,10 +319,43 @@ const Profile = ({ setDialog }) => {
   };
 
   const calculatePercentage = () => {
-    const totalFields = Object.keys(profile).length;
-    const filledFields = Object.values(profile).filter(
+    const {
+      paypal_id,
+      webmoney_id,
+      payout_bankName,
+      payout_currency,
+      payout_country,
+      payout_cardNumber,
+      ...rest
+    } = profile;
+
+    let relevantFields = {};
+
+    if (paypal_id !== "") {
+      relevantFields = { paypal_id };
+    } else if (webmoney_id !== "") {
+      relevantFields = { webmoney_id };
+    } else if (
+      payout_bankName !== "" ||
+      payout_currency !== "" ||
+      payout_country !== "" ||
+      payout_cardNumber !== ""
+    ) {
+      relevantFields = {
+        payout_bankName,
+        payout_currency,
+        payout_country,
+        payout_cardNumber,
+      };
+    } else {
+      relevantFields = profile; // If nothing is filled, include all fields.
+    }
+
+    const totalFields = Object.keys(relevantFields).length;
+    const filledFields = Object.values(relevantFields).filter(
       (value) => value !== ""
     ).length;
+
     const percentage = (filledFields / totalFields) * 100;
     return Math.round(percentage);
   };
@@ -825,6 +859,52 @@ const Profile = ({ setDialog }) => {
 
           <Autocomplete
             multiple
+            onChange={(e, v) => handleAutoComplete('like', v[v.length - 1]?.value)}
+            id="tags-filled"
+            value={profile.like}
+            options={loveList.sort((a, b) => b.title - a.title)}
+            autoComplete="off"
+            // options={loveList.map((option) => option.title)}
+            getOptionLabel={(option) => option.title}
+            // defaultValue={[top100Films[13].title]}
+            freeSolo
+            // value={JSON.parse(profile.like)}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => {
+                return (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                )
+              })
+            }
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  name="like"
+                  value={profile.like}
+                  variant="filled"
+                  label="Love"
+                  sx={{
+                    '& .MuiFilledInput-root': {
+                      backgroundColor: "transparent",
+                      border: "1px solid #D9D9D9",
+                      borderRadius: "2px",
+                      height: "100px",
+                    }
+                  }}
+
+                // placeholder="Favorites"
+                />
+              );
+            }}
+          />
+
+          {/* <Autocomplete
+            multiple
             onChange={(e, v) =>
               handleAutoComplete("like", v[v.length - 1]?.value)
             }
@@ -868,14 +948,60 @@ const Profile = ({ setDialog }) => {
                 />
               );
             }}
-          />
+          /> */}
 
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="h5" className={classes.label}>
             Three things that you hate
           </Typography>
+
           <Autocomplete
+            multiple
+            onChange={(e, v) => handleAutoComplete('unlike', v[v.length - 1]?.value)}
+            id="tags-filled"
+            value={profile.unlike}
+            options={hateList.sort((a, b) => b.title - a.title)}
+            autoComplete="off"
+            // options={loveList.map((option) => option.title)}
+            getOptionLabel={(option) => option.title}
+            // defaultValue={[top100Films[13].title]}
+            freeSolo
+            // value={JSON.parse(profile.like)}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => {
+                return (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                )
+              })
+            }
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  name="unlike"
+                  autoComplete="off"
+                  value={profile.unlike}
+                  variant="filled"
+                  label="Hate"
+                  sx={{
+                    '& .MuiFilledInput-root': {
+                      backgroundColor: "transparent",
+                      border: "1px solid #D9D9D9",
+                      borderRadius: "2px",
+                      height: "100px",
+                    }
+                  }}
+                // placeholder="Favorites"
+                />
+              );
+            }}
+          />
+          {/* <Autocomplete
             multiple
             onChange={(e, v) =>
               handleAutoComplete("unlike", v[v.length - 1]?.value)
@@ -921,7 +1047,67 @@ const Profile = ({ setDialog }) => {
                 />
               );
             }}
+          /> */}
+        </Grid>
+
+
+        <Grid item xs={12} md={5.5}>
+          <Typography variant="h5" className={classes.label}>
+            Preferred Language
+          </Typography>
+          <Select
+            name="language"
+            id="demo-simple-select"
+            value={profile.language}
+            onChange={handleInputChange}
+            autoComplete="off"
+            className={classes.input1}
+            fullWidth
+            disabled={status}
+          >
+            {languages.map((language) => (
+              <MenuItem
+                key={language.value}
+                value={language.value}
+                disableRipple
+              >
+                <img
+                  src={language.flag}
+                  alt={`${language.name} flag`}
+                  style={{ width: '20px', marginRight: '8px' }}
+                />
+                {language.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} md={6}>
+
+          <Typography variant="h5" className={classes.label}>
+            Referral Code
+          </Typography>
+          <TextField
+            type="text"
+            name="referral_code"
+            onChange={handleInputChange}
+            autoComplete="off"
+            value={profile?.referral_code || ''}
+            placeholder="Refferal Code"
+            className={classes.input1}
+            fullWidth
+            InputProps={{
+              style: {
+                backgroundColor: "transparent",
+                border: "1px solid #D9D9D9",
+                borderRadius: "2px",
+                width: "100%",
+                height: "50px",
+              },
+            }}
           />
+          <Box color={"red"} sx={{ fontSize: 12 }}>{t(error)}</Box>
+
+
         </Grid>
 
         {/* <Grid item sx={{ width: "100%", justifyContent: "center", display: "flex" }}>
