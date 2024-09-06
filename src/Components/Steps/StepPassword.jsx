@@ -27,6 +27,7 @@ import { voxLogin, voxRegister } from "../../Services/utils";
 import useStyles from "./style";
 import { useTranslation } from "react-i18next";
 import { LoadingButton } from "@mui/lab";
+import ProfileStatus from "./ProfileStatus";
 
 const StepPassword = ({ setStep }) => {
   const { pathname } = useLocation();
@@ -34,6 +35,7 @@ const StepPassword = ({ setStep }) => {
   const [cPassword, setCPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
+  const [modal, setModal] = useState(false);
   const { error, user, role, mood, region, userData, siteMeta } = useSelector(
     (state) => state.auth
   );
@@ -109,7 +111,8 @@ const StepPassword = ({ setStep }) => {
                 user.emailExist &&
                 user_data.payload.is_active == "Inactive"
               ) {
-                dispatch(setError("Your account under the review from admin!"));
+                setModal(true)
+                // dispatch(setError("Your account under the review from admin!"));
                 setLoading(false);
                 return;
               }
@@ -124,9 +127,8 @@ const StepPassword = ({ setStep }) => {
                   "@",
                   "-flame-"
                 );
-                const password = `${user_data.payload.email.split("@")[0]}${
-                  user_data.payload.id
-                }`;
+                const password = `${user_data.payload.email.split("@")[0]}${user_data.payload.id
+                  }`;
                 console.log(res.data.content.role, mood, region);
                 await voxLogin(userName, password, user_data.payload.email);
               }
@@ -312,6 +314,7 @@ const StepPassword = ({ setStep }) => {
           </Container>
         </Box>
       </Box>
+      <ProfileStatus modal={modal} setModal={setModal} action={() => setModal(false)} />
     </>
   );
 };

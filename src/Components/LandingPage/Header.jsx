@@ -10,12 +10,13 @@ import Languagebtn from "./Languagebtn";
 import { useTranslation, I18nextProvider } from "react-i18next";
 import CardMedia from "@mui/material/CardMedia";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setRole } from "../../Services/store/authSlice";
 
 const Header = () => {
     const [showLogo, setShowLogo] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const { token } = useSelector((state) => state.auth)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { pathname } = useLocation()
@@ -43,7 +44,11 @@ const Header = () => {
 
     const getStartedBtn = () => {
         dispatch(setRole("user"));
-        navigate('/user/authentication')
+        if (token) {
+            navigate('/user/home')
+        } else {
+            navigate('/user/authentication')
+        }
     };
 
     const { t } = useTranslation();
@@ -83,31 +88,31 @@ const Header = () => {
                             alignItems: "center",
                         }}
                     >
-                        {pathname == '/' && 
-                        <Button
-                            onClick={getStartedBtn}
-                            sx={{
-                                my: 2,
-                                color: "white",
-                                display: "block",
-                                bgcolor: "#FB1F43",
-                                textTransform: "capitalize",
-                                paddingInline: "2rem",
-                                paddingBlock: ".45rem",
-                                borderRadius: "999px",
-                                fontSize: { xs: "16px", md: "14px", xl: "16px" },
-                                "&:hover": {
-                                    bgcolor: "#C81230",
+                        {pathname == '/' &&
+                            <Button
+                                onClick={getStartedBtn}
+                                sx={{
+                                    my: 2,
                                     color: "white",
-                                },
-                                "&:active": {
-                                    bgcolor: "#C81230",
-                                    color: "white",
-                                },
-                            }}
-                        >
-                            {t("Get Started")}
-                        </Button>}
+                                    display: "block",
+                                    bgcolor: "#FB1F43",
+                                    textTransform: "capitalize",
+                                    paddingInline: "2rem",
+                                    paddingBlock: ".45rem",
+                                    borderRadius: "999px",
+                                    fontSize: { xs: "16px", md: "14px", xl: "16px" },
+                                    "&:hover": {
+                                        bgcolor: "#C81230",
+                                        color: "white",
+                                    },
+                                    "&:active": {
+                                        bgcolor: "#C81230",
+                                        color: "white",
+                                    },
+                                }}
+                            >
+                                {t("Get Started")}
+                            </Button>}
                     </Box>
                     <Box sx={{ marginLeft: { md: "0", xs: "auto" } }}>
                         <Languagebtn />

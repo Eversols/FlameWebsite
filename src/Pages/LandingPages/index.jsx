@@ -36,14 +36,17 @@ const LandingPages = () => {
 
   const getStarted = () => {
     dispatch(setRole("user"));
-    navigate('/user/authentication')
-    console.log("getStarted");
+    if (token) {
+      navigate(`/user/home`);
+    } else {
+      navigate('/user/authentication')
+    }
   };
 
   const heroflameTitle = "Flame \n Moments";
 
   useEffect(() => {
-    if(!(localStorage.getItem('privacyPolicy'))){
+    if (!(localStorage.getItem('privacyPolicy'))) {
       dispatch(setPrivacyModel(true))
     }
     dispatch(getSiteMeta())

@@ -175,7 +175,7 @@ const Profile = ({ setDialog }) => {
 
   const handleAutoComplete = (name, value) => {
     // const { name, value } = event.target;
-    // console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', name, value,)
+    console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', name, value,)
     if (name && value) {
       if (profile[name].includes(`#${value}`)) return;
       setProfile((prevProfile) => ({
@@ -239,8 +239,13 @@ const Profile = ({ setDialog }) => {
   };
 
   const confirmSubmit = async () => {
-    setLoading(true);
     setError("");
+
+    if (!(calculatePercentage() == 100)) {
+      setError("Please complete your profile");
+      return
+    }
+    setLoading(true);
     let refferal;
     // if (siteMeta.is_refferal_on_off == 'yes') {
     //   refferal = refferalList.find((item) => item.referral_code == profile.referral_code.trim())
@@ -268,11 +273,11 @@ const Profile = ({ setDialog }) => {
       });
       if (res) {
         console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV', profile)
-        if (calculatePercentage() == 100) {
-          setLoading(false);
-          setModal(true)
-          return
-        }
+
+        setLoading(false);
+        setModal(true)
+        return
+
         // const profileData = await dispatch(getProfile({ id: userData.id }));
         // if (profileData.payload) {
         //   const { data, metadata } = profileData.payload;
@@ -326,6 +331,8 @@ const Profile = ({ setDialog }) => {
       payout_currency,
       payout_country,
       payout_cardNumber,
+      like,
+      unlike,
       ...rest
     } = profile;
 
@@ -351,10 +358,13 @@ const Profile = ({ setDialog }) => {
       relevantFields = profile; // If nothing is filled, include all fields.
     }
 
-    const totalFields = Object.keys(relevantFields).length;
-    const filledFields = Object.values(relevantFields).filter(
-      (value) => value !== ""
-    ).length;
+    let arrayCheck = false;
+
+    if (like.length > 0 && unlike.length > 0) {
+      arrayCheck = true;
+    }
+    const totalFields = Object.keys({ ...rest, ...relevantFields }).length + 1
+    const filledFields = Object.values({ ...rest, ...relevantFields }).filter((value) => value !== "").length + (arrayCheck ? 1 : 0);
 
     const percentage = (filledFields / totalFields) * 100;
     return Math.round(percentage);
@@ -859,7 +869,7 @@ const Profile = ({ setDialog }) => {
 
           <Autocomplete
             multiple
-            onChange={(e, v) => handleAutoComplete('like', v[v.length - 1]?.value)}
+            onChange={(e, v) => profile.like.length < 3 && handleAutoComplete('like', v[v.length - 1]?.value)}
             id="tags-filled"
             value={profile.like}
             options={loveList.sort((a, b) => b.title - a.title)}
@@ -958,7 +968,7 @@ const Profile = ({ setDialog }) => {
 
           <Autocomplete
             multiple
-            onChange={(e, v) => handleAutoComplete('unlike', v[v.length - 1]?.value)}
+            onChange={(e, v) => profile.unlike.length < 3 && handleAutoComplete('unlike', v[v.length - 1]?.value)}
             id="tags-filled"
             value={profile.unlike}
             options={hateList.sort((a, b) => b.title - a.title)}
@@ -1050,38 +1060,7 @@ const Profile = ({ setDialog }) => {
           /> */}
         </Grid>
 
-
         <Grid item xs={12} md={5.5}>
-          <Typography variant="h5" className={classes.label}>
-            Preferred Language
-          </Typography>
-          <Select
-            name="language"
-            id="demo-simple-select"
-            value={profile.language}
-            onChange={handleInputChange}
-            autoComplete="off"
-            className={classes.input1}
-            fullWidth
-            disabled={status}
-          >
-            {languages.map((language) => (
-              <MenuItem
-                key={language.value}
-                value={language.value}
-                disableRipple
-              >
-                <img
-                  src={language.flag}
-                  alt={`${language.name} flag`}
-                  style={{ width: '20px', marginRight: '8px' }}
-                />
-                {language.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </Grid>
-        <Grid item xs={12} md={6}>
 
           <Typography variant="h5" className={classes.label}>
             Referral Code
@@ -1105,10 +1084,45 @@ const Profile = ({ setDialog }) => {
               },
             }}
           />
-          <Box color={"red"} sx={{ fontSize: 12 }}>{t(error)}</Box>
+
 
 
         </Grid>
+
+        <Grid item xs={12} md={3}>
+          <Typography variant="h5" className={classes.label}>
+            Preferred Language
+          </Typography>
+          <Select
+            name="language"
+            id="demo-simple-select"
+            value={profile.language}
+            onChange={handleInputChange}
+            autoComplete="off"
+            className={classes.input1}
+            fullWidth
+            disabled={status}
+          >
+            {languages.map((language) => (
+              <MenuItem
+                key={language.value}
+                value={language.value}
+                disableRipple
+              >
+                {language.name}
+                <img
+                  src={language.flag}
+                  alt={`${language.name} flag`}
+                  style={{ width: '20px', marginLeft: '8px' }}
+                />
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} md={2.5}>
+
+        </Grid>
+
 
         {/* <Grid item sx={{ width: "100%", justifyContent: "center", display: "flex" }}>
           <LoadingButton
@@ -1242,7 +1256,7 @@ const Profile = ({ setDialog }) => {
                       placeholder="Enter Webmoney ID"
                       className={classes.input1}
                       fullWidth
-                      disabled={status}
+                      disabled={true}
                       autoComplete="off"
                       InputProps={{
                         style: {
@@ -1312,7 +1326,7 @@ const Profile = ({ setDialog }) => {
                         placeholder="Bank Name"
                         className={classes.input1}
                         fullWidth
-                        disabled={status}
+                        disabled={true}
                         autoComplete="off"
                         InputProps={{
                           style: {
@@ -1332,7 +1346,7 @@ const Profile = ({ setDialog }) => {
                         placeholder="Currency of bank"
                         className={classes.input1}
                         fullWidth
-                        disabled={status}
+                        disabled={true}
                         autoComplete="off"
                         InputProps={{
                           style: {
@@ -1352,7 +1366,7 @@ const Profile = ({ setDialog }) => {
                         placeholder="Card Number"
                         className={classes.input1}
                         fullWidth
-                        disabled={status}
+                        disabled={true}
                         autoComplete="off"
                         InputProps={{
                           style: {
@@ -1372,7 +1386,7 @@ const Profile = ({ setDialog }) => {
                         placeholder="Country of bank"
                         className={classes.input1}
                         fullWidth
-                        disabled={status}
+                        disabled={true}
                         autoComplete="off"
                         InputProps={{
                           style: {
@@ -1406,7 +1420,7 @@ const Profile = ({ setDialog }) => {
           </LoadingButton>
 
         </Grid>
-
+        <Box color={"red"} sx={{ fontSize: 16 }}>{t(error)}</Box>
       </Grid>
 
 
