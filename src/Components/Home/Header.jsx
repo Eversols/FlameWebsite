@@ -40,6 +40,7 @@ const Header = ({ setDialog }) => {
   const logout = async () => {
     try {
       const res = await post("/logout", userData);
+      localStorage.removeItem("token");
       voxService.get().disconnect();
       persistor.purge();
       localStorage.removeItem("persist:root");

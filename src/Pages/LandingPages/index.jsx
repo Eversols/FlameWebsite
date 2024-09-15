@@ -36,7 +36,7 @@ const LandingPages = () => {
 
   const getStarted = () => {
     dispatch(setRole("user"));
-    if (token) {
+    if (localStorage.getItem("token")) {
       navigate(`/user/home`);
     } else {
       navigate('/user/authentication')

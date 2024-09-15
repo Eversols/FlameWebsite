@@ -36,11 +36,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <StyledEngineProvider injectFirst>
           <Router>
             <Provider store={store}>
-              <PersistGate loading={null} persistor={persistor}>
+              {/* <PersistGate loading={null} persistor={persistor}> */}
                 <I18nextProvider i18n={i18n}>
                 <App />
                 </I18nextProvider>
-              </PersistGate>
+              {/* </PersistGate> */}
             </Provider>
           </Router>
         </StyledEngineProvider>

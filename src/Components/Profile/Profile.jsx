@@ -47,6 +47,8 @@ import { LoadingButton } from "@mui/lab";
 import { display } from "@mui/system";
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import ProfileStatus from "./ProfileStatus";
+import { voxService } from "../../Services/voximplant";
+import { persistor } from "../../Services/store";
 
 const gridStyle = {
   alignItems: "center",
@@ -245,15 +247,15 @@ const Profile = ({ setDialog }) => {
       setError("Please complete your profile");
       return
     }
-    setLoading(true);
     let refferal;
-    // if (siteMeta.is_refferal_on_off == 'yes') {
-    //   refferal = refferalList.find((item) => item.referral_code == profile.referral_code.trim())
-    //   if (!refferal) {
-    //     setError("Refferal code not found")
-    //     return
-    //   }
-    // }
+    if (siteMeta.is_refferal_on_off == 'yes') {
+      refferal = refferalList.find((item) => item.referral_code == profile.referral_code.trim())
+      if (!refferal) {
+        setError("Refferal code not found")
+        return
+      }
+    }
+    setLoading(true);
     delete profile.profileImage;
     delete profile.profileImage1;
     delete profile.profileImage2;
@@ -1425,7 +1427,14 @@ const Profile = ({ setDialog }) => {
 
 
 
-      <ProfileStatus modal={modal} setModal={setModal} action={() => { setModal(false); navigate('/') }} />
+      <ProfileStatus modal={modal} setModal={setModal} action={() => {
+        setModal(false);
+        localStorage.removeItem("token");
+        voxService.get().disconnect();
+        persistor.purge();
+        localStorage.removeItem("persist:root");
+        navigate(`/`, { replace: true });
+      }} />
     </Box>
   );
 };

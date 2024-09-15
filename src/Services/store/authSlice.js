@@ -55,6 +55,7 @@ export const authSlice = createSlice({
       state.role = payload;
     },
     setToken: (state, { payload }) => {
+      console.log("RRRRRRRRRRRRRRRRRRR", payload);
       state.token = payload;
     },
     setUser: (state, { payload }) => {

@@ -93,6 +93,7 @@ const StepPassword = ({ setStep }) => {
 
         if (res.data.status === "success") {
           if (res?.data?.content?.access_token) {
+            localStorage.setItem("token", res.data.content.access_token);
             const token = await dispatch(
               setToken(res.data.content.access_token)
             );
