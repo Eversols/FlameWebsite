@@ -70,7 +70,7 @@ const Languagebtn = () => {
     setAnchorEl(null);
   };
   useEffect(() => {
-    console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV', language)
+    // console.log('', language)
     if (language) {
       setSelectedLanguage(language);
       i18n.changeLanguage(language.toLowerCase());
@@ -108,6 +108,7 @@ const Languagebtn = () => {
         sx={{
           backgroundColor: 'white',
           color: 'black',
+          textTransform:'uppercase',
           paddingInline: ".65rem",
           paddingBlock: ".45rem",
           borderRadius: "999px",
