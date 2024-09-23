@@ -66,7 +66,7 @@ const Header = () => {
                             image={pathname == '/' ? flamelogo : flameLogoBlack}
                             alt="Flame Logo"
                             sx={{
-                                width: "12rem",
+                                width: "8rem",
                                 height: "6rem",
                                 objectFit: "contain",
                                 marginRight: "0.2rem",
@@ -75,6 +75,10 @@ const Header = () => {
                             onClick={() => navigate('/')}
                         />
                     )}
+
+
+
+
 
                     <Box
                         sx={{
