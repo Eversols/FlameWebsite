@@ -35,7 +35,7 @@ const LandingPages = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  const heroParaOne = `Flame is an exclusive global community of fun loving, adventurous, and exciting men and women Whether you are in the mood to flirt, find love, shake a leg, or just have a good time, find your next here on Flame`;
+  const heroParaOne = `Flame is an exclusive global community of fun loving, adventurous, and exciting men and women. \n Whether you are in the mood to flirt, find love, shake a leg, or just have a good time, find your next here on Flame`;
   const heroParaTwo = `Discover exciting people from around the world. Meet without waiting to be swiped. Build instant connections. Have unlimited fun.`;
   const heroParaThree = `Travel around the world. Live. Love. Laugh.`;
   const heroParaFour = `Discover moments that last a life time`;
@@ -89,7 +89,7 @@ const LandingPages = () => {
           <SlideImage
             isVideo={true}
             videoSrc={SlideVideo1}
-            heroTitle={"Find Your"}
+            heroTitle={"Find Your Next"}
             heroPara={heroParaOne}
             btnClick={getStarted}
             heroSpan={true}
