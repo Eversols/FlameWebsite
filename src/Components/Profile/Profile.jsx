@@ -101,6 +101,7 @@ const Profile = ({ setDialog }) => {
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
+  const [isSubmited, setIsSubmited] = useState(false);
 
   const [profile, setProfile] = useState({
     profileImage: userData?.profileImage ?? "",
@@ -244,11 +245,12 @@ const Profile = ({ setDialog }) => {
     setError("");
 
     if (!(calculatePercentage() == 100)) {
-      setError("Please complete your profile");
+      setIsSubmited(true);
+      // setError("Please complete your profile");
       return
     }
     let refferal;
-    if (siteMeta.is_refferal_on_off == 'yes') {
+    if (siteMeta?.is_refferal_on_off == 'yes') {
       refferal = refferalList.find((item) => item.referral_code == profile.referral_code.trim())
       if (!refferal) {
         setError("Refferal code not found")
@@ -443,9 +445,7 @@ const Profile = ({ setDialog }) => {
               />
               <img
                 src={profile.profileImage ? `${profile.profileImage}` : Img}
-                width="108%"
-                height="108%"
-                style={{ borderRadius: "50%" }}
+                className={classes.single_image}
               />
               {!status && (
                 <Grid
@@ -730,6 +730,7 @@ const Profile = ({ setDialog }) => {
           autoComplete="off"
           name="about"
           value={profile?.about}
+          helperText={profile?.about.length >= 200 ? "Max 200 characters" : ""}
           // value={values.currentaddress || ""}
           onChange={handleInputChange}
           sx={{
@@ -737,7 +738,11 @@ const Profile = ({ setDialog }) => {
               '& fieldset': {
                 border: 'none', // Remove the border
               },
+              "&.Mui-error fieldset": {
+                borderColor: "red", // Custom red border color for error state
+              },
             },
+
           }}
           style={{
             marginTop: '10px',
@@ -782,10 +787,13 @@ const Profile = ({ setDialog }) => {
             fullWidth
             disabled={status}
             autoComplete="off"
+            error={isSubmited &&(!profile.displayName)}
+            helperText={ isSubmited && !profile.displayName ? "Please fill this field" : ""}
+
             InputProps={{
               style: {
                 backgroundColor: "transparent",
-                border: "1px solid #D9D9D9",
+                border: `1px solid ${ isSubmited && !profile.displayName ? 'red' : '#D9D9D9'}`,
                 borderRadius: "2px",
                 width: "100%",
                 height: "50px",
@@ -839,12 +847,14 @@ const Profile = ({ setDialog }) => {
                 className={classes.input1}
                 fullWidth
                 disabled={status}
+                error={isSubmited && !profile.region}
+                helperText={ isSubmited && !profile.region ? "Please fill this field" : ""}
                 InputProps={{
                   ...params.InputProps,
                   style: {
                     ...params.InputProps?.style,
                     backgroundColor: "transparent",
-                    border: "1px solid #D9D9D9",
+                    border: `1px solid ${ isSubmited && !profile.region ? 'red' : '#D9D9D9'}`,
                     borderRadius: "2px",
                     width: "100%",
                     height: "50px",
@@ -900,10 +910,12 @@ const Profile = ({ setDialog }) => {
                   value={profile.like}
                   variant="filled"
                   label="Love"
+                  error={isSubmited && profile.like.length < 3}
+                  helperText={isSubmited && profile.like.length < 3 ? "Please fill this field" : ""}
                   sx={{
                     '& .MuiFilledInput-root': {
                       backgroundColor: "transparent",
-                      border: "1px solid #D9D9D9",
+                      border: `1px solid ${ isSubmited && profile.like.length < 3 ? 'red' : '#D9D9D9'}`,
                       borderRadius: "2px",
                       height: "100px",
                     }
@@ -1000,10 +1012,12 @@ const Profile = ({ setDialog }) => {
                   value={profile.unlike}
                   variant="filled"
                   label="Hate"
+                  error={isSubmited && profile.unlike.length < 3}
+                  helperText={isSubmited && profile.unlike.length < 3 ? "Please fill this field" : ""}
                   sx={{
                     '& .MuiFilledInput-root': {
                       backgroundColor: "transparent",
-                      border: "1px solid #D9D9D9",
+                      border: `1px solid ${ isSubmited && profile.unlike.length < 3 ? 'red' : '#D9D9D9'}`,
                       borderRadius: "2px",
                       height: "100px",
                     }
@@ -1076,10 +1090,12 @@ const Profile = ({ setDialog }) => {
             placeholder="Refferal Code"
             className={classes.input1}
             fullWidth
+            error={isSubmited && !profile?.referral_code}
+            helperText={isSubmited && !profile?.referral_code ? "Please fill this field" : ""}
             InputProps={{
               style: {
                 backgroundColor: "transparent",
-                border: "1px solid #D9D9D9",
+                border: `1px solid ${isSubmited && !profile?.referral_code ? 'red' : '#D9D9D9'}`,
                 borderRadius: "2px",
                 width: "100%",
                 height: "50px",
@@ -1178,10 +1194,12 @@ const Profile = ({ setDialog }) => {
                   fullWidth
                   disabled={status}
                   autoComplete="off"
+                  error={isSubmited && !profile.payout_firstName}
+                  helperText={isSubmited && !profile.payout_firstName ? "Please fill this field" : ""}
                   InputProps={{
                     style: {
                       backgroundColor: "#F2F2F2",
-                      // border: "1px solid #D9D9D9",
+                      border: isSubmited && !profile.payout_firstName ? "1px solid red" : "none",
                       borderRadius: "2px",
                       width: "100%",
                       height: "50px",
@@ -1203,10 +1221,12 @@ const Profile = ({ setDialog }) => {
                   fullWidth
                   disabled={status}
                   autoComplete="off"
+                  error={isSubmited && !profile.payout_lastName}
+                  helperText={isSubmited && !profile.payout_lastName ? "Please fill this field" : ""}
                   InputProps={{
                     style: {
                       backgroundColor: "#F2F2F2",
-                      // border: "1px solid #D9D9D9",
+                      border: isSubmited && !profile.payout_lastName ? "1px solid red" : "none",
                       borderRadius: "2px",
                       width: "100%",
                       height: "50px",
@@ -1228,10 +1248,12 @@ const Profile = ({ setDialog }) => {
                   fullWidth
                   disabled={status}
                   autoComplete="off"
+                  error={isSubmited && !profile.payout_phoneNumber}
+                  helperText={isSubmited && !profile.payout_phoneNumber ? "Please fill this field" : ""}
                   InputProps={{
                     style: {
                       backgroundColor: "#F2F2F2",
-                      // border: "1px solid #D9D9D9",
+                      border: isSubmited && !profile.payout_phoneNumber ? "1px solid red" : "none",
                       borderRadius: "2px",
                       width: "100%",
                       height: "50px",
@@ -1292,10 +1314,12 @@ const Profile = ({ setDialog }) => {
                       fullWidth
                       disabled={status}
                       autoComplete="off"
+                      error={isSubmited && !profile.paypal_id}
+                      helperText={isSubmited && !profile.paypal_id ? "Please fill this field" : ""}
                       InputProps={{
                         style: {
                           backgroundColor: "#FFFFFF",
-                          border: "1px solid #E3E3E3",
+                          border: `1px solid ${isSubmited && !profile.paypal_id ? 'red' : '#E3E3E3'}`,
                           borderRadius: "8px",
                           width: "100%",
                           height: "50px",

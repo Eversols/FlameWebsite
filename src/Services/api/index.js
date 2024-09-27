@@ -1,5 +1,6 @@
 import axios from "axios";
-import { store } from "../store";
+import { persistor, store } from "../store";
+import { voxService } from "../voximplant";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -28,30 +29,36 @@ export const post = (url, body, config) => api.post(url, body, config);
 export const get = (url) => api.get(url);
 
 // Interceptors
-// api.interceptors.response.use(
-//   (config) => {
-//     return config;
-//   },
-//   async (error) => {
-//     const originalRequest = error.config;
-//     if (
-//       error.response.status === 401 &&
-//       originalRequest &&
-//       !originalRequest._isRetry
-//     ) {
-//       originalRequest.isRetry = true;
-//       try {
-//         await axios.get(`${import.meta.env.VITE_BASE_URL}/api/refresh`, {
-//           withCredentials: true,
-//         });
+api.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      originalRequest &&
+      !originalRequest._isRetry
+    ) {
+      originalRequest.isRetry = true;
+      try {
 
-//         return api.request(originalRequest);
-//       } catch (err) {
-//         console.log(err.message);
-//       }
-//     }
-//     throw error;
-//   }
-// );
+        localStorage.removeItem("token");
+        voxService.get().disconnect();
+        persistor.purge();
+        localStorage.removeItem("persist:root");
+        window.location = '/';
+        // await axios.get(`${import.meta.env.VITE_BASE_URL}/api/refresh`, {
+        //   withCredentials: true,
+        // });
+
+        // return api.request(originalRequest);
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    throw error;
+  }
+);
 
 export default api;

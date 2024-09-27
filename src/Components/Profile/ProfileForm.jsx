@@ -246,9 +246,9 @@ const ProfileForm = ({ setDialog }) => {
                         language: metadata?.language ?? "",
                     });
                     metadata?.language && dispatch(setLanguage(metadata.language.toLowerCase()))
-                    if ((siteMeta.is_profile_complete == 'yes' && calculatePercentage() == 100)) {
-                        navigate(`/${role}/payout`);
-                    }
+                    // if ((siteMeta.is_profile_complete == 'yes' && calculatePercentage() == 100)) {
+                    //     navigate(`/${role}/payout`);
+                    // }
                     setLoading(false);
                 }
             }
@@ -340,9 +340,7 @@ const ProfileForm = ({ setDialog }) => {
                                         ? `${profile.profileImage}`
                                         : Img
                                 }
-                                width="108%"
-                                height="108%"
-                                style={{ borderRadius: "50%" }}
+                                className={classes.single_image}
                             />
                             {!status && (
                                 <Grid
@@ -835,7 +833,7 @@ const ProfileForm = ({ setDialog }) => {
                     </Select>
                 </Grid>
                 <Grid item xs={12} md={5.5}>
-                    {(siteMeta.is_refferal_on_off == 'yes' && userData.isProfileComplete == '0') &&
+                    {(siteMeta?.is_refferal_on_off == 'yes' && userData?.isProfileComplete == '0') &&
                         <>
                             <Typography variant="h5" className={classes.label}>
                                 Referral Code
@@ -862,9 +860,13 @@ const ProfileForm = ({ setDialog }) => {
                     >
                         <LoadingButton
                             onClick={() => {
-
-                                confirmSubmit();
-
+                                setStatus((prev) => {
+                                    console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', prev)
+                                    if(!prev){
+                                        confirmSubmit();
+                                    }
+                                    return !prev;
+                                });
                             }}
                             loading={loading}
                             loadingPosition="center"

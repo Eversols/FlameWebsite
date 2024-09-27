@@ -136,7 +136,9 @@ const StepPassword = ({ setStep }) => {
               if (res.data.content.role === "user") {
                 dispatch(getProfile({ id: user_data.payload.id })).then(
                   (res) => {
-                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPP", res);
+                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPP",role, res);
+                    if (res.payload.metadata.isProfileComplete == "0")
+                      navigate(`/user/profile`);
                     if (res.payload.metadata.isProfileComplete == "1")
                       navigate(`/${role}/home`);
                     if (!user.emailExist && !user_data.payload.moodID)
