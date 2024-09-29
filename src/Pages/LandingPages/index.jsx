@@ -2,13 +2,20 @@ import { useRef, useEffect, useState } from "react";
 import { Lenis as ReactLenis } from "@studio-freight/react-lenis";
 import { Box } from "@mui/material";
 // import SlideImg01 from "/slider-bg1.jpg";
-import SlideImg02 from "../../Assets/images/slider-bg02.jpg";
+// import SlideImg02 from "../../Assets/images/slider-bg02.jpg";
 // import SlideImg03 from "/slider-bg3.jpg";
-import SlideImg04 from "../../Assets/images/slider-bg04.jpg";
-import SlideVideo2 from "../../Assets/images/fun-people-married-on-vacation-enjoy-life-on-beach.webm";
-import SlideVideo1 from "../../Assets/images/Landingpage.webm";
+// import SlideImg04 from "../../Assets/images/slider-bg04.jpg";
+// import SlideVideo2 from "../../Assets/images/fun-people-married-on-vacation-enjoy-life-on-beach.webm";
+// import SlideVideo1 from "../../Assets/images/Landingpage.webm";
 import Header from "../../Components/LandingPage/Header";
 import SlideImage from "../../Components/LandingPage/SlideImage";
+
+const SlideVideo1  = "https://flame-webpage-videos.s3.eu-north-1.amazonaws.com/Landingpage.webm";
+const SlideVideo2 = "https://flame-webpage-videos.s3.eu-north-1.amazonaws.com/boat.webm";
+const SlideImg02  = "https://flame-webpage-videos.s3.eu-north-1.amazonaws.com/slider-bg02.jpg";
+const SlideImg04  = "https://flame-webpage-videos.s3.eu-north-1.amazonaws.com/slider-bg04.jpg";
+
+
 import Footer from "../../Components/LandingPage/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +35,7 @@ const LandingPages = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  const heroParaOne = `Flame is an exclusive global community of fun loving, adventorous and exciting men and women Whether you are in the mood to flirt, find love, shake a leg or just a good time, find your next, here on flame`;
+  const heroParaOne = `Flame is an exclusive global community of fun loving, adventurous, and exciting men and women. \n Whether you are in the mood to flirt, find love, shake a leg, or just have a good time, find your next here on Flame`;
   const heroParaTwo = `Discover exciting people from around the world. Meet without waiting to be swiped. Build instant connections. Have unlimited fun.`;
   const heroParaThree = `Travel around the world. Live. Love. Laugh.`;
   const heroParaFour = `Discover moments that last a life time`;
@@ -82,7 +89,7 @@ const LandingPages = () => {
           <SlideImage
             isVideo={true}
             videoSrc={SlideVideo1}
-            heroTitle={"Find Your"}
+            heroTitle={"Find Your Next"}
             heroPara={heroParaOne}
             btnClick={getStarted}
             heroSpan={true}

@@ -205,7 +205,7 @@ const SlideImage = ({
                             </Typography>
                         </Box>
 
-                        <Box sx={{ width: heroParaWidth ? { xs: "100%", md: "38%" } : 'auto', marginTop: "1rem" }}>
+                        <Box sx={{ width: heroParaWidth ? { xs: "100%", md: "60%" } : 'auto', marginTop: "1rem" }}>
                             <Typography
                                 variant="body1"
                                 sx={{

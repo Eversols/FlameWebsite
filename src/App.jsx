@@ -1,14 +1,9 @@
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import { Routes, Route } from 'react-router-dom';
 import { lazy } from 'react';
 
 const Layout = lazy(() => import('./Layouts/Layout'));
-
-// const ModelLandingPage = lazy(() =>
-//   import('./Pages/LandingPages/LandingPageModel')
-// );
-// const UserLandingPage = lazy(() =>
-//   import('./Pages/LandingPages/LandingPageUser')
-// );
 const Authenticate = lazy(() => import('./Pages/Authenticate'));
 const Mood = lazy(() => import('./Pages/Mood'));
 const Region = lazy(() => import('./Pages/Region'));
@@ -23,12 +18,45 @@ const Completion = lazy(() => import('./Pages/Payment/Completion'));
 const LandingPages = lazy(() => import('./Pages/LandingPages'));
 const Dashboard = lazy(() => import('./Pages/Dashboard'));
 
+const theme = createTheme({
+  palette: {
+    mode: "light",
+  },
+  typography: {
+    fontFamily: 'Rubik, Helvetica, Arial, sans-serif', // Default font family
+    h1: {
+      fontWeight: 'bold',
+    },
+    h2: {
+      fontFamily: 'Inter, Helvetica, Arial, sans-serif',
+    },
+    body1: {
+      fontFamily: 'Inter, Helvetica, Arial, sans-serif',
+      fontWeight: 400,
+    },
+    button: {
+      fontFamily: 'Helvetica, Arial, sans-serif',
+      textTransform: 'none', // Optional: to keep button text case as it is
+      fontWeight: 400,
+    },
+  },
+});
+
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPages />} />
-      {/* <Route path="/model" element={<ModelLandingPage />} /> */}
-      <Route path='/partner' element={<Layout />} >
+      {/* Apply theme only to the LandingPages route */}
+      <Route
+        path="/"
+        element={
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <LandingPages />
+          </ThemeProvider>
+        }
+      />
+      {/* Other routes without theme */}
+      <Route path='/partner' element={<Layout />}>
         <Route path="dashboard" element={<Dashboard />} />
       </Route>
       <Route path="/:role" element={<Layout />}>
