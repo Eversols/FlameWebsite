@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   fieldWrapper: {
-    width: "78%",
+    width: "100%",
     height: "100%",
     display: "flex",
     justifyContent: "space-around",
