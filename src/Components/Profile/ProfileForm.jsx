@@ -95,7 +95,8 @@ const ProfileForm = ({ setDialog }) => {
         region: userData?.region ?? "",
         about: userData?.about ?? "",
         referral_code: userData?.referral_code ?? "",
-        language: userData?.language ?? "",
+        language: userData?.language ?? "EN",
+        videothumbnail: userData?.videothumbnail ?? "",
     });
     const dispatch = useDispatch();
 
@@ -425,6 +426,7 @@ const ProfileForm = ({ setDialog }) => {
                                         }
                                         width="100%"
                                         height="90px"
+                                        style={{ maxHeight: '90px' }}
                                     />
                                     {!status && (
                                         <label htmlFor="image1" style={{ cursor: "pointer" }}>
@@ -462,6 +464,7 @@ const ProfileForm = ({ setDialog }) => {
                                         }
                                         width="100%"
                                         height="90px"
+                                        style={{ maxHeight: '90px' }}
                                     />
                                     {!status && (
                                         <label htmlFor="image2" style={{ cursor: "pointer" }}>
@@ -491,7 +494,17 @@ const ProfileForm = ({ setDialog }) => {
                                         // background: "red",
                                     }}
                                 >
-                                    <video src={video2} width="100%" height="90px" />
+                                    {/* <video src={video2} width="100%" height="90px" /> */}
+                                    <img
+                                        src={profile.videothumbnail}
+                                        alt="img"
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                            maxHeight: "100%",
+                                            maxWidth: "none",
+                                        }}
+                                    />
                                     {!status && (
                                         <label htmlFor="video" style={{ cursor: "pointer" }}>
                                             <Box className={classes.images}>
@@ -862,7 +875,7 @@ const ProfileForm = ({ setDialog }) => {
                             onClick={() => {
                                 setStatus((prev) => {
                                     console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', prev)
-                                    if(!prev){
+                                    if (!prev) {
                                         confirmSubmit();
                                     }
                                     return !prev;

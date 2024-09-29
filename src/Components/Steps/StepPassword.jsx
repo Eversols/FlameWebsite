@@ -66,6 +66,7 @@ const StepPassword = ({ setStep }) => {
       }
       try {
         let res;
+        let  type = "login";
         if (user.emailExist) {
           res = await post("/login", { email: user.email, password });
           if (res.data.status === "success") {
@@ -73,22 +74,14 @@ const StepPassword = ({ setStep }) => {
             // navigate(`/${role}/profile`);
             // return;
           }
+          type = "login";
         } else {
           res = await post("/register", {
             email: user.email,
             password,
             role: role ? role : "user",
           });
-          const voxRegisterRes = await voxRegister(res, user.displayName);
-          if (voxRegisterRes) {
-            await post("/updateUserMeta", {
-              userID: res.data.content.user_id,
-              displayName: user.displayName,
-              voxUserId: voxRegisterRes.data.user_id,
-              isProfileComplete:
-                siteMeta.is_profile_complete == "yes" ? false : true,
-            });
-          }
+          type = "register";
         }
 
         if (res.data.status === "success") {
@@ -97,6 +90,19 @@ const StepPassword = ({ setStep }) => {
             const token = await dispatch(
               setToken(res.data.content.access_token)
             );
+            if(type == 'register'){
+              const voxRegisterRes = await voxRegister(res, user.displayName);
+              if (voxRegisterRes) {
+                await post("/updateUserMeta", {
+                  userID: res.data.content.user_id,
+                  displayName: user.displayName,
+                  voxUserId: voxRegisterRes.data.user_id,
+                  isProfileComplete:
+                    siteMeta.is_profile_complete == "yes" ? false : true,
+                });
+              }
+            }
+
             if (token?.payload) {
               const user_data = await dispatch(getUser());
 
@@ -114,6 +120,7 @@ const StepPassword = ({ setStep }) => {
               ) {
                 setModal(true)
                 // dispatch(setError("Your account under the review from admin!"));
+                localStorage.setItem("token", null);
                 setLoading(false);
                 return;
               }
@@ -136,7 +143,7 @@ const StepPassword = ({ setStep }) => {
               if (res.data.content.role === "user") {
                 dispatch(getProfile({ id: user_data.payload.id })).then(
                   (res) => {
-                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPP",role, res);
+                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPP", role, res);
                     if (res.payload.metadata.isProfileComplete == "0")
                       navigate(`/user/profile`);
                     if (res.payload.metadata.isProfileComplete == "1")

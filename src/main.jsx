@@ -31,7 +31,7 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Suspense fallback={<Loader />}>
-    <IntercomProvider appId="tiwvt5ao" autoBoot={false}>
+    <IntercomProvider appId="tiwvt5ao" autoBoot={true}>
       <ThemeProvider theme={theme}>
         <StyledEngineProvider injectFirst>
           <Router>

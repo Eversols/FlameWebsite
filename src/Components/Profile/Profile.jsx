@@ -97,7 +97,12 @@ const Profile = ({ setDialog }) => {
   const [loveList, setLoveList] = useState([]);
   const [hateList, setHateList] = useState([]);
   const [refferalList, setRefferalList] = useState([]);
-  const [imageIsLoading, setImageIsLoading] = useState(false);
+  const [imageIsLoading, setImageIsLoading] = useState({
+    profileImage: false,
+    profileImage1: false,
+    profileImage2: false,
+    video: false,
+  });
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
@@ -114,7 +119,7 @@ const Profile = ({ setDialog }) => {
     region: userData?.region ?? "",
     about: userData?.about ?? "",
     referral_code: userData?.referral_code ?? "",
-    language: userData?.language ?? "",
+    language: userData?.language ?? "EN",
     payout_firstName: userData?.payout_firstName ?? "",
     payout_lastName: userData?.payout_lastName ?? "",
     payout_phoneNumber: userData?.payout_phoneNumber ?? "",
@@ -124,6 +129,7 @@ const Profile = ({ setDialog }) => {
     payout_currency: userData?.payout_currency ?? "",
     payout_country: userData?.payout_country ?? "",
     payout_cardNumber: userData?.payout_cardNumber ?? "",
+    videothumbnail: userData?.videothumbnail ?? "",
   });
   const dispatch = useDispatch();
 
@@ -190,23 +196,23 @@ const Profile = ({ setDialog }) => {
       }));
     }
   };
-  const handleImageChange = async (event, url) => {
-    setImageIsLoading(true);
+  const handleImageChange = async (event, url, imgType) => {
+    setImageIsLoading((prev)=> ({...prev, [imgType]: true}));
     setFileError("");
     const file = event.target.files[0];
     try {
-      if (file && file.size >= 2.5 * 1024 * 1024) {
-        setFileError("File size should be less than 2.5 MB");
-        setImageIsLoading(false);
+      if (file && file.type.includes('image') && file.size >= 5 * 1024 * 1024) {
+        setFileError("File size should be less than 5 MB");
+        setImageIsLoading((prev)=> ({...prev, [imgType]: false}));
         return;
       }
       if (
         file &&
-        file.type.split("/")[0] == "video" &&
+        file.type.includes('video') &&
         file.size >= 10 * 1024 * 1024
       ) {
         setFileError("File size should be less than 10 MB");
-        setImageIsLoading(false);
+        setImageIsLoading((prev)=> ({...prev, [imgType]: false}));
         return;
       }
       const formData = new FormData();
@@ -227,10 +233,11 @@ const Profile = ({ setDialog }) => {
             profileImage2: profileData.payload.data?.profileImage2 ?? "",
             video: profileData.payload.data?.video ?? "",
           });
-          setImageIsLoading(false);
+          setImageIsLoading((prev)=> ({...prev, [imgType]: false}));
         }
       }
     } catch (error) {
+      setImageIsLoading((prev)=> ({...prev, [imgType]: false}));
       console.log(error);
     }
     // const selectedImages = Array.from(event.target.files);
@@ -461,7 +468,7 @@ const Profile = ({ setDialog }) => {
                         id="additionalImages"
                         name="image"
                         accept="image/*"
-                        onChange={(e) => handleImageChange(e, "upload")}
+                        onChange={(e) => handleImageChange(e, "upload", 'profileImage')}
                         style={{ display: "none" }}
                       />
                     </Grid>
@@ -471,7 +478,7 @@ const Profile = ({ setDialog }) => {
                     >
                       <Box className={classes.single_image}>
                         <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                          {imageIsLoading.profileImage ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -530,12 +537,13 @@ const Profile = ({ setDialog }) => {
                     }
                     width="100%"
                     height="90px"
+                    style={{maxHeight: '90px'}}
                   />
                   {!status && (
                     <label htmlFor="image1" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                          {imageIsLoading.profileImage1 ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -546,7 +554,7 @@ const Profile = ({ setDialog }) => {
                   id="image1"
                   name="image"
                   accept="image/*"
-                  onChange={(e) => handleImageChange(e, "upload1")}
+                  onChange={(e) => handleImageChange(e, "upload1", 'profileImage1')}
                   style={{ display: "none" }}
                 />
 
@@ -565,12 +573,13 @@ const Profile = ({ setDialog }) => {
                     }
                     width="100%"
                     height="90px"
+                    style={{maxHeight: '90px'}}
                   />
                   {!status && (
                     <label htmlFor="image2" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                          {imageIsLoading.profileImage2 ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -581,7 +590,7 @@ const Profile = ({ setDialog }) => {
                   id="image2"
                   name="image"
                   accept="image/*"
-                  onChange={(e) => handleImageChange(e, "upload2")}
+                  onChange={(e) => handleImageChange(e, "upload2", 'profileImage2')}
                   style={{ display: "none" }}
                 />
                 <Box
@@ -594,8 +603,18 @@ const Profile = ({ setDialog }) => {
                     // background: "red",
                   }}
                 >
-                  {profile.video ?
-                    <video src={profile.video} width="100%" height="90px" />
+                  {(profile.video || profile.videothumbnail)?
+                    // <video src={profile.video} width="100%" height="90px" />
+                    <img
+                      src={profile.videothumbnail}
+                      alt="img"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxHeight: "100%",
+                        maxWidth: "none",
+                      }}
+                    />
                     :
                     <img
                       src={video2}
@@ -612,7 +631,7 @@ const Profile = ({ setDialog }) => {
                     <label htmlFor="video" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a video"}
+                          {imageIsLoading.videothumbnail ? "Uploading..." : "Upload a video"}
                         </Typography>
                       </Box>
                     </label>
@@ -623,7 +642,7 @@ const Profile = ({ setDialog }) => {
                   id="video"
                   name="video"
                   accept="video/*"
-                  onChange={(e) => handleImageChange(e, "uploadvideo")}
+                  onChange={(e) => handleImageChange(e, "uploadvideo", 'video')}
                   style={{ display: "none" }}
                 />
               </Box>
@@ -706,7 +725,7 @@ const Profile = ({ setDialog }) => {
           flexDirection: "column",
           justifyContent: "start",
           alignItems: "start",
-          border: "1px solid #D9D9D9",
+          border: `1px solid ${ (isSubmited && !profile.about)  ? 'red' : '#D9D9D9'}`,
           padding: "20px",
           marginY: "20px",
         }
@@ -722,7 +741,7 @@ const Profile = ({ setDialog }) => {
         <TextField
           multiline
           rows={6}
-          error={profile?.about.length >= 200}
+          error={ isSubmited ?  !profile.about ? true: profile?.about.length >= 200 ? true: false : false}
           placeholder="Write your information here "
           length={100}
           className={classes.placeholderStyle}
@@ -730,13 +749,15 @@ const Profile = ({ setDialog }) => {
           autoComplete="off"
           name="about"
           value={profile?.about}
-          helperText={profile?.about.length >= 200 ? "Max 200 characters" : ""}
+          helperText={ isSubmited ?  !profile.about ? "Please fill this field" : profile?.about.length >= 200 ? "Max 200 characters"
+            : "" : ""}
           // value={values.currentaddress || ""}
           onChange={handleInputChange}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 border: 'none', // Remove the border
+               
               },
               "&.Mui-error fieldset": {
                 borderColor: "red", // Custom red border color for error state
@@ -1102,9 +1123,7 @@ const Profile = ({ setDialog }) => {
               },
             }}
           />
-
-
-
+           <Box color={"red"} sx={{ fontSize: 14 }}>{t(error)}</Box>
         </Grid>
 
         <Grid item xs={12} md={3}>
@@ -1120,6 +1139,7 @@ const Profile = ({ setDialog }) => {
             className={classes.input1}
             fullWidth
             disabled={status}
+            defaultValue={""}
           >
             {languages.map((language) => (
               <MenuItem
@@ -1446,7 +1466,7 @@ const Profile = ({ setDialog }) => {
           </LoadingButton>
 
         </Grid>
-        <Box color={"red"} sx={{ fontSize: 16 }}>{t(error)}</Box>
+        {/* <Box color={"red"} sx={{ fontSize: 16 }}>{t(error)}</Box> */}
       </Grid>
 
 
