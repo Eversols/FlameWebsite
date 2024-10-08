@@ -133,22 +133,22 @@ const ChatBox = ({ showChatBox, setShowChatBox, setDialog, modelData, callUser, 
   };
   return (
     <>
-      <IconButton
+      {/* <IconButton
         color="primary"
-        onClick={() => boot()}
+        onClick={boot}
         className={classes.chatbox_container}
       >
         <img src={ChatIcon} />
-      </IconButton>
+      </IconButton> */}
 
       {/* // when not open */}
-      <IconButton
+      {/* <IconButton
         color="primary"
         onClick={handleToggleChatBox}
         className={classes.ideaIcon}
       >
         <img src={ideaIcon} className={classes.ideaImage} alt="no data" />
-      </IconButton>
+      </IconButton> */}
 
       {/* when open  */}
       {/* <Box

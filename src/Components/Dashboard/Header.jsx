@@ -11,14 +11,14 @@ import { useTranslation, I18nextProvider } from "react-i18next";
 import CardMedia from "@mui/material/CardMedia";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setRole } from "../../Services/store/authSlice";
+import { setRole, setToken } from "../../Services/store/authSlice";
 import { Avatar, IconButton, Typography } from "@mui/material";
 import logoutLogo from "../../Assets/images/logout.svg"
 import useStyles from "./style";
 import { post } from "../../Services/api";
 import { persistor } from "../../Services/store";
 
-const Header = ({setPayoutModel, setDialog}) => {
+const Header = ({ setPayoutModel, setDialog }) => {
     const { role, userData, rechargeModel, profileModel, payoutModel } =
         useSelector((state) => state.auth);
     const [showLogo, setShowLogo] = useState(true);
@@ -58,15 +58,21 @@ const Header = ({setPayoutModel, setDialog}) => {
 
     const handleLogout = async () => {
         try {
+            localStorage.removeItem("token");
             const res = await post("/logout", userData);
-            persistor.purge();
-            localStorage.removeItem("persist:root");
-            navigate(`/`);
+            dispatch(setToken('')).then(() => {
+                persistor.purge();
+                localStorage.removeItem("persist:root");
+                navigate(`/`);
+            })
         } catch (error) {
-            persistor.purge();
-            localStorage.removeItem("persist:root");
-            navigate(`/`);
-            console.log(error);
+            localStorage.removeItem("token", null);
+            dispatch(setToken('')).then(() => {
+                persistor.purge();
+                localStorage.removeItem("persist:root");
+                navigate(`/`);
+                console.log(error);
+            })
         }
     };
 
@@ -161,7 +167,7 @@ const Header = ({setPayoutModel, setDialog}) => {
                                 {userData?.displayName}
                             </Typography>
                         </Box>
-                        <IconButton onClick={()=>setDialog({open: true, description: 'Are you sure you want to logout?', action: handleLogout })}>
+                        <IconButton onClick={() => setDialog({ open: true, description: 'Are you sure you want to logout?', action: handleLogout })}>
                             <img src={logoutLogo} className={classes.logout} />
                             <Typography
                                 variant="body1"

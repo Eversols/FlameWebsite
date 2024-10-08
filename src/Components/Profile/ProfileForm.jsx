@@ -95,7 +95,8 @@ const ProfileForm = ({ setDialog }) => {
         region: userData?.region ?? "",
         about: userData?.about ?? "",
         referral_code: userData?.referral_code ?? "",
-        language: userData?.language ?? "",
+        language: userData?.language ?? "EN",
+        videothumbnail: userData?.videothumbnail ?? "",
     });
     const dispatch = useDispatch();
 
@@ -246,9 +247,9 @@ const ProfileForm = ({ setDialog }) => {
                         language: metadata?.language ?? "",
                     });
                     metadata?.language && dispatch(setLanguage(metadata.language.toLowerCase()))
-                    if ((siteMeta.is_profile_complete == 'yes' && calculatePercentage() == 100)) {
-                        navigate(`/${role}/payout`);
-                    }
+                    // if ((siteMeta.is_profile_complete == 'yes' && calculatePercentage() == 100)) {
+                    //     navigate(`/${role}/payout`);
+                    // }
                     setLoading(false);
                 }
             }
@@ -340,9 +341,7 @@ const ProfileForm = ({ setDialog }) => {
                                         ? `${profile.profileImage}`
                                         : Img
                                 }
-                                width="108%"
-                                height="108%"
-                                style={{ borderRadius: "50%" }}
+                                className={classes.single_image}
                             />
                             {!status && (
                                 <Grid
@@ -427,6 +426,7 @@ const ProfileForm = ({ setDialog }) => {
                                         }
                                         width="100%"
                                         height="90px"
+                                        style={{ maxHeight: '90px' }}
                                     />
                                     {!status && (
                                         <label htmlFor="image1" style={{ cursor: "pointer" }}>
@@ -464,6 +464,7 @@ const ProfileForm = ({ setDialog }) => {
                                         }
                                         width="100%"
                                         height="90px"
+                                        style={{ maxHeight: '90px' }}
                                     />
                                     {!status && (
                                         <label htmlFor="image2" style={{ cursor: "pointer" }}>
@@ -493,7 +494,17 @@ const ProfileForm = ({ setDialog }) => {
                                         // background: "red",
                                     }}
                                 >
-                                    <video src={video2} width="100%" height="90px" />
+                                    {/* <video src={video2} width="100%" height="90px" /> */}
+                                    <img
+                                        src={profile.videothumbnail}
+                                        alt="img"
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                            maxHeight: "100%",
+                                            maxWidth: "none",
+                                        }}
+                                    />
                                     {!status && (
                                         <label htmlFor="video" style={{ cursor: "pointer" }}>
                                             <Box className={classes.images}>
@@ -835,7 +846,7 @@ const ProfileForm = ({ setDialog }) => {
                     </Select>
                 </Grid>
                 <Grid item xs={12} md={5.5}>
-                    {(siteMeta.is_refferal_on_off == 'yes' && userData.isProfileComplete == '0') &&
+                    {(siteMeta?.is_refferal_on_off == 'yes' && userData?.isProfileComplete == '0') &&
                         <>
                             <Typography variant="h5" className={classes.label}>
                                 Referral Code
@@ -862,9 +873,13 @@ const ProfileForm = ({ setDialog }) => {
                     >
                         <LoadingButton
                             onClick={() => {
-
-                                confirmSubmit();
-
+                                setStatus((prev) => {
+                                    console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', prev)
+                                    if (!prev) {
+                                        confirmSubmit();
+                                    }
+                                    return !prev;
+                                });
                             }}
                             loading={loading}
                             loadingPosition="center"

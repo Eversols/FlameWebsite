@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
+import './fonts.css';
 import {
   ThemeProvider,
   createTheme,
@@ -31,16 +32,16 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Suspense fallback={<Loader />}>
-    <IntercomProvider appId="tiwvt5ao" autoBoot={false}>
+    <IntercomProvider appId="tiwvt5ao" autoBoot={true}>
       <ThemeProvider theme={theme}>
         <StyledEngineProvider injectFirst>
           <Router>
             <Provider store={store}>
-              <PersistGate loading={null} persistor={persistor}>
+              {/* <PersistGate loading={null} persistor={persistor}> */}
                 <I18nextProvider i18n={i18n}>
                 <App />
                 </I18nextProvider>
-              </PersistGate>
+              {/* </PersistGate> */}
             </Provider>
           </Router>
         </StyledEngineProvider>

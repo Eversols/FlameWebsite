@@ -102,7 +102,7 @@ html, body {
 }
 
 .scroll-container {
-    height: calc(100vh - 0px); /* Adjust this based on the footer height */
+    height: 100vh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
@@ -111,10 +111,10 @@ html, body {
 .scroll-section {
     scroll-snap-align: start;
     height: 100vh;
+    position: relative;
 }
 
 .footer-container {
-    /* height: 150px; */
     scroll-snap-align: end;
 }
 

@@ -27,6 +27,7 @@ import { voxLogin, voxRegister } from "../../Services/utils";
 import useStyles from "./style";
 import { useTranslation } from "react-i18next";
 import { LoadingButton } from "@mui/lab";
+import ProfileStatus from "./ProfileStatus";
 
 const StepPassword = ({ setStep }) => {
   const { pathname } = useLocation();
@@ -34,6 +35,7 @@ const StepPassword = ({ setStep }) => {
   const [cPassword, setCPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
+  const [modal, setModal] = useState(false);
   const { error, user, role, mood, region, userData, siteMeta } = useSelector(
     (state) => state.auth
   );
@@ -64,6 +66,7 @@ const StepPassword = ({ setStep }) => {
       }
       try {
         let res;
+        let  type = "login";
         if (user.emailExist) {
           res = await post("/login", { email: user.email, password });
           if (res.data.status === "success") {
@@ -71,29 +74,35 @@ const StepPassword = ({ setStep }) => {
             // navigate(`/${role}/profile`);
             // return;
           }
+          type = "login";
         } else {
           res = await post("/register", {
             email: user.email,
             password,
             role: role ? role : "user",
           });
-          const voxRegisterRes = await voxRegister(res, user.displayName);
-          if (voxRegisterRes) {
-            await post("/updateUserMeta", {
-              userID: res.data.content.user_id,
-              displayName: user.displayName,
-              voxUserId: voxRegisterRes.data.user_id,
-              isProfileComplete:
-                siteMeta.is_profile_complete == "yes" ? false : true,
-            });
-          }
+          type = "register";
         }
 
         if (res.data.status === "success") {
           if (res?.data?.content?.access_token) {
+            localStorage.setItem("token", res.data.content.access_token);
             const token = await dispatch(
               setToken(res.data.content.access_token)
             );
+            if(type == 'register'){
+              const voxRegisterRes = await voxRegister(res, user.displayName);
+              if (voxRegisterRes) {
+                await post("/updateUserMeta", {
+                  userID: res.data.content.user_id,
+                  displayName: user.displayName,
+                  voxUserId: voxRegisterRes.data.user_id,
+                  isProfileComplete:
+                    siteMeta.is_profile_complete == "yes" ? false : true,
+                });
+              }
+            }
+
             if (token?.payload) {
               const user_data = await dispatch(getUser());
 
@@ -109,7 +118,9 @@ const StepPassword = ({ setStep }) => {
                 user.emailExist &&
                 user_data.payload.is_active == "Inactive"
               ) {
-                dispatch(setError("Your account under the review from admin!"));
+                setModal(true)
+                // dispatch(setError("Your account under the review from admin!"));
+                localStorage.setItem("token", null);
                 setLoading(false);
                 return;
               }
@@ -124,16 +135,17 @@ const StepPassword = ({ setStep }) => {
                   "@",
                   "-flame-"
                 );
-                const password = `${user_data.payload.email.split("@")[0]}${
-                  user_data.payload.id
-                }`;
+                const password = `${user_data.payload.email.split("@")[0]}${user_data.payload.id
+                  }`;
                 console.log(res.data.content.role, mood, region);
                 await voxLogin(userName, password, user_data.payload.email);
               }
               if (res.data.content.role === "user") {
                 dispatch(getProfile({ id: user_data.payload.id })).then(
                   (res) => {
-                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPP", res);
+                    console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPP", role, res);
+                    if (res.payload.metadata.isProfileComplete == "0")
+                      navigate(`/user/profile`);
                     if (res.payload.metadata.isProfileComplete == "1")
                       navigate(`/${role}/home`);
                     if (!user.emailExist && !user_data.payload.moodID)
@@ -312,6 +324,7 @@ const StepPassword = ({ setStep }) => {
           </Container>
         </Box>
       </Box>
+      <ProfileStatus modal={modal} setModal={setModal} action={() => setModal(false)} />
     </>
   );
 };

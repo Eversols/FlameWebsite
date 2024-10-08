@@ -94,24 +94,26 @@ const useStyles = makeStyles((theme) => ({
   },
 
   btn1: {
-    width: '30%',
-    height: '40px',
+    width: 'auto',
+    height: '44px',
     backgroundColor: '#FB1F43',
     color: '#ffffff',
-    fontWeight: 600,
+    fontWeight: '500',
     borderRadius: '10px',
+    paddingInline:'32px',
     fontFamily: 'Inter, Montserrat, sans-serif',
     '&:hover': {
       backgroundColor: '#dc697c',
     },
   },
   btn2: {
-    width: '40%',
+    width: 'auto',
     height: '44px',
     backgroundColor: '#FB1F43',
     color: '#ffffff',
-    fontWeight: 600,
+    fontWeight: '500',
     borderRadius: '10px',
+    paddingInline:'32px',
     fontFamily: 'Inter, Montserrat, sans-serif',
     '&:hover': {
       backgroundColor: '#dc697c',

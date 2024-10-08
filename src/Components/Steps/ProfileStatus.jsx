@@ -1,8 +1,8 @@
 import { Box, Button, Dialog, Grid, IconButton, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import FailureIcon from "../../Assets/images/failureIcon.svg";
-import SuccessIcon from "../../Assets/images/clap.png";
-import useStyles from "./style";
+import SuccessIcon from "../../Assets/images/mdi_timer-sand.png";
+import useStyles from "./../Profile/style";
 import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { setPaymentStatus } from "../../Services/store/authSlice";
@@ -107,13 +107,12 @@ const ProfileStatus = ({ modal, setModal, action }) => {
           </Box>
           <Box className={classes.textContainer}>
             <Typography className={classes.text}>
-              Congratulations!
+              Profile under review
             </Typography>
           </Box>
           <Box className={classes.textContainer}>
             <Typography className={classes.text2}>
-              Thank you for completing your profile online.
-              Have a great day!
+              Please check your email for confirmation to start using flame
             </Typography>
           </Box>
           <Grid item sx={{ width: "100%", marginTop: "30px" }}>

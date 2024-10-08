@@ -47,6 +47,8 @@ import { LoadingButton } from "@mui/lab";
 import { display } from "@mui/system";
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import ProfileStatus from "./ProfileStatus";
+import { voxService } from "../../Services/voximplant";
+import { persistor } from "../../Services/store";
 
 const gridStyle = {
   alignItems: "center",
@@ -95,10 +97,16 @@ const Profile = ({ setDialog }) => {
   const [loveList, setLoveList] = useState([]);
   const [hateList, setHateList] = useState([]);
   const [refferalList, setRefferalList] = useState([]);
-  const [imageIsLoading, setImageIsLoading] = useState(false);
+  const [imageIsLoading, setImageIsLoading] = useState({
+    profileImage: false,
+    profileImage1: false,
+    profileImage2: false,
+    video: false,
+  });
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
+  const [isSubmited, setIsSubmited] = useState(false);
 
   const [profile, setProfile] = useState({
     profileImage: userData?.profileImage ?? "",
@@ -111,7 +119,7 @@ const Profile = ({ setDialog }) => {
     region: userData?.region ?? "",
     about: userData?.about ?? "",
     referral_code: userData?.referral_code ?? "",
-    language: userData?.language ?? "",
+    language: userData?.language ?? "EN",
     payout_firstName: userData?.payout_firstName ?? "",
     payout_lastName: userData?.payout_lastName ?? "",
     payout_phoneNumber: userData?.payout_phoneNumber ?? "",
@@ -121,6 +129,7 @@ const Profile = ({ setDialog }) => {
     payout_currency: userData?.payout_currency ?? "",
     payout_country: userData?.payout_country ?? "",
     payout_cardNumber: userData?.payout_cardNumber ?? "",
+    videothumbnail: userData?.videothumbnail ?? "",
   });
   const dispatch = useDispatch();
 
@@ -175,7 +184,7 @@ const Profile = ({ setDialog }) => {
 
   const handleAutoComplete = (name, value) => {
     // const { name, value } = event.target;
-    // console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', name, value,)
+    console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', name, value,)
     if (name && value) {
       if (profile[name].includes(`#${value}`)) return;
       setProfile((prevProfile) => ({
@@ -187,23 +196,23 @@ const Profile = ({ setDialog }) => {
       }));
     }
   };
-  const handleImageChange = async (event, url) => {
-    setImageIsLoading(true);
+  const handleImageChange = async (event, url, imgType) => {
+    setImageIsLoading((prev)=> ({...prev, [imgType]: true}));
     setFileError("");
     const file = event.target.files[0];
     try {
-      if (file && file.size >= 2.5 * 1024 * 1024) {
-        setFileError("File size should be less than 2.5 MB");
-        setImageIsLoading(false);
+      if (file && file.type.includes('image') && file.size >= 5 * 1024 * 1024) {
+        setFileError("File size should be less than 5 MB");
+        setImageIsLoading((prev)=> ({...prev, [imgType]: false}));
         return;
       }
       if (
         file &&
-        file.type.split("/")[0] == "video" &&
+        file.type.includes('video') &&
         file.size >= 10 * 1024 * 1024
       ) {
         setFileError("File size should be less than 10 MB");
-        setImageIsLoading(false);
+        setImageIsLoading((prev)=> ({...prev, [imgType]: false}));
         return;
       }
       const formData = new FormData();
@@ -224,10 +233,11 @@ const Profile = ({ setDialog }) => {
             profileImage2: profileData.payload.data?.profileImage2 ?? "",
             video: profileData.payload.data?.video ?? "",
           });
-          setImageIsLoading(false);
+          setImageIsLoading((prev)=> ({...prev, [imgType]: false}));
         }
       }
     } catch (error) {
+      setImageIsLoading((prev)=> ({...prev, [imgType]: false}));
       console.log(error);
     }
     // const selectedImages = Array.from(event.target.files);
@@ -239,16 +249,22 @@ const Profile = ({ setDialog }) => {
   };
 
   const confirmSubmit = async () => {
-    setLoading(true);
     setError("");
+
+    if (!(calculatePercentage() == 100)) {
+      setIsSubmited(true);
+      // setError("Please complete your profile");
+      return
+    }
     let refferal;
-    // if (siteMeta.is_refferal_on_off == 'yes') {
-    //   refferal = refferalList.find((item) => item.referral_code == profile.referral_code.trim())
-    //   if (!refferal) {
-    //     setError("Refferal code not found")
-    //     return
-    //   }
-    // }
+    if (siteMeta?.is_refferal_on_off == 'yes') {
+      refferal = refferalList.find((item) => item.referral_code == profile.referral_code.trim())
+      if (!refferal) {
+        setError("Refferal code not found")
+        return
+      }
+    }
+    setLoading(true);
     delete profile.profileImage;
     delete profile.profileImage1;
     delete profile.profileImage2;
@@ -267,11 +283,12 @@ const Profile = ({ setDialog }) => {
         // unlike: "",
       });
       if (res) {
-        if (calculatePercentage() == 100) {
-          setLoading(false);
-          setModal(true)
-          return
-        }
+        console.log('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV', profile)
+
+        setLoading(false);
+        setModal(true)
+        return
+
         // const profileData = await dispatch(getProfile({ id: userData.id }));
         // if (profileData.payload) {
         //   const { data, metadata } = profileData.payload;
@@ -318,10 +335,48 @@ const Profile = ({ setDialog }) => {
   };
 
   const calculatePercentage = () => {
-    const totalFields = Object.keys(profile).length;
-    const filledFields = Object.values(profile).filter(
-      (value) => value !== ""
-    ).length;
+    const {
+      paypal_id,
+      webmoney_id,
+      payout_bankName,
+      payout_currency,
+      payout_country,
+      payout_cardNumber,
+      like,
+      unlike,
+      ...rest
+    } = profile;
+
+    let relevantFields = {};
+
+    if (paypal_id !== "") {
+      relevantFields = { paypal_id };
+    } else if (webmoney_id !== "") {
+      relevantFields = { webmoney_id };
+    } else if (
+      payout_bankName !== "" ||
+      payout_currency !== "" ||
+      payout_country !== "" ||
+      payout_cardNumber !== ""
+    ) {
+      relevantFields = {
+        payout_bankName,
+        payout_currency,
+        payout_country,
+        payout_cardNumber,
+      };
+    } else {
+      relevantFields = profile; // If nothing is filled, include all fields.
+    }
+
+    let arrayCheck = false;
+
+    if (like.length > 0 && unlike.length > 0) {
+      arrayCheck = true;
+    }
+    const totalFields = Object.keys({ ...rest, ...relevantFields }).length + 1
+    const filledFields = Object.values({ ...rest, ...relevantFields }).filter((value) => value !== "").length + (arrayCheck ? 1 : 0);
+
     const percentage = (filledFields / totalFields) * 100;
     return Math.round(percentage);
   };
@@ -397,9 +452,7 @@ const Profile = ({ setDialog }) => {
               />
               <img
                 src={profile.profileImage ? `${profile.profileImage}` : Img}
-                width="108%"
-                height="108%"
-                style={{ borderRadius: "50%" }}
+                className={classes.single_image}
               />
               {!status && (
                 <Grid
@@ -415,7 +468,7 @@ const Profile = ({ setDialog }) => {
                         id="additionalImages"
                         name="image"
                         accept="image/*"
-                        onChange={(e) => handleImageChange(e, "upload")}
+                        onChange={(e) => handleImageChange(e, "upload", 'profileImage')}
                         style={{ display: "none" }}
                       />
                     </Grid>
@@ -425,7 +478,7 @@ const Profile = ({ setDialog }) => {
                     >
                       <Box className={classes.single_image}>
                         <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                          {imageIsLoading.profileImage ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -484,12 +537,13 @@ const Profile = ({ setDialog }) => {
                     }
                     width="100%"
                     height="90px"
+                    style={{maxHeight: '90px'}}
                   />
                   {!status && (
                     <label htmlFor="image1" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                          {imageIsLoading.profileImage1 ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -500,7 +554,7 @@ const Profile = ({ setDialog }) => {
                   id="image1"
                   name="image"
                   accept="image/*"
-                  onChange={(e) => handleImageChange(e, "upload1")}
+                  onChange={(e) => handleImageChange(e, "upload1", 'profileImage1')}
                   style={{ display: "none" }}
                 />
 
@@ -519,12 +573,13 @@ const Profile = ({ setDialog }) => {
                     }
                     width="100%"
                     height="90px"
+                    style={{maxHeight: '90px'}}
                   />
                   {!status && (
                     <label htmlFor="image2" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a picture"}
+                          {imageIsLoading.profileImage2 ? "Uploading..." : "Upload a picture"}
                         </Typography>
                       </Box>
                     </label>
@@ -535,7 +590,7 @@ const Profile = ({ setDialog }) => {
                   id="image2"
                   name="image"
                   accept="image/*"
-                  onChange={(e) => handleImageChange(e, "upload2")}
+                  onChange={(e) => handleImageChange(e, "upload2", 'profileImage2')}
                   style={{ display: "none" }}
                 />
                 <Box
@@ -548,8 +603,18 @@ const Profile = ({ setDialog }) => {
                     // background: "red",
                   }}
                 >
-                  {profile.video ?
-                    <video src={profile.video} width="100%" height="90px" />
+                  {(profile.video || profile.videothumbnail)?
+                    // <video src={profile.video} width="100%" height="90px" />
+                    <img
+                      src={profile.videothumbnail}
+                      alt="img"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxHeight: "100%",
+                        maxWidth: "none",
+                      }}
+                    />
                     :
                     <img
                       src={video2}
@@ -566,7 +631,7 @@ const Profile = ({ setDialog }) => {
                     <label htmlFor="video" style={{ cursor: "pointer" }}>
                       <Box className={classes.images}>
                         <Typography variant="h6" className={classes.body_text}>
-                          {imageIsLoading ? "Uploading..." : "Upload a video"}
+                          {imageIsLoading.videothumbnail ? "Uploading..." : "Upload a video"}
                         </Typography>
                       </Box>
                     </label>
@@ -577,7 +642,7 @@ const Profile = ({ setDialog }) => {
                   id="video"
                   name="video"
                   accept="video/*"
-                  onChange={(e) => handleImageChange(e, "uploadvideo")}
+                  onChange={(e) => handleImageChange(e, "uploadvideo", 'video')}
                   style={{ display: "none" }}
                 />
               </Box>
@@ -660,7 +725,7 @@ const Profile = ({ setDialog }) => {
           flexDirection: "column",
           justifyContent: "start",
           alignItems: "start",
-          border: "1px solid #D9D9D9",
+          border: `1px solid ${ (isSubmited && !profile.about)  ? 'red' : '#D9D9D9'}`,
           padding: "20px",
           marginY: "20px",
         }
@@ -676,7 +741,7 @@ const Profile = ({ setDialog }) => {
         <TextField
           multiline
           rows={6}
-          error={profile?.about.length >= 200}
+          error={ isSubmited ?  !profile.about ? true: profile?.about.length >= 200 ? true: false : false}
           placeholder="Write your information here "
           length={100}
           className={classes.placeholderStyle}
@@ -684,14 +749,21 @@ const Profile = ({ setDialog }) => {
           autoComplete="off"
           name="about"
           value={profile?.about}
+          helperText={ isSubmited ?  !profile.about ? "Please fill this field" : profile?.about.length >= 200 ? "Max 200 characters"
+            : "" : ""}
           // value={values.currentaddress || ""}
           onChange={handleInputChange}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 border: 'none', // Remove the border
+               
+              },
+              "&.Mui-error fieldset": {
+                borderColor: "red", // Custom red border color for error state
               },
             },
+
           }}
           style={{
             marginTop: '10px',
@@ -736,10 +808,13 @@ const Profile = ({ setDialog }) => {
             fullWidth
             disabled={status}
             autoComplete="off"
+            error={isSubmited &&(!profile.displayName)}
+            helperText={ isSubmited && !profile.displayName ? "Please fill this field" : ""}
+
             InputProps={{
               style: {
                 backgroundColor: "transparent",
-                border: "1px solid #D9D9D9",
+                border: `1px solid ${ isSubmited && !profile.displayName ? 'red' : '#D9D9D9'}`,
                 borderRadius: "2px",
                 width: "100%",
                 height: "50px",
@@ -793,12 +868,14 @@ const Profile = ({ setDialog }) => {
                 className={classes.input1}
                 fullWidth
                 disabled={status}
+                error={isSubmited && !profile.region}
+                helperText={ isSubmited && !profile.region ? "Please fill this field" : ""}
                 InputProps={{
                   ...params.InputProps,
                   style: {
                     ...params.InputProps?.style,
                     backgroundColor: "transparent",
-                    border: "1px solid #D9D9D9",
+                    border: `1px solid ${ isSubmited && !profile.region ? 'red' : '#D9D9D9'}`,
                     borderRadius: "2px",
                     width: "100%",
                     height: "50px",
@@ -824,6 +901,54 @@ const Profile = ({ setDialog }) => {
           </Typography>
 
           <Autocomplete
+            multiple
+            onChange={(e, v) => profile.like.length < 3 && handleAutoComplete('like', v[v.length - 1]?.value)}
+            id="tags-filled"
+            value={profile.like}
+            options={loveList.sort((a, b) => b.title - a.title)}
+            autoComplete="off"
+            // options={loveList.map((option) => option.title)}
+            getOptionLabel={(option) => option.title}
+            // defaultValue={[top100Films[13].title]}
+            freeSolo
+            // value={JSON.parse(profile.like)}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => {
+                return (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                )
+              })
+            }
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  name="like"
+                  value={profile.like}
+                  variant="filled"
+                  label="Love"
+                  error={isSubmited && profile.like.length < 3}
+                  helperText={isSubmited && profile.like.length < 3 ? "Please fill this field" : ""}
+                  sx={{
+                    '& .MuiFilledInput-root': {
+                      backgroundColor: "transparent",
+                      border: `1px solid ${ isSubmited && profile.like.length < 3 ? 'red' : '#D9D9D9'}`,
+                      borderRadius: "2px",
+                      height: "100px",
+                    }
+                  }}
+
+                // placeholder="Favorites"
+                />
+              );
+            }}
+          />
+
+          {/* <Autocomplete
             multiple
             onChange={(e, v) =>
               handleAutoComplete("like", v[v.length - 1]?.value)
@@ -868,14 +993,62 @@ const Profile = ({ setDialog }) => {
                 />
               );
             }}
-          />
+          /> */}
 
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="h5" className={classes.label}>
             Three things that you hate
           </Typography>
+
           <Autocomplete
+            multiple
+            onChange={(e, v) => profile.unlike.length < 3 && handleAutoComplete('unlike', v[v.length - 1]?.value)}
+            id="tags-filled"
+            value={profile.unlike}
+            options={hateList.sort((a, b) => b.title - a.title)}
+            autoComplete="off"
+            // options={loveList.map((option) => option.title)}
+            getOptionLabel={(option) => option.title}
+            // defaultValue={[top100Films[13].title]}
+            freeSolo
+            // value={JSON.parse(profile.like)}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => {
+                return (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  />
+                )
+              })
+            }
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  name="unlike"
+                  autoComplete="off"
+                  value={profile.unlike}
+                  variant="filled"
+                  label="Hate"
+                  error={isSubmited && profile.unlike.length < 3}
+                  helperText={isSubmited && profile.unlike.length < 3 ? "Please fill this field" : ""}
+                  sx={{
+                    '& .MuiFilledInput-root': {
+                      backgroundColor: "transparent",
+                      border: `1px solid ${ isSubmited && profile.unlike.length < 3 ? 'red' : '#D9D9D9'}`,
+                      borderRadius: "2px",
+                      height: "100px",
+                    }
+                  }}
+                // placeholder="Favorites"
+                />
+              );
+            }}
+          />
+          {/* <Autocomplete
             multiple
             onChange={(e, v) =>
               handleAutoComplete("unlike", v[v.length - 1]?.value)
@@ -921,8 +1094,73 @@ const Profile = ({ setDialog }) => {
                 />
               );
             }}
-          />
+          /> */}
         </Grid>
+
+        <Grid item xs={12} md={5.5}>
+
+          <Typography variant="h5" className={classes.label}>
+            Referral Code
+          </Typography>
+          <TextField
+            type="text"
+            name="referral_code"
+            onChange={handleInputChange}
+            autoComplete="off"
+            value={profile?.referral_code || ''}
+            placeholder="Refferal Code"
+            className={classes.input1}
+            fullWidth
+            error={isSubmited && !profile?.referral_code}
+            helperText={isSubmited && !profile?.referral_code ? "Please fill this field" : ""}
+            InputProps={{
+              style: {
+                backgroundColor: "transparent",
+                border: `1px solid ${isSubmited && !profile?.referral_code ? 'red' : '#D9D9D9'}`,
+                borderRadius: "2px",
+                width: "100%",
+                height: "50px",
+              },
+            }}
+          />
+           <Box color={"red"} sx={{ fontSize: 14 }}>{t(error)}</Box>
+        </Grid>
+
+        <Grid item xs={12} md={3}>
+          <Typography variant="h5" className={classes.label}>
+            Preferred Language
+          </Typography>
+          <Select
+            name="language"
+            id="demo-simple-select"
+            value={profile.language}
+            onChange={handleInputChange}
+            autoComplete="off"
+            className={classes.input1}
+            fullWidth
+            disabled={status}
+            defaultValue={""}
+          >
+            {languages.map((language) => (
+              <MenuItem
+                key={language.value}
+                value={language.value}
+                disableRipple
+              >
+                {language.name}
+                <img
+                  src={language.flag}
+                  alt={`${language.name} flag`}
+                  style={{ width: '20px', marginLeft: '8px' }}
+                />
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item xs={12} md={2.5}>
+
+        </Grid>
+
 
         {/* <Grid item sx={{ width: "100%", justifyContent: "center", display: "flex" }}>
           <LoadingButton
@@ -976,10 +1214,12 @@ const Profile = ({ setDialog }) => {
                   fullWidth
                   disabled={status}
                   autoComplete="off"
+                  error={isSubmited && !profile.payout_firstName}
+                  helperText={isSubmited && !profile.payout_firstName ? "Please fill this field" : ""}
                   InputProps={{
                     style: {
                       backgroundColor: "#F2F2F2",
-                      // border: "1px solid #D9D9D9",
+                      border: isSubmited && !profile.payout_firstName ? "1px solid red" : "none",
                       borderRadius: "2px",
                       width: "100%",
                       height: "50px",
@@ -1001,10 +1241,12 @@ const Profile = ({ setDialog }) => {
                   fullWidth
                   disabled={status}
                   autoComplete="off"
+                  error={isSubmited && !profile.payout_lastName}
+                  helperText={isSubmited && !profile.payout_lastName ? "Please fill this field" : ""}
                   InputProps={{
                     style: {
                       backgroundColor: "#F2F2F2",
-                      // border: "1px solid #D9D9D9",
+                      border: isSubmited && !profile.payout_lastName ? "1px solid red" : "none",
                       borderRadius: "2px",
                       width: "100%",
                       height: "50px",
@@ -1026,10 +1268,12 @@ const Profile = ({ setDialog }) => {
                   fullWidth
                   disabled={status}
                   autoComplete="off"
+                  error={isSubmited && !profile.payout_phoneNumber}
+                  helperText={isSubmited && !profile.payout_phoneNumber ? "Please fill this field" : ""}
                   InputProps={{
                     style: {
                       backgroundColor: "#F2F2F2",
-                      // border: "1px solid #D9D9D9",
+                      border: isSubmited && !profile.payout_phoneNumber ? "1px solid red" : "none",
                       borderRadius: "2px",
                       width: "100%",
                       height: "50px",
@@ -1056,7 +1300,7 @@ const Profile = ({ setDialog }) => {
                       placeholder="Enter Webmoney ID"
                       className={classes.input1}
                       fullWidth
-                      disabled={status}
+                      disabled={true}
                       autoComplete="off"
                       InputProps={{
                         style: {
@@ -1090,10 +1334,12 @@ const Profile = ({ setDialog }) => {
                       fullWidth
                       disabled={status}
                       autoComplete="off"
+                      error={isSubmited && !profile.paypal_id}
+                      helperText={isSubmited && !profile.paypal_id ? "Please fill this field" : ""}
                       InputProps={{
                         style: {
                           backgroundColor: "#FFFFFF",
-                          border: "1px solid #E3E3E3",
+                          border: `1px solid ${isSubmited && !profile.paypal_id ? 'red' : '#E3E3E3'}`,
                           borderRadius: "8px",
                           width: "100%",
                           height: "50px",
@@ -1126,7 +1372,7 @@ const Profile = ({ setDialog }) => {
                         placeholder="Bank Name"
                         className={classes.input1}
                         fullWidth
-                        disabled={status}
+                        disabled={true}
                         autoComplete="off"
                         InputProps={{
                           style: {
@@ -1146,7 +1392,7 @@ const Profile = ({ setDialog }) => {
                         placeholder="Currency of bank"
                         className={classes.input1}
                         fullWidth
-                        disabled={status}
+                        disabled={true}
                         autoComplete="off"
                         InputProps={{
                           style: {
@@ -1166,7 +1412,7 @@ const Profile = ({ setDialog }) => {
                         placeholder="Card Number"
                         className={classes.input1}
                         fullWidth
-                        disabled={status}
+                        disabled={true}
                         autoComplete="off"
                         InputProps={{
                           style: {
@@ -1186,7 +1432,7 @@ const Profile = ({ setDialog }) => {
                         placeholder="Country of bank"
                         className={classes.input1}
                         fullWidth
-                        disabled={status}
+                        disabled={true}
                         autoComplete="off"
                         InputProps={{
                           style: {
@@ -1220,12 +1466,19 @@ const Profile = ({ setDialog }) => {
           </LoadingButton>
 
         </Grid>
-
+        {/* <Box color={"red"} sx={{ fontSize: 16 }}>{t(error)}</Box> */}
       </Grid>
 
 
 
-      <ProfileStatus modal={modal} setModal={setModal} action={() => { setModal(false); navigate('/') }} />
+      <ProfileStatus modal={modal} setModal={setModal} action={() => {
+        setModal(false);
+        localStorage.removeItem("token");
+        voxService.get().disconnect();
+        persistor.purge();
+        localStorage.removeItem("persist:root");
+        navigate(`/`, { replace: true });
+      }} />
     </Box>
   );
 };
